@@ -26,15 +26,7 @@ class LoginScreen extends StatelessWidget {
               child: ListView(
                 children: [
 
-                  Container(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
-                      child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(
-                              height: 150
-                          ),
-                          child: Image.asset("assets/images/jmcare_hijau.png")
-                      )
-                  ),
+                 Komponen.getLogoHijau(),
 
                   Container(
                     padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
@@ -46,6 +38,7 @@ class LoginScreen extends StatelessWidget {
                         child: Container(
                             padding: const EdgeInsets.all(20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text(
                                   "MASUK DALAM AKUN ANDA",
@@ -79,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                                         suffixIcon: IconButton(onPressed: (){
                                           logic.showHidePassword();
                                         },
-                                            icon: logic.show_password.value ? Icon(Icons.remove_red_eye) : Icon(Icons.remove_red_eye_outlined))
+                                            icon: logic.show_password.value ? const Icon(Icons.remove_red_eye) : const Icon(Icons.remove_red_eye_outlined))
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {

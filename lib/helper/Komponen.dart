@@ -5,6 +5,18 @@ import 'package:jmcare/helper/Warna.dart';
 
 class Komponen{
 
+  static Widget getLogoHijau(){
+    return Container(
+        padding: const EdgeInsets.only(left: 30, right: 30),
+        child: ConstrainedBox(
+            constraints: const BoxConstraints.expand(
+                height: 150
+            ),
+            child: Image.asset("assets/images/jmcare_hijau.png")
+        )
+    );
+  }
+
   static AppBar getAppBar(BuildContext context, String title){
     return AppBar(
       centerTitle: true,

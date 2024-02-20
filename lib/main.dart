@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    WidgetsFlutterBinding.ensureInitialized();
+    // WidgetsFlutterBinding.ensureInitialized();
     final client = Dio();
     client.interceptors.addAll(Endpoint.dioInterceptors);
     BaseService.initialize(client);

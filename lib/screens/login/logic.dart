@@ -1,4 +1,5 @@
 
+import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/login/state.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,7 +52,7 @@ class LoginLogic extends GetxController{
       is_loading.value = false;
 
       if (loginRespon is LoginError || loginRespon?.code == Konstan.tag_100){
-        Get.snackbar("Error", "Login gagal");
+        Fungsi.showSnack(context, Konstan.tag_error, "Login gagal", 2);
         debugPrint('Login gagal!');
       }else if (loginRespon?.code == Konstan.tag_200){
         final storage = (await getStorage<LoginRespon>());

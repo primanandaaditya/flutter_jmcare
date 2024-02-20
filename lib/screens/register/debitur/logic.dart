@@ -1,4 +1,5 @@
 
+import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,8 @@ class RegisterDebiturLogic extends GetxController{
   var is_loading = false.obs;
   var show_password_1 = true.obs;
   var show_password_2 = true.obs;
+  var password_strength = false.obs;
+
   final RegisterDebiturState state = RegisterDebiturState();
 
   @override
@@ -35,6 +38,10 @@ class RegisterDebiturLogic extends GetxController{
     }
   }
 
+  void checkPasswordStrength(){
+    password_strength.value = Fungsi.passwordCalculator(state.passwordController!.text.toString());
+  }
+
   void doRegisterDebitur(BuildContext context) async {
 
     if (state.formKey!.currentState!.validate()){
@@ -45,8 +52,14 @@ class RegisterDebiturLogic extends GetxController{
         return;
       }
 
-      if ( !state.emailController!.text.toString().isEmpty && !state.emailController!.text.toString().isEmail){
+      if (state.emailController!.text.toString().isNotEmpty && !state.emailController!.text.toString().isEmail){
         Get.snackbar(Konstan.tag_error, "Email tidak valid");
+        return;
+      }
+
+      var isStrongPassword = Fungsi.passwordCalculator(state.passwordController!.text.toString());
+      if (!isStrongPassword){
+        Get.snackbar(Konstan.tag_error, "Password masih belum kuat!");
         return;
       }
 
@@ -60,10 +73,10 @@ class RegisterDebiturLogic extends GetxController{
       is_loading.value = false;
 
       if (baseRespon is BaseError || baseRespon?.code == Konstan.tag_100){
-        Get.snackbar(Konstan.tag_error, baseRespon!.message!);
+        Fungsi.showSnack(context, Konstan.tag_error, baseRespon!.message!, 2);
         debugPrint('Login gagal!');
       }else if (baseRespon?.code == Konstan.tag_200){
-        Get.snackbar(Konstan.tag_sukses, "Register berhasil, silakan login");
+        Fungsi.showSnack(context, Konstan.tag_sukses, "Register berhasil, silakan login", 2);
         Get.offAllNamed(Konstan.rute_login);
       }
     }

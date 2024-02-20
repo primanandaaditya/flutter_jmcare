@@ -17,7 +17,7 @@ class RegisterDebiturScreen extends StatelessWidget {
       assignId: true,
       builder: (logic) {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: Container(
             decoration: Tema.getBackgroundLogin() ,
             padding: const EdgeInsets.all(20),
@@ -26,15 +26,7 @@ class RegisterDebiturScreen extends StatelessWidget {
               child: ListView(
                 children: [
 
-                  Container(
-                      padding: const EdgeInsets.only(left: 30, right: 30),
-                      child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(
-                              height: 150
-                          ),
-                          child: Image.asset("assets/images/jmcare_hijau.png")
-                      )
-                  ),
+                  Komponen.getLogoHijau(),
 
                   Container(
                     padding: const EdgeInsets.only(top: 0, left: 30, right: 30),
@@ -46,9 +38,11 @@ class RegisterDebiturScreen extends StatelessWidget {
                         child: Container(
                             padding: const EdgeInsets.all(20),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 const Text(
                                   "REGISTER DEBITUR",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold
@@ -56,6 +50,7 @@ class RegisterDebiturScreen extends StatelessWidget {
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 40)),
                                 TextFormField(
+                                  buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
                                   controller: state.ktpController,
                                   maxLength: 16,
                                   keyboardType: TextInputType.number,
@@ -72,6 +67,7 @@ class RegisterDebiturScreen extends StatelessWidget {
                                 ),
 
                                 TextFormField(
+                                  buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
                                   controller: state.hpController,
                                   maxLength: 16,
                                   keyboardType: TextInputType.number,
@@ -97,6 +93,7 @@ class RegisterDebiturScreen extends StatelessWidget {
 
                                 Obx(() {
                                   return TextFormField(
+                                    onChanged: ((e) => logic.checkPasswordStrength()),
                                     controller: state.passwordController,
                                     obscureText: logic.show_password_1.value,
                                     decoration:  InputDecoration(
@@ -104,7 +101,7 @@ class RegisterDebiturScreen extends StatelessWidget {
                                         suffixIcon: IconButton(onPressed: (){
                                           logic.showHidePassword_1();
                                         },
-                                            icon: logic.show_password_1.value ? Icon(Icons.remove_red_eye) : Icon(Icons.remove_red_eye_outlined))
+                                            icon: logic.show_password_1.value ? const Icon(Icons.remove_red_eye) : const Icon(Icons.remove_red_eye_outlined))
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -112,6 +109,29 @@ class RegisterDebiturScreen extends StatelessWidget {
                                       }
                                       return null;
                                     },
+                                  );
+                                }),
+
+                                const Padding(padding: EdgeInsets.only(top: 5)),
+
+                                const Padding(padding: EdgeInsets.only(left: 10),
+                                  child: Text("Password harus mengandung huruf besar, huruf kecil dan angka.", style: TextStyle(fontSize: 10),),
+                                ),
+
+                                const Padding(padding: EdgeInsets.only(top: 5)),
+
+                                Obx(() {
+                                  return Padding(padding: const EdgeInsets.only(
+                                      left: 10),
+                                      child: Text(
+                                          logic.password_strength.value
+                                              ? "Password kuat"
+                                              : "Password lemah",
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                              color: logic.password_strength.value ? Colors.green : Colors.red,
+                                              fontSize: 10)
+                                      )
                                   );
                                 }),
 
@@ -124,7 +144,7 @@ class RegisterDebiturScreen extends StatelessWidget {
                                         suffixIcon: IconButton(onPressed: (){
                                           logic.showHidePassword_2();
                                         },
-                                            icon: logic.show_password_2.value ? Icon(Icons.remove_red_eye) : Icon(Icons.remove_red_eye_outlined))
+                                            icon: logic.show_password_2.value ? const Icon(Icons.remove_red_eye) : const Icon(Icons.remove_red_eye_outlined))
                                     ),
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -141,7 +161,6 @@ class RegisterDebiturScreen extends StatelessWidget {
                                   ElevatedButton(onPressed: (){
                                       logic.doRegisterDebitur(context);
                                     }, child: const Text("REGISTER")),),
-
                               ],
                             )
                         )

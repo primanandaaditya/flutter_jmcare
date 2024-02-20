@@ -7,6 +7,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Fungsi{
 
+  static bool passwordCalculator(String password) {
+    RegExp numReg = RegExp(r".*[0-9].*");
+    RegExp letterReg = RegExp(r".*[A-Za-z].*");
+
+    if (!letterReg.hasMatch(password) || !numReg.hasMatch(password)) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   static toastBelumLogin(BuildContext context){
     showSnack(context, "Silakan login terlebih dahulu", "OK", 2);
   }
@@ -81,7 +92,6 @@ class Fungsi{
       },
     );
   }
-
 
   static String formatTanggal(String tanggalYYYYmmdd){
     try{

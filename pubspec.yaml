@@ -53,6 +53,7 @@ dependencies:
   package_info_plus: ^3.0.3
   universal_platform: ^1.0.0+1
   device_info_plus: ^8.1.0
+  flutter_datetime_picker: ^1.5.1
 
 
 dev_dependencies:

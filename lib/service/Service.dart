@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
+import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'BaseService.dart';
 import 'LoginService.dart';
 
@@ -16,7 +17,8 @@ class Service {
   Map<Type, BaseService> get classes {
     return {
       LoginService: LoginService.instance,
-      RegisterDebiturService: RegisterDebiturService.instance
+      RegisterDebiturService: RegisterDebiturService.instance,
+      RegisterNonDebiturService: RegisterNonDebiturService.instance,
     };
   }
 
