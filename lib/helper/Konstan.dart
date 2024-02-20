@@ -4,6 +4,8 @@ class Konstan {
   static const String rute_pilih_register = '/pilihregister';
   static const String rute_register_debitur = '/registerdebitur';
   static const String rute_register_nondebitur = '/registernondebitur';
+  static const String rute_cek_nomor_hp = '/ceknomorhp';
+  static const String rute_pilih_metode_reset_password = '/pilihmetoderesetpassword';
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_is_login = 'is_login';

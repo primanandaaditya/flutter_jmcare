@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:jmcare/service/CeknomorhpService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'BaseService.dart';
@@ -19,6 +20,7 @@ class Service {
       LoginService: LoginService.instance,
       RegisterDebiturService: RegisterDebiturService.instance,
       RegisterNonDebiturService: RegisterNonDebiturService.instance,
+      CeknomorhpService: CeknomorhpService.instance
     };
   }
 

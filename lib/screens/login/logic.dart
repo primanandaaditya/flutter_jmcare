@@ -67,4 +67,8 @@ class LoginLogic extends GetxController{
     Get.toNamed(Konstan.rute_pilih_register);
   }
 
+  void resetPassword(){
+    Get.toNamed(Konstan.rute_cek_nomor_hp);
+  }
+
 }
