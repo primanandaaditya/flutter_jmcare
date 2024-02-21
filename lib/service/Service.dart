@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
+import 'package:jmcare/service/OtpemailService.dart';
+import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
+import 'package:jmcare/service/SmsService.dart';
 import 'BaseService.dart';
 import 'LoginService.dart';
 
@@ -20,7 +23,10 @@ class Service {
       LoginService: LoginService.instance,
       RegisterDebiturService: RegisterDebiturService.instance,
       RegisterNonDebiturService: RegisterNonDebiturService.instance,
-      CeknomorhpService: CeknomorhpService.instance
+      CeknomorhpService: CeknomorhpService.instance,
+      OtpemailService: OtpemailService.instance,
+      OtpwaService: OtpwaService.instance,
+      SmsService: SmsService.instance
     };
   }
 

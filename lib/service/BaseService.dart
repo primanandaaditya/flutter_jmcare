@@ -60,6 +60,20 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
+  Future<T?> postSMS<T>(String url) async {
+    client.options.baseUrl = Endpoint.base_url_reset_pass_sms;
+    final response = await _wrapRequest(() => client.post(url,
+        options: Options(
+          headers: {
+            'Accept': '*/*'
+          },
+        ))
+    );
+    return models.ModelGenerator.resolve<T>(response.data);
+  }
+
+
+
   _wrapRequest(request, {int retryCount = 3}) async {
     try {
       return await request();

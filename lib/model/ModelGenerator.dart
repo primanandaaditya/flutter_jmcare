@@ -1,12 +1,20 @@
+import 'dart:convert';
+
 import 'package:jmcare/model/BaseRespon.dart';
 import 'package:jmcare/model/LoginRespon.dart';
+import 'package:jmcare/model/ResetPassModel.dart';
+import 'package:jmcare/model/SelectedMethod.dart';
+import 'package:jmcare/model/SmsRespon.dart';
 
 class ModelGenerator {
   static ModelGenerator instance = ModelGenerator();
   get classes {
     return {
       LoginRespon : (json) => LoginRespon.fromJson(json),
-      BaseRespon : (json) => BaseRespon.fromJson(json)
+      BaseRespon : (json) => BaseRespon.fromJson(json),
+      ResetPassModel: (json) => ResetPassModel.fromJson(json),
+      SelectedMethod: (json) => SelectedMethod.fromJson(json),
+      SmsRespon: (json) => SmsRespon.fromJson(json)
     };
   }
 

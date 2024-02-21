@@ -4,6 +4,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class Endpoint{
   static const String base_url = "http://ws.mpm-finance.com/JMCare_development/Service1.svc/";
   // static const String base_url = "https://apicloud.jaccs-mpmfinance.com/JMCare-xrgis8hm4zcwdt3ktsgy/Service1.svc/";
+  static const String base_url_reset_pass_sms = "http://web-server-api.mpmf.com/M1cr0s1t3T3st1ng/Service1.svc/sendSMS/";
   
   
   static const String login                            = "login.json";
@@ -71,7 +72,8 @@ class Endpoint{
   static const String TAG_VIEWLIST_MERKKENDARAAN               = "getlistmerkkend/{tipeJaminan}";
   static const String TAG_VIEWLIST_TIPEKENDARAAN               = "getlisttipekend/{id}";
 
-  static const String TAG_SEND_OTP                             = "sendSMS/{nomor_hp}/{pesan}";
+  static const String TAG_SEND_OTP                             = "sendSMS/";
+  // static const String TAG_SEND_OTP                             = "sendSMS/{nomor_hp}/{pesan}";
 
   static List<Interceptor> dioInterceptors = [
     PrettyDioLogger(

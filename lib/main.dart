@@ -11,6 +11,7 @@ import 'package:jmcare/screens/register/debitur/view.dart';
 import 'package:jmcare/screens/register/nondebitur/view.dart';
 import 'package:jmcare/screens/resetpassword/ceknomorhp/view.dart';
 import 'package:jmcare/screens/resetpassword/pilihmetode/view.dart';
+import 'package:jmcare/screens/resetpassword/webview/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/service/BaseService.dart';
 import 'package:jmcare/service/Service.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_register_nondebitur, page: () => const RegisterNonDebiturScreen()),
         GetPage(name: Konstan.rute_register_debitur, page: () => const RegisterDebiturScreen()),
         GetPage(name: Konstan.rute_cek_nomor_hp, page: () => const CeknomorhpScreen()),
-        GetPage(name: Konstan.rute_pilih_metode_reset_password, page: () => const PilihMetodeResetPasswordScreen())
+        GetPage(name: Konstan.rute_pilih_metode_reset_password, page: () => const PilihMetodeResetPasswordScreen()),
+        GetPage(name: Konstan.rute_reset_password_webview, page: () => const ResetPasswordWebView())
       ],
       title: 'JM CARE',
       theme: ThemeData(

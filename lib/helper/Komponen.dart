@@ -5,12 +5,53 @@ import 'package:jmcare/helper/Warna.dart';
 
 class Komponen{
 
+  static Widget getCardOption({
+    required String title,
+    required String subtitle,
+    required int radioValue,
+    required int groupValue,
+    required Function changeGroupValue
+
+}){
+
+    return Card(
+      elevation: 4,
+      child: Row(
+        children: [
+          Radio(
+            value: radioValue,
+            groupValue: groupValue,
+            onChanged: (value){
+              changeGroupValue();
+            },
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title,
+                style: const TextStyle(
+                    fontSize: 14
+                ),
+              ),
+              Text(subtitle,
+                style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   static Widget getLogoHijau(){
     return Container(
         padding: const EdgeInsets.only(left: 30, right: 30),
         child: ConstrainedBox(
             constraints: const BoxConstraints.expand(
-                height: 150
+                height: 100
             ),
             child: Image.asset("assets/images/jmcare_hijau.png")
         )

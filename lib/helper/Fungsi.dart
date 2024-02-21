@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -6,6 +8,66 @@ import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Fungsi{
+
+  static String generateOTP(int length){
+    const ch = '0123456789';
+    Random r = Random();
+    return String.fromCharCodes(Iterable.generate(
+        length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
+  }
+
+  static String bintang(String input){
+    String hasil = "";
+    int panjang = input.length;
+    int counter = 0;
+
+    if (panjang == 0 || panjang == 1 || panjang == 2){
+      hasil = input;
+    }else{
+      if (panjang == 3 || panjang == 4){
+        counter = 0;
+        input.runes.forEach((element) {
+          if (counter == 0 || counter == panjang){
+            var c = String.fromCharCode(element);
+            hasil += c;
+          }else{
+            hasil += "*";
+          }
+          counter += 1;
+        });
+      }else{
+        counter = 0;
+        input.runes.forEach((element) {
+          if (counter == 0 || counter == 1 || counter == panjang -1 || counter == panjang -2 || counter == panjang -3){
+            var c = String.fromCharCode(element);
+            hasil += c;
+          }else{
+            hasil += "*";
+          }
+          counter += 1;
+        });
+      }
+    }
+    print("Hasil bintang " + hasil);
+    return hasil;
+  }
+
+  static String enamDua(String nomorHP){
+    String hasil = "";
+    if (nomorHP.isEmpty){
+      hasil = "";
+    }else{
+      if (nomorHP.startsWith("0")){
+        int panjang = nomorHP.length;
+        String sisa = nomorHP.substring(1, panjang);
+        hasil = "62" + sisa;
+      }else{
+        hasil = nomorHP;
+      }
+    }
+    print("Hasil enamdua " + hasil);
+    return hasil;
+  }
 
   static bool passwordCalculator(String password) {
     RegExp numReg = RegExp(r".*[0-9].*");
@@ -120,6 +182,9 @@ class Fungsi{
   }
 
   static showSnack(BuildContext context, String konten, String label, int durasiDetik ){
+    if (label.length >= 30){
+      label=label.substring(0,30);
+    }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content:  Text(konten),
       duration: Duration(seconds: durasiDetik ),
