@@ -12,8 +12,9 @@ class Fungsi{
   static String generateOTP(int length){
     const ch = '0123456789';
     Random r = Random();
-    return String.fromCharCodes(Iterable.generate(
+    var hasil = String.fromCharCodes(Iterable.generate(
         length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
+    return hasil;
   }
 
   static String bintang(String input){

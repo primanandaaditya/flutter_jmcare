@@ -487,7 +487,7 @@ class Komponen{
         children: const [
           CircularProgressIndicator(),
           Padding(padding: EdgeInsets.only(top: 10)),
-          Text(Konstan.tag_now_loading, textAlign: TextAlign.center,)
+          Text(Konstan.tag_now_loading, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)
         ],
       )
     );
