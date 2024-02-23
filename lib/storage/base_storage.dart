@@ -57,4 +57,9 @@ class BaseStorage<T> {
       final response = jsonDecode(dataString);
       setData(response == null ? response :  ModelGenerator.resolve<T>(response));
   }
+
+  clear() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 }

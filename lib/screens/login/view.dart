@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
 
                 TextButton(
                     onPressed: (){
-                      Navigator.popAndPushNamed(context, "/home");
+                      logic.gotoHome();
                     },
                     child: const Text(
                       "Jelajahi JMCare sekarang",

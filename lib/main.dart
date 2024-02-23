@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
+    precacheImage(const AssetImage("assets/images/bg_login.png"), context);
     // WidgetsFlutterBinding.ensureInitialized();
     final client = Dio();
     client.interceptors.addAll(Endpoint.dioInterceptors);
@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       getPages: [
+        GetPage(name: Konstan.rute_splash, page: () => const SplashScreen()),
         GetPage(name: Konstan.rute_login, page: () => const LoginScreen()),
         GetPage(name: Konstan.rute_home, page: () => const HomeScreen()),
         GetPage(name: Konstan.rute_pilih_register, page: () => const PilihRegisterScreen() ),

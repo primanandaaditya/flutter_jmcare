@@ -1,4 +1,5 @@
 class Konstan {
+  static const String rute_splash = '/splash';
   static const String rute_login = '/login';
   static const String rute_home = '/home';
   static const String rute_pilih_register = '/pilihregister';

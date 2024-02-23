@@ -59,6 +59,10 @@ class LoginLogic extends BaseLogic{
     }
   }
 
+  void gotoHome(){
+    Get.offAllNamed(Konstan.rute_home);
+  }
+
   void pilihRegister(){
     Get.toNamed(Konstan.rute_pilih_register);
   }

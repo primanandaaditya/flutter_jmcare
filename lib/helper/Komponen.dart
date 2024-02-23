@@ -83,7 +83,10 @@ class Komponen{
     );
   }
 
-  static Widget getMainDrawer(BuildContext context){
+  static Widget getMainDrawer(
+      BuildContext context,
+      Function onLogout
+      ){
     return Drawer(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(20))
@@ -91,6 +94,7 @@ class Komponen{
       backgroundColor: Colors.white,
       child: ListView(
         children: [
+
           Container(
               height: 200,
               decoration: const BoxDecoration(
@@ -120,11 +124,7 @@ class Komponen{
             tileColor: Colors.white,
             title: const Text('Logout'),
             onTap: () {
-              dialogLogout(context).then((value) {
-                if (value!){
-                  Fungsi.logOut(context);
-                }
-              });
+              onLogout();
             },
           ),
 
@@ -137,39 +137,6 @@ class Komponen{
 
         ],
       ),
-    );
-  }
-
-  static Future<bool?> dialogLogout(BuildContext context) async {
-    return showDialog<bool?>(
-      context: context,
-      barrierDismissible: true, // user must tap button
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Logout'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: const <Widget>[
-                Text('Apakah Anda yakin akan keluar?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Ya'),
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-            ),
-            TextButton(
-              child: const Text('Tidak'),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 
