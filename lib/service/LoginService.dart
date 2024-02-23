@@ -1,5 +1,5 @@
 import 'package:jmcare/helper/Endpoint.dart';
-import '../model/LoginRespon.dart';
+import '../model/api/LoginRespon.dart';
 import 'BaseService.dart';
 
 class LoginService extends BaseService{

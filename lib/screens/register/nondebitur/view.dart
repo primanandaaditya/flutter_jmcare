@@ -126,7 +126,7 @@ class RegisterNonDebiturScreen extends StatelessWidget {
 
                 Obx(() {
                   return TextFormField(
-                    onChanged: ((e) => logic.checkPasswordStrength()),
+                    onChanged: ((e) => logic.checkPasswordStrength(e)),
                     controller: state.passwordController,
                     obscureText: logic.show_password_1.value,
                     decoration:  InputDecoration(

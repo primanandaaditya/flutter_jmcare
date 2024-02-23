@@ -1,10 +1,11 @@
 
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:get/get.dart';
+import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:jmcare/screens/pilihregister/state.dart';
 
 
-class PilihRegisterLogic extends GetxController{
+class PilihRegisterLogic extends BaseLogic{
 
   final PilihRegisterState state = PilihRegisterState();
 

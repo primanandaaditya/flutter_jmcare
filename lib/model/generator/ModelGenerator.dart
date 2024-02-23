@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:jmcare/model/BaseRespon.dart';
-import 'package:jmcare/model/LoginRespon.dart';
-import 'package:jmcare/model/OtpModel.dart';
-import 'package:jmcare/model/ResetPassModel.dart';
-import 'package:jmcare/model/SelectedMethod.dart';
-import 'package:jmcare/model/SmsRespon.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/model/api/LoginRespon.dart';
+import 'package:jmcare/model/api/OtpModel.dart';
+import 'package:jmcare/model/session/ResetPassModel.dart';
+import 'package:jmcare/model/session/SelectedMethod.dart';
+import 'package:jmcare/model/api/SmsRespon.dart';
 
 class ModelGenerator {
   static ModelGenerator instance = ModelGenerator();

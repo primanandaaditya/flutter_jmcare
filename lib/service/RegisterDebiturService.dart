@@ -1,5 +1,5 @@
 import 'package:jmcare/helper/Endpoint.dart';
-import 'package:jmcare/model/BaseRespon.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
 import 'BaseService.dart';
 
 class RegisterDebiturService extends BaseService{

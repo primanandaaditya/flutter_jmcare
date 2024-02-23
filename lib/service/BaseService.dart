@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
-import 'package:jmcare/model/ModelGenerator.dart' as models;
+import 'package:jmcare/model/generator/ModelGenerator.dart' as models;
 
 class ServiceLoggerInterceptor extends InterceptorsWrapper {
   JsonEncoder encoder = const JsonEncoder.withIndent('  ');

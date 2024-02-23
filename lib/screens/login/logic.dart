@@ -1,18 +1,18 @@
 
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
+import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:jmcare/screens/login/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../../model/LoginRespon.dart';
+import '../../model/api/LoginRespon.dart';
 import '../../service/LoginService.dart';
 import '../../service/Service.dart';
 import '../../storage/storage.dart';
 
 
-class LoginLogic extends GetxController{
+class LoginLogic extends BaseLogic{
 
-  var is_loading = false.obs;
   var show_password = true.obs;
   final LoginState state = LoginState();
 
@@ -24,7 +24,6 @@ class LoginLogic extends GetxController{
 
   void loadStorage() async {
     final storageAuth = await getStorage<LoginRespon>();
-
     if(storageAuth.data?.loginUserId != null){
       debugPrint('Email ${storageAuth.data!.email!}');
       Get.offAllNamed(Konstan.rute_home);
@@ -42,7 +41,6 @@ class LoginLogic extends GetxController{
   }
 
   void doLogin(BuildContext context) async {
-
     if (state.formKey!.currentState!.validate()){
       is_loading.value = true;
       LoginRespon? loginRespon = await getService<LoginService>()!.doLogin(
@@ -55,9 +53,7 @@ class LoginLogic extends GetxController{
         Fungsi.showSnack(context, Konstan.tag_error, "Login gagal", 2);
         debugPrint('Login gagal!');
       }else if (loginRespon?.code == Konstan.tag_200){
-        final storage = (await getStorage<LoginRespon>());
-        storage.setData(loginRespon);
-        storage.save();
+        baseSaveStorage<LoginRespon>(loginRespon);
         Get.offAllNamed(Konstan.rute_home);
       }
     }

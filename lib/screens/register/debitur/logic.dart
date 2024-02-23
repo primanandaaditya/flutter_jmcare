@@ -3,17 +3,15 @@ import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jmcare/model/BaseRespon.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/screens/base/base_logic.dart';
+import 'package:jmcare/screens/base/base_register_logic.dart';
 import 'package:jmcare/screens/register/debitur/state.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import '../../../service/Service.dart';
 
-class RegisterDebiturLogic extends GetxController{
-
-  var is_loading = false.obs;
-  var show_password_1 = true.obs;
-  var show_password_2 = true.obs;
-  var password_strength = false.obs;
+//di-extend dari BaseRegisterLogic
+class RegisterDebiturLogic extends BaseRegisterLogic{
 
   final RegisterDebiturState state = RegisterDebiturState();
 
@@ -22,41 +20,20 @@ class RegisterDebiturLogic extends GetxController{
     super.onInit();
   }
 
-  void showHidePassword_1(){
-    if (show_password_1.value){
-      show_password_1.value = false;
-    }else{
-      show_password_1.value = true;
-    }
-  }
-
-  void showHidePassword_2(){
-    if (show_password_2.value){
-      show_password_2.value = false;
-    }else{
-      show_password_2.value = true;
-    }
-  }
-
-  void checkPasswordStrength(){
-    password_strength.value = Fungsi.passwordCalculator(state.passwordController!.text.toString());
-  }
-
   void doRegisterDebitur(BuildContext context) async {
 
     if (state.formKey!.currentState!.validate()){
-
       //cek apakah password dan confirm-nya sama
       if (state.passwordController!.text.toString() != state.ulangipasswordController!.text.toString()){
         Get.snackbar(Konstan.tag_error, "Password harus sama dengan pengulangannya");
         return;
       }
-
+      //cek apakah email diisi dan valid
       if (state.emailController!.text.toString().isNotEmpty && !state.emailController!.text.toString().isEmail){
         Get.snackbar(Konstan.tag_error, "Email tidak valid");
         return;
       }
-
+      //cek kalkulator password
       var isStrongPassword = Fungsi.passwordCalculator(state.passwordController!.text.toString());
       if (!isStrongPassword){
         Get.snackbar(Konstan.tag_error, "Password masih belum kuat!");

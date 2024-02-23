@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jmcare/model/BaseRespon.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
 
 
 class RegisterDebiturState{

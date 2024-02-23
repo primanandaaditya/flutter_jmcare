@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:jmcare/model/ModelGenerator.dart';
+import 'package:jmcare/model/generator/ModelGenerator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_platform/universal_platform.dart';

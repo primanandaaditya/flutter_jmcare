@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../model/LoginRespon.dart';
+import '../../model/api/LoginRespon.dart';
 
 class LoginState{
 
