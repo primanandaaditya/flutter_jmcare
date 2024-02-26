@@ -5,7 +5,9 @@ import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'package:jmcare/service/ResetpasswordService.dart';
+import 'package:jmcare/service/SlideService.dart';
 import 'package:jmcare/service/SmsService.dart';
+import 'package:jmcare/service/VersiService.dart';
 import 'BaseService.dart';
 import 'LoginService.dart';
 
@@ -28,7 +30,9 @@ class Service {
       OtpemailService: OtpemailService.instance,
       OtpwaService: OtpwaService.instance,
       SmsService: SmsService.instance,
-      ResetpasswordService: ResetpasswordService.instance
+      ResetpasswordService: ResetpasswordService.instance,
+      VersiService: VersiService.instance,
+      SlideService: SlideService.instance
     };
   }
 

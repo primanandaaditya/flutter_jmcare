@@ -4,6 +4,7 @@ import 'package:jmcare/screens/home/state.dart';
 import 'package:get/get.dart';
 import '../../helper/Komponen.dart';
 import '../../helper/Warna.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
                       Container(),),
 
             body: SafeArea(
+
               child: Stack(
                 children: [
                   Container(
@@ -56,6 +58,7 @@ class HomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
+
                             children: [
                               Komponen.getLogoPutih(),
                               const Padding(padding: EdgeInsets.only(left: 10)),
@@ -78,10 +81,27 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               children: [
 
+                                Obx(() => logic.is_loading.value ?
+                                Komponen.getLoadingWidget()
+                                    :
                                 SizedBox(
-                                    height: 300,
-                                    child: Container()
-                                ),
+                                  height: 300,
+                                  child: CarouselSlider(
+                                      carouselController: state.carouselController,
+                                      options: CarouselOptions(
+                                          autoPlay: true,
+                                          viewportFraction: 1.0,
+                                          enlargeCenterPage: false,
+                                          autoPlayInterval: const Duration(seconds: 5),
+                                          height: double.infinity,
+                                          onPageChanged: (index,reason){
+                                            // context.read<IndicatorProvider>().commit(index);
+                                          }
+                                      ),
+                                      items: logic.konversi(logic.arraySlideshow.value)
+                                  ),
+                                ),),
+
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
 
@@ -98,11 +118,15 @@ class HomeScreen extends StatelessWidget {
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
 
+                                Obx(() => logic.is_loading.value ? LinearProgressIndicator() : Komponen.getProdukListView(logic.arrayProduk.value),),
+
                                 const Padding(padding: EdgeInsets.only(top: 30)),
 
                                 Komponen.teksJudul("Info Promosi"),
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
+
+                                Obx(() => logic.is_loading.value ? LinearProgressIndicator() : Komponen.getPromoListView(logic.arrayPromo.value),),
 
                                 const Padding(padding: EdgeInsets.only(top: 20)),
                               ],

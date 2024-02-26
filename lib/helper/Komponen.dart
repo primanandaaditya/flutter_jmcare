@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/helper/Warna.dart';
+import 'package:jmcare/model/api/ProdukRespon.dart';
+import 'package:jmcare/model/api/PromoRespon.dart';
 
 class Komponen{
 
@@ -423,6 +425,101 @@ class Komponen{
               );
             },
           ),
+        )
+    );
+  }
+
+  static Widget getProdukListView(ProdukRespon produkRespon){
+
+
+    return SizedBox(
+        height: 170,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: produkRespon.data!.length!,
+          itemBuilder: (context,index){
+            return getBoxPromo(
+                produkRespon!.data![index].imgUrl2!,
+                produkRespon.data![index].nameId!,
+                produkRespon.data![index].descriptionId!,
+            );
+          },
+        )
+    );
+  }
+
+  static Widget getBoxPromo(String imageUrl, String title, String descriptionID){
+    return SizedBox(
+        height: 170,
+        width: 150,
+        child: InkWell(
+          onTap: (){
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => DetailScreen(descriptionID)),
+            // );
+          },
+          child: Card(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                  child:  Image.network(
+                    imageUrl,
+                    height: 130,
+                    fit: BoxFit.fill,
+                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return SizedBox(
+                          height: 130,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          )
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                    height: 20,
+                    child: Center(
+                        child:Text(
+                          title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12
+                          ),
+                        )
+                    ))
+              ],
+            ),
+          ),
+        )
+    );
+  }
+
+  static Widget getPromoListView(PromoRespon promoRespon){
+    return SizedBox(
+        height: 170,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: promoRespon.data!.length,
+          itemBuilder: (context,index){
+            return getBoxPromo(
+              promoRespon!.data![index].imgUrl!,
+              promoRespon.data![index].titleId!,
+              promoRespon.data![index].descriptionId!,
+            );
+          },
         )
     );
   }

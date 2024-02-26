@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
-import 'package:jmcare/model/generator/ModelGenerator.dart' as models;
+import '../model/api/models.dart' as models;
 
 class ServiceLoggerInterceptor extends InterceptorsWrapper {
   JsonEncoder encoder = const JsonEncoder.withIndent('  ');
@@ -60,6 +60,29 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
+
+  //tambahkan '{"data":' di sebelah kiri respon dan '}' disebelah kanan respon
+  //buat model di json to dart berdasarkan tambahan tadi
+  Future<T?> getJsonArray<T>(String url, {Map<String, dynamic>? body}) async {
+    String param = jsonEncode(body);
+    client.options.baseUrl = Endpoint.base_url;
+    final response = await _wrapRequest(() => client.post(url,
+        data: param,
+        options: Options(
+          headers: {
+            'Content-Type': 'text/plain',
+            'Accept': '*/*',
+            'merchantkey': Konstan.tag_merchant_key,
+            'authorization': basicAuth
+          },
+        ))
+    );
+    var encoded = jsonEncode(response.data);
+    var bodi = '{"data":'  + encoded + '}';
+    var decoded = jsonDecode(bodi);
+    return models.ModelGenerator.resolve<T>(decoded);
+  }
+
   Future<T?> postSMS<T>(String url) async {
     client.options.baseUrl = Endpoint.base_url_reset_pass_sms;
     final response = await _wrapRequest(() => client.post(url,
@@ -71,8 +94,6 @@ abstract class BaseService {
     );
     return models.ModelGenerator.resolve<T>(response.data);
   }
-
-
 
   _wrapRequest(request, {int retryCount = 3}) async {
     try {
@@ -103,12 +124,12 @@ abstract class BaseService {
     }
   }
 
-
-  makeRequest(String? url) async {
-    Dio dio = Dio(BaseOptions(contentType: Headers.jsonContentType,responseType: ResponseType.json,validateStatus: (_)=>true,));
-    Response facilityResponse = await dio.get(
-        url!
-    );
-    print("woy ${facilityResponse}");
-  }
+  //
+  // makeRequest(String? url) async {
+  //   Dio dio = Dio(BaseOptions(contentType: Headers.jsonContentType,responseType: ResponseType.json,validateStatus: (_)=>true,));
+  //   Response facilityResponse = await dio.get(
+  //       url!
+  //   );
+  //   print("woy ${facilityResponse}");
+  // }
 }
