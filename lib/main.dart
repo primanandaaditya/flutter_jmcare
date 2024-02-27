@@ -16,6 +16,7 @@ import 'package:jmcare/screens/resetpassword/pilihmetode/view.dart';
 import 'package:jmcare/screens/resetpassword/verifikasiotp/view.dart';
 import 'package:jmcare/screens/resetpassword/webview/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
+import 'package:jmcare/screens/welcome/view.dart';
 import 'package:jmcare/service/BaseService.dart';
 import 'package:jmcare/service/Service.dart';
 
@@ -50,7 +51,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_reset_password_webview, page: () => const ResetPasswordWebView()),
         GetPage(name: Konstan.rute_verifikasi_otp, page: () => const VerifikasiotpScreen()),
         GetPage(name: Konstan.rute_password_baru, page: () => const PasswordbaruScreen()),
-        GetPage(name: Konstan.rute_detail_slide, page: () => DetailslideScreen())
+        GetPage(name: Konstan.rute_detail_slide, page: () => const DetailslideScreen()),
+        GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(

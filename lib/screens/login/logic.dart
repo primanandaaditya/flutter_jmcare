@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import '../../model/api/LoginRespon.dart';
 import '../../service/LoginService.dart';
 import '../../service/Service.dart';
-import '../../storage/storage.dart';
 
 
 class LoginLogic extends BaseLogic{
@@ -19,17 +18,6 @@ class LoginLogic extends BaseLogic{
   @override
   void onInit() {
     super.onInit();
-    loadStorage();
-  }
-
-  void loadStorage() async {
-    final storageAuth = await getStorage<LoginRespon>();
-    if(storageAuth.data?.loginUserId != null){
-      debugPrint('Email ${storageAuth.data!.email!}');
-      Get.offAllNamed(Konstan.rute_home);
-    }else{
-      debugPrint('Email tidak ada' );
-    }
   }
 
   void showHidePassword(){

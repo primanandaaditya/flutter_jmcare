@@ -9,6 +9,7 @@ import 'package:jmcare/model/api/SlideshowRespon.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
 import 'package:jmcare/model/api/SmsRespon.dart';
+import 'package:jmcare/model/session/ShowWelcome.dart';
 import '../api/VersiRespon.dart';
 
 class ModelGenerator {
@@ -24,7 +25,8 @@ class ModelGenerator {
       VersiRespon: (json) => VersiRespon.fromJson(json),
       SlideshowRespon: (json) => SlideshowRespon.fromJson(json),
       ProdukRespon: (json) => ProdukRespon.fromJson(json),
-      PromoRespon: (json) => PromoRespon.fromJson(json)
+      PromoRespon: (json) => PromoRespon.fromJson(json),
+      ShowWelcome: (json) => ShowWelcome.fromJson(json)
     };
   }
 

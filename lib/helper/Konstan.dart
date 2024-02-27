@@ -11,6 +11,7 @@ class Konstan {
   static const String rute_verifikasi_otp = '/verifikasiotp';
   static const String rute_password_baru = '/passwordbaru';
   static const String rute_detail_slide = '/detailslide';
+  static const String rute_welcome = '/welcome';
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_is_login = 'is_login';
