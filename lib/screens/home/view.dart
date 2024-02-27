@@ -62,12 +62,13 @@ class HomeScreen extends StatelessWidget {
                             children: [
                               Komponen.getLogoPutih(),
                               const Padding(padding: EdgeInsets.only(left: 10)),
-                              Obx(() => logic.sdhLogin.value ? InkWell(
-                                  onTap: (){
-                                    debugPrint("aaa");
-                                  },
-                                  child: Container()
-                              )
+                              Obx(() =>
+                                logic.sdhLogin.value ? InkWell(
+                                    onTap: (){
+                                      debugPrint("aaa");
+                                    },
+                                    child: Container()
+                                )
                                   : Container(),),
 
                               const Padding(padding: EdgeInsets.only(right: 30)),
@@ -81,32 +82,63 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               children: [
 
-                                Obx(() => logic.is_loading.value ?
-                                Komponen.getLoadingWidget()
+                                Obx(() => (logic.is_loading.value || logic.arraySlideshow.value == null) ?
+                                  Komponen.getLoadingWidget()
                                     :
-                                SizedBox(
-                                  height: 300,
-                                  child: CarouselSlider(
-                                      carouselController: state.carouselController,
-                                      options: CarouselOptions(
-                                          autoPlay: true,
-                                          viewportFraction: 1.0,
-                                          enlargeCenterPage: false,
-                                          autoPlayInterval: const Duration(seconds: 5),
-                                          height: double.infinity,
-                                          onPageChanged: (index,reason){
-                                            // context.read<IndicatorProvider>().commit(index);
-                                          }
+                                  Stack(
+                                    children: [
+                                      SizedBox(
+                                        height: 300,
+                                        child: CarouselSlider(
+                                            carouselController: state.carouselController,
+                                            options: CarouselOptions(
+                                                autoPlay: true,
+                                                viewportFraction: 1.0,
+                                                enlargeCenterPage: false,
+                                                autoPlayInterval: const Duration(seconds: 5),
+                                                height: double.infinity,
+                                                onPageChanged: (index,reason){
+                                                  logic.setIndeksCarousel(index);
+                                                }
+                                            ),
+                                            items: logic.konversi(logic.arraySlideshow.value)
+                                        ),
                                       ),
-                                      items: logic.konversi(logic.arraySlideshow.value)
-                                  ),
-                                ),),
 
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: logic.konversi(logic.arraySlideshow.value).asMap().entries.map((entry) {
+
+                                            return GestureDetector(
+                                              onTap: () {
+                                                logic.state.carouselController!.animateToPage(entry.key);
+                                              },
+                                              child: Container(
+                                                width: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
+                                                height: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
+                                                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: (Theme.of(context).brightness == Brightness.dark
+                                                        ? Colors.white
+                                                        : Warna.hijau
+                                                    ).withOpacity(logic.indeksCarousel.value == entry.key ? 0.9 : 0.4)
+                                                ),
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ),
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
 
                                 //jika belum login munculkan link untuk login/register
-                                Obx(() => logic.sdhLogin.value ? Container() : Komponen.linkMasukOrRegister(context), ),
+                                Obx(() => logic.sdhLogin.value ? Container() : Komponen.linkMasukOrRegister(context) ),
 
                                 const Padding(padding: EdgeInsets.only(top: 20)),
 
@@ -118,7 +150,12 @@ class HomeScreen extends StatelessWidget {
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
 
-                                Obx(() => logic.is_loading.value ? LinearProgressIndicator() : Komponen.getProdukListView(logic.arrayProduk.value),),
+                                Obx(
+                                      () =>
+                                      logic.is_loading.value || logic.arrayProduk.value == null
+                                          ? Komponen.getLoadingWidget()
+                                          : Komponen.getProdukListView(logic.arrayProduk.value),
+                                ),
 
                                 const Padding(padding: EdgeInsets.only(top: 30)),
 
@@ -126,7 +163,11 @@ class HomeScreen extends StatelessWidget {
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
 
-                                Obx(() => logic.is_loading.value ? LinearProgressIndicator() : Komponen.getPromoListView(logic.arrayPromo.value),),
+                                Obx(
+                                      () => logic.is_loading.value || logic.arrayPromo.value == null
+                                          ? Komponen.getLoadingWidget()
+                                          : Komponen.getPromoListView(logic.arrayPromo.value)
+                                ),
 
                                 const Padding(padding: EdgeInsets.only(top: 20)),
                               ],

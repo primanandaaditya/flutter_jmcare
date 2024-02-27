@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
+import 'package:jmcare/screens/detailslide/view.dart';
 import 'package:jmcare/screens/home/view.dart';
 import 'package:jmcare/screens/login/view.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_pilih_metode_reset_password, page: () => const PilihMetodeResetPasswordScreen()),
         GetPage(name: Konstan.rute_reset_password_webview, page: () => const ResetPasswordWebView()),
         GetPage(name: Konstan.rute_verifikasi_otp, page: () => const VerifikasiotpScreen()),
-        GetPage(name: Konstan.rute_password_baru, page: () => const PasswordbaruScreen())
+        GetPage(name: Konstan.rute_password_baru, page: () => const PasswordbaruScreen()),
+        GetPage(name: Konstan.rute_detail_slide, page: () => DetailslideScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(

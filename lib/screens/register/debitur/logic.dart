@@ -50,10 +50,9 @@ class RegisterDebiturLogic extends BaseRegisterLogic{
       is_loading.value = false;
 
       if (baseRespon is BaseError || baseRespon?.code == Konstan.tag_100){
-        Fungsi.showSnack(context, Konstan.tag_error, baseRespon!.message!, 2);
-        debugPrint('Login gagal!');
+        Fungsi.errorToast(baseRespon!.message!);
       }else if (baseRespon?.code == Konstan.tag_200){
-        Fungsi.showSnack(context, Konstan.tag_sukses, "Register berhasil, silakan login", 2);
+        Fungsi.suksesToast("Register berhasil, silakan login");
         Get.offAllNamed(Konstan.rute_login);
       }
     }

@@ -10,6 +10,7 @@ class Konstan {
   static const String rute_reset_password_webview = '/resetpasswordwebview';
   static const String rute_verifikasi_otp = '/verifikasiotp';
   static const String rute_password_baru = '/passwordbaru';
+  static const String rute_detail_slide = '/detailslide';
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_is_login = 'is_login';
@@ -32,5 +33,6 @@ class Konstan {
   static const String tag_100 = '100';
   static const String tag_error = "ERROR";
   static const String tag_sukses = "BERHASIL";
+  static const String tag_warning = "PERINGATAN";
 
 }

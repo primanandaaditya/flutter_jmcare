@@ -50,7 +50,7 @@ class LoginLogic extends BaseLogic{
       is_loading.value = false;
 
       if (loginRespon is LoginError || loginRespon?.code == Konstan.tag_100){
-        Fungsi.showSnack(context, Konstan.tag_error, "Login gagal", 2);
+        Fungsi.errorToast("Login gagal! Periksa email/password Anda.");
         debugPrint('Login gagal!');
       }else if (loginRespon?.code == Konstan.tag_200){
         baseSaveStorage<LoginRespon>(loginRespon);

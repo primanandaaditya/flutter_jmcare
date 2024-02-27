@@ -4,11 +4,53 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:jmcare/helper/Konstan.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class Fungsi{
 
+
+  static warningToast(String message){
+    Get.snackbar(
+        Konstan.tag_warning,
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: Colors.teal,
+        icon: const Icon(Icons.warning_amber, color: Colors.white,),
+        duration: const Duration(seconds: 3),
+        forwardAnimationCurve: Curves.bounceInOut
+    );
+  }
+
+  static suksesToast(String message){
+    Get.snackbar(
+        Konstan.tag_sukses,
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        colorText: Colors.white,
+        backgroundColor: Colors.green,
+        icon: const Icon(Icons.thumb_up_off_alt, color: Colors.white,),
+        duration: const Duration(seconds: 3),
+        forwardAnimationCurve: Curves.bounceInOut
+    );
+  }
+
+  static errorToast(String message){
+    Get.snackbar(
+        Konstan.tag_error,
+        message,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: Colors.white,
+      backgroundColor: Colors.red,
+      icon: const Icon(Icons.error_outline, color: Colors.white,),
+      duration: const Duration(seconds: 4),
+      forwardAnimationCurve: Curves.bounceInOut
+    );
+  }
+  
   static String generateOTP(int length){
     const ch = '0123456789';
     Random r = Random();
@@ -82,7 +124,7 @@ class Fungsi{
   }
 
   static toastBelumLogin(BuildContext context){
-    showSnack(context, "Silakan login terlebih dahulu", "OK", 2);
+    warningToast("Silakan login terlebih dahulu!");
   }
 
   static Future<void> cekFingerprint(BuildContext context) async {
@@ -105,10 +147,10 @@ class Fungsi{
           if (didAuthenticate){
             Navigator.popAndPushNamed(context, '/home');
           }else{
-            Fungsi.showSnack(context, "Silakan memasukkan PIN", "OK", 2);
+            warningToast("Silakan memasukkan PIN");
           }
         } on PlatformException catch (e) {
-          Fungsi.showSnack(context, e.message.toString(), "OK", 1);
+          errorToast(e.message.toString());
         }
       }else{
         debugPrint("not available bio");
@@ -182,23 +224,5 @@ class Fungsi{
     return formatter.format(str);
   }
 
-  static showSnack(BuildContext context, String konten, String label, int durasiDetik ){
-    if (label.length >= 30){
-      label=label.substring(0,30);
-    }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:  Text(konten),
-      duration: Duration(seconds: durasiDetik ),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      action: SnackBarAction(
-        label: label,
-        onPressed: () {
 
-        },
-      ),
-    ));
-  }
 }

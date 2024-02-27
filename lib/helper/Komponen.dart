@@ -4,6 +4,7 @@ import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/helper/Warna.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
+import 'package:get/get.dart';
 
 class Komponen{
 
@@ -78,7 +79,7 @@ class Komponen{
       leading: IconButton(
         icon: const Icon(Icons.keyboard_double_arrow_left),
         onPressed: (){
-          Navigator.pop(context);
+          Get.back();
         },
       ),
       title: Text(title, textAlign: TextAlign.center,),
@@ -338,7 +339,7 @@ class Komponen{
       children: [
         TextButton(
             onPressed: (){
-              Navigator.popAndPushNamed(context, "/login");
+              Get.offAllNamed(Konstan.rute_login);
             },
             child: const Text(
               "Masuk",
@@ -348,7 +349,7 @@ class Komponen{
         const Text(" atau "),
         TextButton(
             onPressed: (){
-              Navigator.popAndPushNamed(context, "/register");
+              Get.offAllNamed(Konstan.rute_pilih_register);
             },
             child: const Text(
               "Register",
@@ -429,95 +430,98 @@ class Komponen{
     );
   }
 
-  static Widget getProdukListView(ProdukRespon produkRespon){
-
-
+  static Widget getProdukListView(
+      ProdukRespon produkRespon
+      ){
     return SizedBox(
-        height: 170,
+        height: 200,
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: produkRespon.data!.length!,
+          itemCount: produkRespon.data == null ? 0 : produkRespon.data!.length,
           itemBuilder: (context,index){
-            return getBoxPromo(
+            return InkWell(
+              onTap: () => Get.toNamed(Konstan.rute_detail_slide, arguments: {'detail': produkRespon.data![index].descriptionId}),
+              child: getBoxPromo(
                 produkRespon!.data![index].imgUrl2!,
                 produkRespon.data![index].nameId!,
                 produkRespon.data![index].descriptionId!,
+              )
             );
           },
         )
     );
   }
 
-  static Widget getBoxPromo(String imageUrl, String title, String descriptionID){
+  static Widget getBoxPromo(
+      String imageUrl,
+      String title,
+      String descriptionID
+      ){
     return SizedBox(
-        height: 170,
+        height: 200,
         width: 150,
-        child: InkWell(
-          onTap: (){
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => DetailScreen(descriptionID)),
-            // );
-          },
-          child: Card(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                  child:  Image.network(
-                    imageUrl,
-                    height: 130,
-                    fit: BoxFit.fill,
-                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return SizedBox(
-                          height: 130,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          )
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(
-                    height: 20,
-                    child: Center(
-                        child:Text(
-                          title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12
+        child: Card(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))
+          ),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                child:  Image.network(
+                  imageUrl,
+                  height: 130,
+                  fit: BoxFit.fill,
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return SizedBox(
+                        height: 130,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                                : null,
                           ),
                         )
-                    ))
-              ],
-            ),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                  height: 40,
+                  child: Center(
+                      child:Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12
+                        ),
+                      )
+                  ))
+            ],
           ),
-        )
+        ),
     );
   }
 
   static Widget getPromoListView(PromoRespon promoRespon){
     return SizedBox(
-        height: 170,
+        height: 200,
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: promoRespon.data!.length,
+          itemCount: promoRespon.data == null ? 0 : promoRespon.data!.length,
           itemBuilder: (context,index){
-            return getBoxPromo(
-              promoRespon!.data![index].imgUrl!,
-              promoRespon.data![index].titleId!,
-              promoRespon.data![index].descriptionId!,
+            return InkWell(
+                onTap: () => Get.toNamed(Konstan.rute_detail_slide, arguments: {'detail': promoRespon.data![index].descriptionId}),
+                child: getBoxPromo(
+                  promoRespon.data![index].imgUrl!,
+                  promoRespon.data![index].titleId!,
+                  promoRespon.data![index].descriptionId!,
+                )
             );
           },
         )
