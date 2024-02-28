@@ -27,6 +27,11 @@ class Konstan {
   static const String tag_tempat_lahir = 'tempat_lahir';
   static const String tag_tgl_lahir = 'tgl_lahir';
 
+  static const String tag_bronze = "bronze";
+  static const String tag_platinum = "platinum";
+  static const String tag_silver = "silver";
+  static const String tag_gold = "gold";
+
   static const String tag_merchant_key = 'aDzJN3X2d3eJEkc';
   static const String tagrequired = 'Wajib diisi';
 

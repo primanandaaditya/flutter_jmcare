@@ -12,6 +12,24 @@ import 'package:get/get.dart';
 class Fungsi{
 
 
+  static String splitNamaUser(String namaUser){
+    String hasil = "";
+    var baru = namaUser.split(' ');
+    if (baru.isEmpty){
+      hasil = namaUser;
+    }else{
+      if (baru.length == 1){
+        hasil = namaUser;
+      }else{
+        String namaDepan = baru.first;
+        String namaBelakang = baru.last;
+        namaBelakang = namaBelakang.substring(0,1);
+        hasil = "$namaDepan $namaBelakang";
+      }
+    }
+    return hasil;
+  }
+
   static warningToast(String message){
     Get.snackbar(
         Konstan.tag_warning,

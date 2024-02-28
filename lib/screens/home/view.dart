@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
 
               child: Stack(
                 children: [
+
                   Container(
                     height: 100,
                     decoration: const BoxDecoration(
@@ -55,27 +56,52 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
                     child: Column(
                       children: [
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
 
-                            children: [
-                              Komponen.getLogoPutih(),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Obx(() =>
-                                logic.sdhLogin.value ? InkWell(
-                                    onTap: (){
-                                      debugPrint("aaa");
-                                    },
-                                    child: Container()
-                                )
-                                  : Container(),),
+                        Row(
+                          children: [
+                            Komponen.getLogoPutih(),
+                            const Spacer(),
+                            Obx(() =>
+                              logic.sdhLogin.value ?
 
-                              const Padding(padding: EdgeInsets.only(right: 30)),
-                            ],
-                          ),
+                              //kalau sudah login, tampilkan loading grade
+                              logic.loading_grade.value
+                                  ? const CircularProgressIndicator(color: Colors.white,)
+                                  : InkWell(
+                                      onTap: (){
+                                        debugPrint("aaa");
+                                      },
+                                      child: Row(
+                                        children: [
+                                          logic.icon_jenis_member.value == ''
+                                              ? const Icon(
+                                                Icons.supervised_user_circle,
+                                              color: Colors.white,
+                                              size: 30,
+                                            )
+                                          : Image.asset(logic.icon_jenis_member.value, height: 30, width: 30,),
+                                          const Padding(padding: EdgeInsets.only(left: 4)),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(logic.nama_user.value, style: const TextStyle(color: Colors.white, fontSize: 12),),
+                                              Row(
+                                                children:  [
+                                                  Text(logic.point.value.toString(), style: const
+                                                  TextStyle(color: Colors.white, fontSize: 10),),
+                                                  const Text(" poin", style: TextStyle(color: Colors.white, fontSize: 8),),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          const Padding(padding: EdgeInsets.only(left: 25)),
+                                        ],
+                                      )
+                              )
+                              //kalau belum login tampilkan Container kosongan
+                                : Container(),),
+                          ],
                         ),
-
 
                         Expanded(
                             child: ListView(

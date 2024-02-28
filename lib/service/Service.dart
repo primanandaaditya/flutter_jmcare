@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
+import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
@@ -32,7 +33,8 @@ class Service {
       SmsService: SmsService.instance,
       ResetpasswordService: ResetpasswordService.instance,
       VersiService: VersiService.instance,
-      SlideService: SlideService.instance
+      SlideService: SlideService.instance,
+      GradeService: GradeService.instance
     };
   }
 
