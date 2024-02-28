@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                                   ? const CircularProgressIndicator(color: Colors.white,)
                                   : InkWell(
                                       onTap: (){
-                                        logic.gotoHistoripoin();
+                                        logic.clickBadgeUser();
                                       },
                                       child: Row(
                                         children: [

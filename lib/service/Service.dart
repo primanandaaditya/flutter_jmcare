@@ -4,6 +4,7 @@ import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/HistoripoinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
+import 'package:jmcare/service/PaginationuserService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'package:jmcare/service/ResetpasswordService.dart';
@@ -36,7 +37,8 @@ class Service {
       VersiService: VersiService.instance,
       SlideService: SlideService.instance,
       GradeService: GradeService.instance,
-      HistoripoinService: HistoripoinService.instance
+      HistoripoinService: HistoripoinService.instance,
+      PaginationuserService: PaginationuserService.instance
     };
   }
 

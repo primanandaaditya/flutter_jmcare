@@ -5,6 +5,7 @@ import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/HistoripoinRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
+import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:jmcare/model/api/SlideshowRespon.dart';
@@ -30,7 +31,8 @@ class ModelGenerator {
       PromoRespon: (json) => PromoRespon.fromJson(json),
       ShowWelcome: (json) => ShowWelcome.fromJson(json),
       GradeRespon: (json) => GradeRespon.fromJson(json),
-      HistoripoinRespon : (json) => HistoripoinRespon.fromJson(json)
+      HistoripoinRespon : (json) => HistoripoinRespon.fromJson(json),
+      PaginationuserRespon : (json) => PaginationuserRespon.fromJson(json)
     };
   }
 

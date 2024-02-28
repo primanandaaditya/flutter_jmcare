@@ -45,6 +45,18 @@ class HomeLogic extends BaseLogic{
   void gotoHistoripoin(){
     Get.toNamed(Konstan.rute_histori_poin);
   }
+  void gotoPaginationuser(){
+    Get.toNamed(Konstan.rute_pagination_user);
+  }
+  void clickBadgeUser() async {
+    final loginStorage = await getStorage<LoginRespon>();
+    bool is_admin = loginStorage.data!.isAdmin! == "1";
+    if (is_admin){
+      gotoPaginationuser();
+    }else{
+      gotoHistoripoin();
+    }
+  }
 
   void getGrade() async {
     loading_grade.value = true;

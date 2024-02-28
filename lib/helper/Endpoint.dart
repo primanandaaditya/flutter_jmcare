@@ -42,6 +42,7 @@ class Endpoint{
   static const String TAG_ANTRIAN_TOLAK_KUISIONER          = "tolakKuisioner.json";
 
   static const String TAG_LIST_USER                = "getlistuser.json";
+  static const String TAG_PAGINATION_USER          = "paginationuser.json";
   static const String TAG_SEARCH_USER              = "searchuser.json";
   static const String TAG_AGREEMENT_CARD           = "getlistagrmntcard.json";
   static const String TAG_GET_LIST_AGREEMENT_KTP   = "getlistagrmntktp.json";

@@ -8,6 +8,7 @@ import 'package:jmcare/screens/home/view.dart';
 import 'package:jmcare/screens/login/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jmcare/screens/paginationuser/view.dart';
 import 'package:jmcare/screens/pilihregister/view.dart';
 import 'package:jmcare/screens/register/debitur/view.dart';
 import 'package:jmcare/screens/register/nondebitur/view.dart';
@@ -54,7 +55,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_password_baru, page: () => const PasswordbaruScreen()),
         GetPage(name: Konstan.rute_detail_slide, page: () => const DetailslideScreen()),
         GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen()),
-        GetPage(name: Konstan.rute_histori_poin, page: () => const HistoripoinScreen())
+        GetPage(name: Konstan.rute_histori_poin, page: () => const HistoripoinScreen()),
+        GetPage(name: Konstan.rute_pagination_user, page: () => const PaginationuserScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(
