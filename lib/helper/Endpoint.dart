@@ -25,7 +25,7 @@ class Endpoint{
   static const String TAG_RESET_PASSWORD_OTP_BY_EMAIL      = "otpbyemail.json";
   static const String TAG_RESET_PASSWORD_OTP_BY_WA         = "otpbywa.json";
   static const String TAG_RESET_PASSWORD                   = "resetpassword.json";
-  static const String TAG_RIWAYAT_POIN                     = "gethistorypointcustomer/{noKTP}";
+  static const String TAG_RIWAYAT_POIN                     = "gethistorypointcustomer.json";
 
   static const String TAG_ANTRIAN_GET_ANTRIANBYCABANG      = "getAntrianByCabang.json";
   static const String TAG_ANTRIAN_KONFIRMASI_KUISIONER     = "getKonfirmasidanKuisioner.json";

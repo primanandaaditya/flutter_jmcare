@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
+import 'package:jmcare/model/api/HistoripoinRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
@@ -28,7 +29,8 @@ class ModelGenerator {
       ProdukRespon: (json) => ProdukRespon.fromJson(json),
       PromoRespon: (json) => PromoRespon.fromJson(json),
       ShowWelcome: (json) => ShowWelcome.fromJson(json),
-      GradeRespon: (json) => GradeRespon.fromJson(json)
+      GradeRespon: (json) => GradeRespon.fromJson(json),
+      HistoripoinRespon : (json) => HistoripoinRespon.fromJson(json)
     };
   }
 

@@ -547,6 +547,10 @@ class Komponen{
     );
   }
 
+  static Widget getTidakAdaData(){
+    return const Text("Tidak ada data");
+  }
+
   static Widget getLoadingWidget(){
     return Center(
       child: Column(

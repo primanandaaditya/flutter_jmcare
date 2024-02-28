@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/detailslide/view.dart';
+import 'package:jmcare/screens/historipoin/view.dart';
 import 'package:jmcare/screens/home/view.dart';
 import 'package:jmcare/screens/login/view.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_verifikasi_otp, page: () => const VerifikasiotpScreen()),
         GetPage(name: Konstan.rute_password_baru, page: () => const PasswordbaruScreen()),
         GetPage(name: Konstan.rute_detail_slide, page: () => const DetailslideScreen()),
-        GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen())
+        GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen()),
+        GetPage(name: Konstan.rute_histori_poin, page: () => const HistoripoinScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(
