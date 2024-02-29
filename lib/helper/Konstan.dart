@@ -14,6 +14,7 @@ class Konstan {
   static const String rute_welcome = '/welcome';
   static const String rute_histori_poin = '/historipoin';
   static const String rute_pagination_user = '/paginationuser';
+  static const String rute_search_user = '/searchuser';
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_is_login = 'is_login';

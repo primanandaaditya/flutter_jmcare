@@ -63,7 +63,6 @@ class HomeScreen extends StatelessWidget {
                             const Spacer(),
                             Obx(() =>
                               logic.sdhLogin.value ?
-
                               //kalau sudah login, tampilkan loading grade
                               logic.loading_grade.value
                                   ? const CircularProgressIndicator(color: Colors.white,)
@@ -89,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                                                 children:  [
                                                   Text(logic.point.value.toString(), style: const
                                                   TextStyle(color: Colors.white, fontSize: 10),),
-                                                  const Text(" poin", style: TextStyle(color: Colors.white, fontSize: 8),),
+                                                  const Text(" point", style: TextStyle(color: Colors.white, fontSize: 8),),
                                                 ],
                                               ),
                                             ],

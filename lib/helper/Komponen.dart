@@ -61,7 +61,10 @@ class Komponen{
     );
   }
 
-  static AppBar getAppBar(BuildContext context, String title){
+  static AppBar getAppBar(
+      BuildContext context,
+      String title
+      ){
     return AppBar(
       centerTitle: true,
       flexibleSpace: Container(
@@ -77,7 +80,7 @@ class Komponen{
         ),
       ),
       leading: IconButton(
-        icon: const Icon(Icons.keyboard_double_arrow_left),
+        icon: const Icon(Icons.arrow_back_outlined),
         onPressed: (){
           Get.back();
         },

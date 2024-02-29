@@ -8,6 +8,7 @@ import 'package:jmcare/service/PaginationuserService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'package:jmcare/service/ResetpasswordService.dart';
+import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/SlideService.dart';
 import 'package:jmcare/service/SmsService.dart';
 import 'package:jmcare/service/VersiService.dart';
@@ -38,7 +39,8 @@ class Service {
       SlideService: SlideService.instance,
       GradeService: GradeService.instance,
       HistoripoinService: HistoripoinService.instance,
-      PaginationuserService: PaginationuserService.instance
+      PaginationuserService: PaginationuserService.instance,
+      SearchuserService: SearchuserService.instance
     };
   }
 

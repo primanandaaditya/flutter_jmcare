@@ -17,9 +17,11 @@ import 'package:jmcare/screens/resetpassword/passwordbaru/view.dart';
 import 'package:jmcare/screens/resetpassword/pilihmetode/view.dart';
 import 'package:jmcare/screens/resetpassword/verifikasiotp/view.dart';
 import 'package:jmcare/screens/resetpassword/webview/view.dart';
+import 'package:jmcare/screens/searchuser/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
 import 'package:jmcare/service/BaseService.dart';
+import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/Service.dart';
 
 void main() {
@@ -56,7 +58,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_detail_slide, page: () => const DetailslideScreen()),
         GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen()),
         GetPage(name: Konstan.rute_histori_poin, page: () => const HistoripoinScreen()),
-        GetPage(name: Konstan.rute_pagination_user, page: () => const PaginationuserScreen())
+        GetPage(name: Konstan.rute_pagination_user, page: () => const PaginationuserScreen()),
+        GetPage(name: Konstan.rute_search_user, page: () => const SearchuserScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(
