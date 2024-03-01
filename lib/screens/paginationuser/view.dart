@@ -26,7 +26,7 @@ class PaginationuserScreen extends StatelessWidget {
                               controller: logic.state.tecSearch,
                               decoration: InputDecoration(
                                   suffixIcon: IconButton(
-                                    icon: Icon(Icons.search),
+                                    icon: const Icon(Icons.search),
                                     onPressed: () => logic.search(),
                                   )
                               ),

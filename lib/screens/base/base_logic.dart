@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
+import 'package:jmcare/service/DeleteakunService.dart';
+import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../helper/Komponen.dart';
@@ -171,8 +174,6 @@ class BaseLogic extends GetxController{
       } else {
         gambar = "";
       }
-
-      debugPrint('gambar ' + gambar);
     }
   }
 

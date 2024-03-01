@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
+import 'package:jmcare/service/DeleteakunService.dart';
 import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/HistoripoinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
@@ -40,7 +42,8 @@ class Service {
       GradeService: GradeService.instance,
       HistoripoinService: HistoripoinService.instance,
       PaginationuserService: PaginationuserService.instance,
-      SearchuserService: SearchuserService.instance
+      SearchuserService: SearchuserService.instance,
+      DeleteakunService: DeleteakunService.instance
     };
   }
 

@@ -91,7 +91,8 @@ class Komponen{
 
   static Widget getMainDrawer(
       BuildContext context,
-      Function onLogout
+      Function onLogout,
+      Function onDeleteAccount
       ){
     return Drawer(
       shape: const RoundedRectangleBorder(
@@ -133,6 +134,13 @@ class Komponen{
               onLogout();
             },
           ),
+          ListTile(
+            tileColor: Colors.white,
+            title: const Text('Hapus akun'),
+            onTap: () {
+              onDeleteAccount();
+            },
+          ),
 
           Container(
             color: Colors.white,
@@ -150,24 +158,15 @@ class Komponen{
       BuildContext context,
       String urlImage,
       String titleMenu,
-      bool sdhLogin,
-      Widget bottomModal){
+      Widget bottomModal,
+      Function klik
+      ){
 
     return Expanded(
         flex: 1,
         child: InkWell(
             onTap: (){
-              if (sdhLogin){
-                showModalBottomSheet<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return bottomModal;
-                    },
-                    backgroundColor: Colors.transparent
-                );
-              }else{
-                Fungsi.toastBelumLogin(context);
-              }
+              klik();
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -189,7 +188,6 @@ class Komponen{
               ],
             )
         )
-
     );
   }
 

@@ -2,12 +2,9 @@ import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
-import 'package:jmcare/screens/paginationuser/state.dart';
 import 'package:jmcare/screens/searchuser/state.dart';
-import 'package:jmcare/service/PaginationuserService.dart';
 import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/Service.dart';
-import 'package:flutter/material.dart';
 
 class SearchuserLogic extends BaseLogic{
   final SearchuserState state = SearchuserState();

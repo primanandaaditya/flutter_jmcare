@@ -1,8 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
@@ -15,6 +17,7 @@ import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/service/VersiService.dart';
 import 'package:jmcare/storage/storage.dart';
+import '../../service/DeleteakunService.dart';
 import '../../service/SlideService.dart';
 
 class HomeLogic extends BaseLogic{
@@ -27,7 +30,6 @@ class HomeLogic extends BaseLogic{
   var loading_grade = false.obs;
   var nama_user = "".obs;
   var icon_jenis_member = "".obs;
-
   var arraySlideshow = SlideshowRespon().obs;
   var arrayProduk = ProdukRespon().obs;
   var arrayPromo = PromoRespon().obs;
@@ -42,6 +44,71 @@ class HomeLogic extends BaseLogic{
     getGrade();
   }
 
+
+  Future<bool> deleteAkun() async {
+    final authStorage = await getStorage<LoginRespon>();
+    var id = authStorage.data!.loginUserId;
+    final baseRespon = await getService<DeleteakunService>()?.deleteAkun(id!);
+    if (baseRespon is BaseError){
+      return false;
+    }else{
+      if (baseRespon?.code == "200" || baseRespon?.message == 'Success'){
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
+
+  Future<bool?> dialogDeleteAkun(
+      BuildContext context
+      ) async {
+    return showDialog<bool?>(
+      context: context,
+      barrierDismissible: true, // user must tap button
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Hapus akun'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Apakah Anda yakin akan menghapus akun Anda?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Tidak'),
+              onPressed: ()  {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: const Text('Ya'),
+              onPressed: () async {
+                //hit api
+                final hasil = await deleteAkun();
+                if (hasil == true){
+                  Fungsi.suksesToast("Akun berhasil dihapus!");
+                  //clear session
+                  clearSP();
+                  //restart aplikasi ke splash screen
+                  Get.offNamedUntil(Konstan.rute_splash, (route) => false);
+                }else{
+                  Fungsi.errorToast("Akun gagal dihapus!");
+                  Navigator.of(context).pop(true);
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void hapusAkunPermanen(){
+    deleteAkun();
+  }
   void gotoHistoripoin(){
     Get.toNamed(Konstan.rute_histori_poin);
   }

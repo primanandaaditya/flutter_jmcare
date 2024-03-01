@@ -24,7 +24,11 @@ class HomeScreen extends StatelessWidget {
             endDrawer:
                 Obx(
                       () => logic.sdhLogin.value ?
-                      Komponen.getMainDrawer(context, () => logic.doLogout(context))
+                      Komponen.getMainDrawer(
+                              context,
+                              () => logic.doLogout(context),
+                              () => logic.dialogDeleteAkun(context)
+                      )
                           :
                       Container(),),
 
@@ -168,6 +172,44 @@ class HomeScreen extends StatelessWidget {
                                 const Padding(padding: EdgeInsets.only(top: 20)),
 
                                 Komponen.teksJudul("Menu Favorit"),
+
+                                const Padding(padding: EdgeInsets.only(top: 10)),
+
+                                Row(
+                                  children: [
+
+                                    const Spacer(),
+
+                                    Komponen.menuUtama(
+                                        context,
+                                        "assets/images/selfservice.png",
+                                        "Self Service",
+                                        Komponen.getBottomSheet(
+                                            context,
+                                            "Self Service",
+                                            200,
+                                            Komponen.getChildren_SelfService(context)
+                                        ),
+                                        () => debugPrint('')
+                                    ),
+
+                                    const Spacer(),
+
+                                    Komponen.menuUtama(
+                                        context,
+                                        "assets/images/mservice.png",
+                                        "M-Service",
+                                        Komponen.getBottomSheet(
+                                            context,
+                                            "M-Service",
+                                            200,
+                                            Komponen.getChildren_MService(context)
+                                        ),
+                                            () => debugPrint('')
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
 
                                 const Padding(padding: EdgeInsets.only(top: 30)),
 
