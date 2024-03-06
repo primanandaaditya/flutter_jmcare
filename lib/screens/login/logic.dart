@@ -38,11 +38,11 @@ class LoginLogic extends BaseLogic{
       is_loading.value = false;
 
       if (loginRespon is LoginError || loginRespon?.code == Konstan.tag_100){
-        Fungsi.errorToast("Login gagal! Periksa email/password Anda.");
+        Fungsi.errorToast("Login gagal! Email/password salah, atau akun sudah dihapus!");
         debugPrint('Login gagal!');
       }else if (loginRespon?.code == Konstan.tag_200){
         baseSaveStorage<LoginRespon>(loginRespon);
-        Get.offAllNamed(Konstan.rute_home);
+        Get.offAllNamed(Konstan.rute_register_pin);
       }
     }
   }

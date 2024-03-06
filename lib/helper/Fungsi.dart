@@ -141,8 +141,8 @@ class Fungsi{
     }
   }
 
-  static toastBelumLogin(BuildContext context){
-    warningToast("Silakan login terlebih dahulu!");
+  static toastBelumLogin(){
+    warningToast(Konstan.tag_belum_login);
   }
 
   static Future<void> cekFingerprint(BuildContext context) async {

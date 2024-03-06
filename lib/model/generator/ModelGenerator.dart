@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/model/api/CabangRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/HistoripoinRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
@@ -9,6 +10,7 @@ import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:jmcare/model/api/SlideshowRespon.dart';
+import 'package:jmcare/model/session/RegisterpinModel.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
 import 'package:jmcare/model/api/SmsRespon.dart';
@@ -32,7 +34,9 @@ class ModelGenerator {
       ShowWelcome: (json) => ShowWelcome.fromJson(json),
       GradeRespon: (json) => GradeRespon.fromJson(json),
       HistoripoinRespon : (json) => HistoripoinRespon.fromJson(json),
-      PaginationuserRespon : (json) => PaginationuserRespon.fromJson(json)
+      PaginationuserRespon : (json) => PaginationuserRespon.fromJson(json),
+      CabangRespon : (json) => CabangRespon.fromJson(json),
+      RegisterpinModel: (json) => RegisterpinModel.fromJson(json)
     };
   }
 

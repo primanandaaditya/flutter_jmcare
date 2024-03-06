@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
+import 'package:jmcare/helper/Komponen.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
@@ -44,6 +45,56 @@ class HomeLogic extends BaseLogic{
     getGrade();
   }
 
+  void klikMenuSelfService(BuildContext context) async {
+    final authStorage = await getStorage<LoginRespon>();
+    if (authStorage.data == null){
+      Fungsi.toastBelumLogin();
+    }else{
+      Get.bottomSheet(
+        FractionallySizedBox(
+          widthFactor: 0.9,
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Colors.black12
+                ),
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    topLeft: Radius.circular(30)
+                )
+            ),
+            padding: EdgeInsets.all(10),
+            child: Wrap(
+              children: [
+                Center(
+                  child:  FractionallySizedBox(
+                    widthFactor: 0.4,
+                    child: Container(
+                      height: 2,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.black12
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                ListTile(
+                  leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                  title: Text("Jaringan Kami"),
+                  subtitle: Text("Lihat daftar semua kantor cabang"),
+                  onTap: () => Get.toNamed(Konstan.rute_list_cabang),
+                ),
+              ],
+            ),
+          )
+        )
+
+      );
+    }
+  }
 
   Future<bool> deleteAkun() async {
     final authStorage = await getStorage<LoginRespon>();

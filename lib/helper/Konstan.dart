@@ -15,6 +15,9 @@ class Konstan {
   static const String rute_histori_poin = '/historipoin';
   static const String rute_pagination_user = '/paginationuser';
   static const String rute_search_user = '/searchuser';
+  static const String rute_list_cabang = '/listcabang';
+  static const String rute_register_pin = '/registerpin';
+  static const String rute_auth_pin = '/authpin';
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_is_login = 'is_login';
@@ -43,5 +46,6 @@ class Konstan {
   static const String tag_error = "ERROR";
   static const String tag_sukses = "BERHASIL";
   static const String tag_warning = "PERINGATAN";
+  static const String tag_belum_login = 'Silakan login terlebih dahulu!';
 
 }

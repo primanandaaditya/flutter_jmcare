@@ -184,13 +184,7 @@ class HomeScreen extends StatelessWidget {
                                         context,
                                         "assets/images/selfservice.png",
                                         "Self Service",
-                                        Komponen.getBottomSheet(
-                                            context,
-                                            "Self Service",
-                                            200,
-                                            Komponen.getChildren_SelfService(context)
-                                        ),
-                                        () => debugPrint('')
+                                        () => logic.klikMenuSelfService(context)
                                     ),
 
                                     const Spacer(),
@@ -198,14 +192,7 @@ class HomeScreen extends StatelessWidget {
                                     Komponen.menuUtama(
                                         context,
                                         "assets/images/mservice.png",
-                                        "M-Service",
-                                        Komponen.getBottomSheet(
-                                            context,
-                                            "M-Service",
-                                            200,
-                                            Komponen.getChildren_MService(context)
-                                        ),
-                                            () => debugPrint('')
+                                        "M-Service", () => debugPrint('')
                                     ),
                                     const Spacer(),
                                   ],

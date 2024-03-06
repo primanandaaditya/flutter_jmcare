@@ -158,7 +158,6 @@ class Komponen{
       BuildContext context,
       String urlImage,
       String titleMenu,
-      Widget bottomModal,
       Function klik
       ){
 
@@ -289,10 +288,10 @@ class Komponen{
 
   static Widget getChildren_SelfService(BuildContext context){
     List<Widget> rowAtas = List<Widget>.empty(growable: true);
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/gradecustomer.png", "Topup\nPlafond", "/topupplafond"));
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/redeem.png", "Renewal\nAsuransi", "/renewalasuransi"));
+    // rowAtas.add(const Spacer());
+    // rowAtas.add(subMenu(context, "assets/images/gradecustomer.png", "Topup\nPlafond", "/topupplafond"));
+    // rowAtas.add(const Spacer());
+    // rowAtas.add(subMenu(context, "assets/images/redeem.png", "Renewal\nAsuransi", "/renewalasuransi"));
     rowAtas.add(const Spacer());
     rowAtas.add(subMenu(context, "assets/images/redeem.png", "Jaringan\nKami", "/jaringankami"));
     rowAtas.add(const Spacer());

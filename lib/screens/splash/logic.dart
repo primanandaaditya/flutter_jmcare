@@ -46,12 +46,20 @@ class SplashLogic extends BaseLogic {
     }else{
       final sdhLogin = await sudahLogin();
       if (sdhLogin) {
-        Get.offAllNamed(Konstan.rute_home);
+        //cek sudah register pin atau belum
+        //jika sudah langsung ke Home
+        var sdhRegisterPin = await sudahRegisterPIN();
+        if (sdhRegisterPin){
+          Get.offAllNamed(Konstan.rute_auth_pin);
+        }else{
+          //jika belum register pin, ke screen Register pin
+          Get.offAllNamed(Konstan.rute_register_pin);
+        }
       }else {
+        //belum login, ke screen logon
         Get.offAllNamed(Konstan.rute_login);
       }
     }
   }
-
 
 }

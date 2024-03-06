@@ -6,6 +6,7 @@ import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
+import 'package:jmcare/model/session/RegisterpinModel.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
@@ -18,6 +19,29 @@ import '../../model/api/SlideshowRespon.dart';
 class BaseLogic extends GetxController{
 
   var is_loading = false.obs;
+
+  Future<bool> sudahRegisterPIN() async {
+    final registerPINStorage = await getStorage<RegisterpinModel>();
+    if (registerPINStorage.data == null ){
+      return false;
+    }else{
+      if (registerPINStorage.data!.sudahRegister == false){
+        return false;
+      }else{
+        return true;
+      }
+    }
+  }
+
+  Future<String> getPIN() async{
+    final registerPINstorage = await getStorage<RegisterpinModel>();
+    if (registerPINstorage.data == null){
+      return "";
+    }else{
+      final String pin = registerPINstorage.data!.pin!;
+      return pin;
+    }
+  }
 
   Future<bool> sudahLogin() async {
     final storageAuth = await getStorage<LoginRespon>();

@@ -1,0 +1,50 @@
+import 'package:get/get.dart';
+import 'package:jmcare/helper/Fungsi.dart';
+import 'package:jmcare/helper/Konstan.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/model/api/LoginRespon.dart';
+import 'package:jmcare/screens/base/base_logic.dart';
+import 'package:jmcare/screens/pin/auth/state.dart';
+import 'package:jmcare/service/LupapinService.dart';
+import 'package:jmcare/service/Service.dart';
+import 'package:jmcare/storage/storage.dart';
+
+class AuthpinLogic extends BaseLogic{
+  final AuthpinState state = AuthpinState();
+
+
+  void lupaPIN() async {
+    is_loading.value = true;
+    final authStorage = await getStorage<LoginRespon>();
+    String email = authStorage.data!.email!;
+    final savedPIN = await getPIN();
+
+    final baseRespon = await getService<LupapinService>()?.lupaPIN(email, savedPIN);
+    if (baseRespon is BaseError){
+      Fungsi.errorToast("Gagal mengirimkan PIN!");
+    }else{
+      Fungsi.suksesToast(baseRespon!.message!);
+    }
+    is_loading.value = false;
+  }
+
+  void checkPIN() async{
+
+    if (state.tecPIN!.text.isEmpty){
+      Fungsi.errorToast("PIN harus diisi!");
+      return;
+    }
+    if (state.tecPIN!.text.length < 6){
+      Fungsi.errorToast("PIN minimal 6 angka");
+      return;
+    }
+
+    final String savedPIN = await getPIN();
+    if (savedPIN == state.tecPIN!.text.toString()){
+      Get.offAllNamed(Konstan.rute_home);
+    }else{
+      Fungsi.errorToast("PIN tidak cocok!");
+    }
+
+  }
+}

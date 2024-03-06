@@ -5,11 +5,14 @@ import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/detailslide/view.dart';
 import 'package:jmcare/screens/historipoin/view.dart';
 import 'package:jmcare/screens/home/view.dart';
+import 'package:jmcare/screens/listcabang/view.dart';
 import 'package:jmcare/screens/login/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/screens/paginationuser/view.dart';
 import 'package:jmcare/screens/pilihregister/view.dart';
+import 'package:jmcare/screens/pin/auth/view.dart';
+import 'package:jmcare/screens/pin/register/view.dart';
 import 'package:jmcare/screens/register/debitur/view.dart';
 import 'package:jmcare/screens/register/nondebitur/view.dart';
 import 'package:jmcare/screens/resetpassword/ceknomorhp/view.dart';
@@ -59,7 +62,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_welcome, page: () => const WelcomeScreen()),
         GetPage(name: Konstan.rute_histori_poin, page: () => const HistoripoinScreen()),
         GetPage(name: Konstan.rute_pagination_user, page: () => const PaginationuserScreen()),
-        GetPage(name: Konstan.rute_search_user, page: () => const SearchuserScreen())
+        GetPage(name: Konstan.rute_search_user, page: () => const SearchuserScreen()),
+        GetPage(name: Konstan.rute_list_cabang, page: () => const CabangScreen()),
+        GetPage(name: Konstan.rute_register_pin, page: () => const RegisterpinScreen()),
+        GetPage(name: Konstan.rute_auth_pin, page: () => const AuthpinScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(
