@@ -18,13 +18,11 @@ class AuthpinScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          
           Pinput(
             length: 6,
             controller: state.tecPIN,
           ),
           const Padding(padding: EdgeInsets.only(top: 10)),
-          
           ElevatedButton(
               onPressed: () => logic.checkPIN(),
               child: const Text(
@@ -32,13 +30,14 @@ class AuthpinScreen extends StatelessWidget {
               )
           ),
           const Padding(padding: EdgeInsets.only(top: 10)),
-
           Obx(
                   () => logic.is_loading.value
                       ? Komponen.getLoadingWidget()
-                      :  TextButton(
-                          onPressed: () => logic.lupaPIN(),
-                          child: const Text("Lupa PIN")
+                      : (logic.counter.value > 0 && logic.counter.value <= 30)
+                        ? Text("Menunggu (${logic.counter.value})", textAlign: TextAlign.center,)
+                        : TextButton(
+                            onPressed: () => logic.lupaPIN(),
+                            child: const Text("Lupa PIN")
                   )
           )
         ],

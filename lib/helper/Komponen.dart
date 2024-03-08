@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/helper/Warna.dart';
+import 'package:jmcare/model/api/AgreementcardRespon.dart';
+import 'package:jmcare/model/api/PilihkontrakRespon.dart' as pilihkontrak;
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:get/get.dart';
@@ -186,6 +190,95 @@ class Komponen{
                 )
               ],
             )
+        )
+    );
+  }
+
+  static Widget getCardKontrak(pilihkontrak.Data respon){
+    return Card(
+        elevation: 5.0,
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                  child:  Table(
+                    border: TableBorder.symmetric(outside: BorderSide.none),
+                    columnWidths: const <int, TableColumnWidth>{
+                      0: FlexColumnWidth(),
+                      1: FlexColumnWidth(),
+                    },
+                    defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                    children: <TableRow>[
+                      TableRow(
+                        children: <Widget>[
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: const Text("No. agreement")
+                              )
+                          ),
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.middle,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: Text(" : ${respon.aGRMNTNO}")
+                              )
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: <Widget>[
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: const Text("No. plat")
+                              )
+                          ),
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: Text(" : ${respon.pLATNO}")
+                              )
+                          ),
+                        ],
+                      ),
+                      TableRow(
+                        children: <Widget>[
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: const Text("Merk/tipe")
+                              )
+                          ),
+                          TableCell(
+                              verticalAlignment: TableCellVerticalAlignment.top,
+                              child: Container(
+                                  padding: const EdgeInsets.all(Konstan.tag_padding_cell),
+                                  child: Text(
+                                    " : ${respon.merkType}",
+                                    maxLines: 3,
+                                    softWrap: false,
+                                    overflow: TextOverflow.ellipsis,
+                                  )
+                              )
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+              const Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(Icons.chevron_right)
+              )
+            ],
+          ),
         )
     );
   }
@@ -564,5 +657,191 @@ class Komponen{
       )
     );
   }
+
+  static TableRow getRowSpacer(double tinggi){
+    return TableRow(
+      children: <Widget>[
+        TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: SizedBox(height: tinggi,)
+        ),
+        TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: SizedBox(height: tinggi,)
+        ),
+        TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: SizedBox(height: tinggi,)
+        ),
+      ],
+    );
+  }
+
+  static Widget getWidgetAgreementCard(String judul, String subjudul, String angka){
+
+    Random random = Random();
+    int i = random.nextInt(5);
+    debugPrint(i.toString());
+
+    late Color c;
+    switch(i) {
+      case 0: {
+        c=Colors.green;
+      }
+      break;
+      case 1: {
+        c=Colors.orange;
+      }
+      break;
+      case 2: {
+        c=Colors.red;
+      }
+      break;
+      case 3: {
+        c=Colors.black;
+      }
+      break;
+      case 4: {
+        c=Colors.purple;
+      }
+      break;
+      default: {
+        c=Colors.green;
+      }
+      break;
+    }
+
+    return IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              judul,
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+            Flexible(child: Divider(color: c, thickness: 1.0)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  subjudul,
+                  style: const TextStyle(
+                      fontSize: 10.0
+                  ),
+                ),
+                const Padding(padding: EdgeInsets.only(right: 5)),
+                Text(
+                  angka,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 16.0
+                  ),
+                )
+
+              ],
+            )
+          ],
+        )
+    );
+  }
+
+  static Widget getWidgetHeaderAgreementCard(BuildContext context, AgreementcardRespon respon){
+
+    var header = respon.data!.first;
+    return  Container(
+        padding: const EdgeInsets.all(20),
+        child:   Table(
+
+          columnWidths: const <int, TableColumnWidth>{
+            0: IntrinsicColumnWidth(),
+            1: FixedColumnWidth(10),
+            2: IntrinsicColumnWidth(),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: <TableRow>[
+            TableRow(
+
+              children: <Widget>[
+
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Tanggal kontrak", "", header.dUEDT!),
+                ),
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.top,
+                    child: Container()
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Kantor cabang","", header.oFFICENAME!),
+                ),
+
+              ],
+            ),
+            Komponen.getRowSpacer(20),
+            TableRow(
+              children: <Widget>[
+
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Nomor kontrak", "", header.aGRMNTNO!),
+                ),
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.top,
+                    child: Container()
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Atas nama", "", header.cUSTNAME!),
+                ),
+
+              ],
+            ),
+            Komponen.getRowSpacer(20),
+            TableRow(
+              children: <Widget>[
+
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Denda dibayarkan", Konstan.tag_rupiah, Fungsi.formatNumberDouble(header.lCINSTPAIDAMTAAM!)),
+                ),
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.top,
+                    child: Container()
+                ),
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Hutang biaya", Konstan.tag_rupiah, Fungsi.formatNumberDouble(header.vISITFEE!)),
+                ),
+              ],
+            ),
+            Komponen.getRowSpacer(20),
+            TableRow(
+              children: <Widget>[
+
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.top,
+                  child: Komponen.getWidgetAgreementCard("Sisa denda keterlambatan", Konstan.tag_rupiah, Fungsi.formatNumberDouble( header.oSLCINST!)),
+                ),
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.top,
+                    child: Container()
+                ),
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.top,
+                    child: Container()
+                ),
+
+              ],
+            ),
+          ],
+        )
+    );
+  }
+
 
 }

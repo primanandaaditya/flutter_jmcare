@@ -46,6 +46,7 @@ class Endpoint{
   static const String TAG_SEARCH_USER              = "searchuser.json";
   static const String TAG_AGREEMENT_CARD           = "getlistagrmntcard.json";
   static const String TAG_GET_LIST_AGREEMENT_KTP   = "getlistagrmntktp.json";
+  static const String TAG_PILIH_KONTRAK            = "listAgreementByKTP.json";
   static const String TAG_TOKEN_ENKRIPSI           = "EoXiV1ZgSXdhKC94fsAGOdgMDZZK3VCBjSuP3Phd6s3yD55vDhevxRoyjt2fvm8PADweDeMvaVM9IfqDC5lQO7p38I2toddcwigjlcZeXXEB0O2Pmyo177gmofpvQgGVXGcjXpL3Qqu5AHkYj0ZdsAgWhtqsF0c7Ip388oTWV0rHkUwVvhcCuU70SYTo8KkMBgJKtPYwvKH3PWCh9GWm3JWk5MGrLPdzI0RpMatdG8bL6j9ErFXs0dIgjIlhLOAL6bl7hPhGlKAYFfTcxDLQZWcIyhflwscVhL7Dod8tF8cs0rQTavH5u17MyVzbIJH70EAZHG4XpbWqAZTyJfOQrhYSv4QfQETyjr2";
   static const String TAG_DELETE_AKUN              = "DeleteAccount.json";
 

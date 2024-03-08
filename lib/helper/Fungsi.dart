@@ -12,6 +12,10 @@ import 'package:get/get.dart';
 class Fungsi{
 
 
+  static String formatNumberDouble(double number){
+    return Fungsi.thousandSeparator(int.parse(number.round().toString()));
+  }
+
   static String splitNamaUser(String namaUser){
     String hasil = "";
     var baru = namaUser.split(' ');

@@ -45,6 +45,57 @@ class HomeLogic extends BaseLogic{
     getGrade();
   }
 
+  void klikMenuMService(BuildContext context) async {
+    final authStorage = await getStorage<LoginRespon>();
+    if (authStorage.data == null){
+      Fungsi.toastBelumLogin();
+    }else{
+      Get.bottomSheet(
+          FractionallySizedBox(
+              widthFactor: 0.9,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.black12
+                    ),
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        topLeft: Radius.circular(30)
+                    )
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Wrap(
+                  children: [
+                    Center(
+                      child:  FractionallySizedBox(
+                        widthFactor: 0.4,
+                        child: Container(
+                          height: 2,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black12
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(top: 20)),
+                    ListTile(
+                      leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                      title: const Text("Agreement Card"),
+                      subtitle: const Text("Lihat agreement card berdasarkan nomor kontrak"),
+                      onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak),
+                    ),
+                  ],
+                ),
+              )
+          )
+
+      );
+    }
+  }
+
   void klikMenuSelfService(BuildContext context) async {
     final authStorage = await getStorage<LoginRespon>();
     if (authStorage.data == null){

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:jmcare/model/api/AgreementcardRespon.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/CabangRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
@@ -7,6 +8,7 @@ import 'package:jmcare/model/api/HistoripoinRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
+import 'package:jmcare/model/api/PilihkontrakRespon.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:jmcare/model/api/SlideshowRespon.dart';
@@ -36,7 +38,9 @@ class ModelGenerator {
       HistoripoinRespon : (json) => HistoripoinRespon.fromJson(json),
       PaginationuserRespon : (json) => PaginationuserRespon.fromJson(json),
       CabangRespon : (json) => CabangRespon.fromJson(json),
-      RegisterpinModel: (json) => RegisterpinModel.fromJson(json)
+      RegisterpinModel: (json) => RegisterpinModel.fromJson(json),
+      PilihkontrakRespon: (json) => PilihkontrakRespon.fromJson(json),
+      AgreementcardRespon: (json) => AgreementcardRespon.fromJson(json)
     };
   }
 

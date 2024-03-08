@@ -192,7 +192,7 @@ class HomeScreen extends StatelessWidget {
                                     Komponen.menuUtama(
                                         context,
                                         "assets/images/mservice.png",
-                                        "M-Service", () => debugPrint('')
+                                        "M-Service", () => logic.klikMenuMService(context)
                                     ),
                                     const Spacer(),
                                   ],

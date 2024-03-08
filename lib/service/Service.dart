@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/service/AgreementcardService.dart';
 import 'package:jmcare/service/CabangService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
@@ -9,6 +10,7 @@ import 'package:jmcare/service/LupapinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/PaginationuserService.dart';
+import 'package:jmcare/service/PilihkontrakService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'package:jmcare/service/ResetpasswordService.dart';
@@ -47,7 +49,9 @@ class Service {
       SearchuserService: SearchuserService.instance,
       DeleteakunService: DeleteakunService.instance,
       CabangService: CabangService.instance,
-      LupapinService: LupapinService.instance
+      LupapinService: LupapinService.instance,
+      PilihkontrakService: PilihkontrakService.instance,
+      AgreementcardService: AgreementcardService.instance
     };
   }
 
