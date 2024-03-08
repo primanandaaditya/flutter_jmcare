@@ -85,7 +85,21 @@ class HomeLogic extends BaseLogic{
                       leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
                       title: const Text("Agreement Card"),
                       subtitle: const Text("Lihat agreement card berdasarkan nomor kontrak"),
+                      onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_agreement_card}),
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                      title: const Text("Antrian Online"),
+                      subtitle: const Text("Sistem reservasi nomor antrian loket pendaftaran secara online"),
                       onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak),
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                      title: const Text("E-Polis"),
+                      subtitle: const Text("Unduh epolis Anda dalam format PDF"),
+                      onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_epolis}),
                     ),
                   ],
                 ),
@@ -211,12 +225,15 @@ class HomeLogic extends BaseLogic{
   void hapusAkunPermanen(){
     deleteAkun();
   }
+
   void gotoHistoripoin(){
     Get.toNamed(Konstan.rute_histori_poin);
   }
+
   void gotoPaginationuser(){
     Get.toNamed(Konstan.rute_pagination_user);
   }
+
   void clickBadgeUser() async {
     final loginStorage = await getStorage<LoginRespon>();
     bool is_admin = loginStorage.data!.isAdmin! == "1";

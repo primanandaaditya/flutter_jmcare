@@ -4,6 +4,8 @@ import 'package:jmcare/service/AgreementcardService.dart';
 import 'package:jmcare/service/CabangService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
+import 'package:jmcare/service/DownloadepolisService.dart';
+import 'package:jmcare/service/EpolisService.dart';
 import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/HistoripoinService.dart';
 import 'package:jmcare/service/LupapinService.dart';
@@ -51,7 +53,9 @@ class Service {
       CabangService: CabangService.instance,
       LupapinService: LupapinService.instance,
       PilihkontrakService: PilihkontrakService.instance,
-      AgreementcardService: AgreementcardService.instance
+      AgreementcardService: AgreementcardService.instance,
+      EpolisService: EpolisService.instance,
+      DownloadepolisService: DownloadepolisService.instance
     };
   }
 

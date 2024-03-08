@@ -22,6 +22,7 @@ class PilihkontrakScreen extends StatelessWidget {
                   ? Komponen.getLoadingWidget()
                   : Column(
                       children: [
+
                         TextField(
                           controller: state.tecSearch,
                           decoration: InputDecoration(
@@ -32,7 +33,13 @@ class PilihkontrakScreen extends StatelessWidget {
                             )
                           ),
                         ),
+
+                        logic.is_download.value
+                        ? Komponen.getDownloadWidget()
+                        : Container(),
+
                         const Padding(padding: EdgeInsets.only(top: 10)),
+
                         logic.pilihKontrak.value.data!.isEmpty || logic.pilihKontrak.value.data == null || logic.pilihKontrak.value == null || logic.pilihKontrak.value.data == null
                         ? Center(child: Komponen.getTidakAdaData(),)
                         : Expanded(

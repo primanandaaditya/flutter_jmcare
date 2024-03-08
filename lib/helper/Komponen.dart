@@ -536,7 +536,7 @@ class Komponen{
             return InkWell(
               onTap: () => Get.toNamed(Konstan.rute_detail_slide, arguments: {'detail': produkRespon.data![index].descriptionId}),
               child: getBoxPromo(
-                produkRespon!.data![index].imgUrl2!,
+                produkRespon.data![index].imgUrl2!,
                 produkRespon.data![index].nameId!,
                 produkRespon.data![index].descriptionId!,
               )
@@ -655,6 +655,20 @@ class Komponen{
           Text(Konstan.tag_now_loading, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)
         ],
       )
+    );
+  }
+
+  static Widget getDownloadWidget(){
+    return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            LinearProgressIndicator(),
+            Padding(padding: EdgeInsets.only(top: 10)),
+            Text(Konstan.tag_downloading, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)
+          ],
+        )
     );
   }
 

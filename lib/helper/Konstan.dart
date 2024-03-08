@@ -20,8 +20,10 @@ class Konstan {
   static const String rute_auth_pin = '/authpin';
   static const String rute_pilih_no_kontrak = "/pilihnomorkontrak";
   static const String rute_agreement_card = "/agreementcard";
+  static const String rute_epolis = "/epolis";
 
   static const String tag_now_loading = 'Sedang memproses...';
+  static const String tag_downloading = 'Sedang mengunduh...';
   static const String tag_is_login = 'is_login';
   static const String tag_email = 'email';
   static const String tag_grade = 'grade';
@@ -49,7 +51,6 @@ class Konstan {
   static const String tag_sukses = "BERHASIL";
   static const String tag_warning = "PERINGATAN";
   static const String tag_belum_login = 'Silakan login terlebih dahulu!';
-
 
   static const String tag_email_tdkvalid = "Email harus valid";
   static const String tag_email_harus_diisi = "Email harus diisi";

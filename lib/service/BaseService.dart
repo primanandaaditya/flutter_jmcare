@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
+import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
+import 'package:path_provider/path_provider.dart';
 import '../model/api/models.dart' as models;
 
 class ServiceLoggerInterceptor extends InterceptorsWrapper {
@@ -60,7 +62,6 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
-
   //tambahkan '{"data":' di sebelah kiri respon dan '}' disebelah kanan respon
   //buat model di json to dart berdasarkan tambahan tadi
   Future<T?> getJsonArray<T>(String url, {Map<String, dynamic>? body}) async {
@@ -115,6 +116,31 @@ abstract class BaseService {
         ))
     );
     return models.ModelGenerator.resolve<T>(response.data);
+  }
+
+  Future<void> download(String baseURL, String fileName) async {
+    client.options.baseUrl = baseURL;
+    String path = await _getFilePath(fileName);
+    await _wrapRequest(() => client.download(
+        baseURL,
+        path
+    ));
+  }
+
+  Future<String> _getFilePath(String filename) async {
+    Directory? dir;
+
+    try {
+      if (Platform.isIOS) {
+        dir = await getApplicationDocumentsDirectory(); // for iOS
+      } else {
+        dir = Directory('/storage/emulated/0/Download/');  // for android
+        if (!await dir.exists()) dir = (await getExternalStorageDirectory())!;
+      }
+    } catch (err) {
+      Fungsi.errorToast("Cannot get download folder path $err");
+    }
+    return "${dir?.path}$filename";
   }
 
   _wrapRequest(request, {int retryCount = 3}) async {
