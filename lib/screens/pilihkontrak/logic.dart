@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
-import 'package:jmcare/model/api/DownloadRespon.dart';
 import 'package:jmcare/model/api/EpolisRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/PilihkontrakRespon.dart';
+import 'package:jmcare/model/sqlite/entity/Epolis.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:jmcare/screens/pilihkontrak/state.dart';
 import 'package:jmcare/service/DownloadepolisService.dart';
@@ -15,6 +14,7 @@ import 'package:jmcare/service/PilihkontrakService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../helper/Konstan.dart';
 import 'package:open_file/open_file.dart';
 
@@ -29,8 +29,18 @@ class PilihkontrakLogic extends BaseLogic{
   @override
   void onInit() {
     super.onInit();
+
+    //get argumen dari screen sebelumnya
     state.rute = Get.arguments['detail'];
     getListKontrak();
+    var a = state.databaseHelper?.getEpolis();
+
+    a?.then((value) {
+      state.jmlEpolis = value.length;
+      debugPrint('jml epolis ' + value.length.toString());
+    });
+
+
   }
 
   void detail(int index){
@@ -44,55 +54,69 @@ class PilihkontrakLogic extends BaseLogic{
       //download epolis
       getEpolis(index);
     }
-
   }
 
+
   void getEpolis(int index) async {
-    is_download.value = true;
+    //dialog untuk permission storage
+    // var status = await Permission.storage.request();
+    // var statusManageExternalStorage = await Permission.manageExternalStorage.request();
+    var statusStorage = await Permission.storage.request();
+    // var statusAccessML = await Permission.accessMediaLocation.request();
 
-    final String agreementNo = pilihKontrak.value.data![index].aGRMNTNO!;
-    final authStorage = await getStorage<LoginRespon>();
-    final String login_id = authStorage.data!.loginUserId!;
-
-    //cek apakah sudah pernah download epolis atau belum
-    final epolisStorage = await getStorage<EpolisRespon>();
-    //jika belum pernah download
-    if (epolisStorage.data == null){
-
-      final epolis = await getService<EpolisService>()?.getEpolis(agreementNo, login_id);
-      if (epolis is EpolisError){
-        Fungsi.errorToast("Gagal mendapatkan epolis!");
-      }else{
-        var dt = DateTime.now().millisecondsSinceEpoch;
-        final String suffix = dt.toString();
-        final String namaFile = "Epolis " + suffix + ".pdf";
-        await getService<DownloadepolisService>()!.downloadEpolis(epolis!.fileurl!, namaFile).then(
-                (value) async {
-              Fungsi.suksesToast("File berhasil diunduh di folder Download!");
-              //simpan di session
-              EpolisRespon save = EpolisRespon(code: "200", message: "", status: "", key: "", filepath: namaFile, fileurl: "");
-              baseSaveStorage(save);
-
-              Directory? dir;
-              try {
-                if (Platform.isIOS) {
-                  dir = await getApplicationDocumentsDirectory(); // for iOS
-                } else {
-                  dir = Directory('/storage/emulated/0/Download/') ;  // for android
-                  if (!await dir.exists()) dir = (await getExternalStorageDirectory())!;
-                  OpenFile.open("/storage/emulated/0/Download/" + namaFile);
-                }
-              } catch (err) {
-                Fungsi.errorToast("Cannot get download folder path $err");
-              }
-            }
-        );
-      }
+    if (statusStorage.isDenied){
+      Fungsi.errorToast("Akses storage harus diizinkan!");
     }else{
-      final String namaFile = epolisStorage.data!.filepath!;
-      Fungsi.warningToast("File $namaFile sudah ada di folder Download!");
+      is_download.value = true;
+      final String agreementNo = pilihKontrak.value.data![index].aGRMNTNO!;
+      final authStorage = await getStorage<LoginRespon>();
+      final String login_id = authStorage.data!.loginUserId!;
+      //cek apakah sudah pernah download epolis atau belum
+      final jumlah = await state.databaseHelper!.selectEpolis(agreementNo);
+      //jika belum pernah download
+      if (jumlah == 0){
+        //download link api
+        final epolis = await getService<EpolisService>()?.getEpolis(agreementNo, login_id);
+        if (epolis is EpolisError){
+          Fungsi.errorToast("Gagal mendapatkan epolis!");
+        }else{
+          var dt = DateTime.now().millisecondsSinceEpoch;
+          final String suffix = dt.toString();
+          final String namaFile = "Epolis-$suffix.pdf";
+          if (epolis!.fileurl == null){
+            Fungsi.errorToast("File URL on JSON is null!");
+          }else{
+            await getService<DownloadepolisService>()!.downloadEpolis(epolis!.fileurl!, namaFile).then(
+                    (value) async {
+
+                  Fungsi.suksesToast("File berhasil diunduh di folder Download!");
+                  //simpan file URL di storage
+                  Directory? dir;
+                  try {
+                    if (Platform.isIOS) {
+                      dir = await getApplicationDocumentsDirectory(); // for iOS
+                    } else {
+                      dir = Directory('/storage/emulated/0/Download/') ;  // for android
+                      if (!await dir.exists()) dir = (await getExternalStorageDirectory())!;
+                      //simpan nomor agreement di sqlite
+                      saveSqlite(agreementNo,"/storage/emulated/0/Download/" + namaFile);
+                      OpenFile.open("/storage/emulated/0/Download/" + namaFile, type: "application/pdf");
+                    }
+                  } catch (err) {
+                    Fungsi.errorToast("Cannot get download folder path $err");
+                  }
+                }
+            );
+          }
+        }
+      }else{
+        Fungsi.warningToast("File sudah ada di folder Download!");
+        var filepath = await state.databaseHelper!.getFilepath(agreementNo);
+        debugPrint('filepath ' + filepath);
+        OpenFile.open(filepath, type: "application/pdf");
+      }
+      is_download.value = false;
     }
-    is_download.value = false;
   }
 
   void getListKontrak() async {
@@ -123,7 +147,15 @@ class PilihkontrakLogic extends BaseLogic{
       pilihKontrak.value.data = filtered;
       jmlRow.value = pilihKontrak.value.data!.length;
     }
-
   }
 
+  void saveSqlite(String agreement_no, String filepath){
+    DateTime now = DateTime.now();
+    state.epolis = Epolis(
+        agreement_no: agreement_no,
+        filepath: filepath,
+        create_date: now.millisecondsSinceEpoch.toString()
+    );
+    state.databaseHelper!.insertEpolis(state.epolis!);
+  }
 }

@@ -26,8 +26,10 @@ import 'package:jmcare/screens/searchuser/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
 import 'package:jmcare/service/BaseService.dart';
-import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/Service.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+
 
 void main() {
   HttpOverrides.global = DioOverrides();
@@ -87,3 +89,4 @@ class DioOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
+
