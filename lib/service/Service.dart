@@ -8,6 +8,7 @@ import 'package:jmcare/service/DownloadepolisService.dart';
 import 'package:jmcare/service/EpolisService.dart';
 import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/HistoripoinService.dart';
+import 'package:jmcare/service/KategoriService.dart';
 import 'package:jmcare/service/LupapinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
@@ -55,7 +56,8 @@ class Service {
       PilihkontrakService: PilihkontrakService.instance,
       AgreementcardService: AgreementcardService.instance,
       EpolisService: EpolisService.instance,
-      DownloadepolisService: DownloadepolisService.instance
+      DownloadepolisService: DownloadepolisService.instance,
+      KategoriService: KategoriService.instance
     };
   }
 

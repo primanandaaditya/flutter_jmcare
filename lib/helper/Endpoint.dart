@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class Endpoint{
-  static const String base_url = "https://ws.mpm-finance.com/JMCare_development/Service1.svc/";
+  static const String base_url = "https://ws.mpm-finance.com/jmcare_dev/Service1.svc/";
   // static const String base_url = "https://apicloud.jaccs-mpmfinance.com/JMCare-xrgis8hm4zcwdt3ktsgy/Service1.svc/";
   static const String base_url_reset_pass_sms = "http://web-server-api.mpmf.com/M1cr0s1t3T3st1ng/Service1.svc/";
   
@@ -40,6 +40,7 @@ class Endpoint{
   static const String TAG_ANTRIAN_GET_PERTANYAAN           = "getPertanyaan.json";
   static const String TAG_ANTRIAN_SUBMIT_JAWABAN           = "submitJawaban.json";
   static const String TAG_ANTRIAN_TOLAK_KUISIONER          = "tolakKuisioner.json";
+  static const String TAG_ANTRIAN_KATEGORI                 = "getKategori.json";
 
   static const String TAG_LIST_USER                = "getlistuser.json";
   static const String TAG_PAGINATION_USER          = "paginationuser.json";

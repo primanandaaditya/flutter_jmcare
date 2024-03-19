@@ -7,6 +7,7 @@ import 'package:jmcare/model/api/DownloadRespon.dart';
 import 'package:jmcare/model/api/EpolisRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/HistoripoinRespon.dart';
+import 'package:jmcare/model/api/KategoriRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
@@ -44,7 +45,8 @@ class ModelGenerator {
       PilihkontrakRespon: (json) => PilihkontrakRespon.fromJson(json),
       AgreementcardRespon: (json) => AgreementcardRespon.fromJson(json),
       EpolisRespon: (json) => EpolisRespon.fromJson(json),
-      DownloadRespon: (json) => DownloadRespon.fromJson(json)
+      DownloadRespon: (json) => DownloadRespon.fromJson(json),
+      KategoriRespon: (json) => KategoriRespon.fromJson(json)
     };
   }
 

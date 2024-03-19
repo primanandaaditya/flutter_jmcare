@@ -67,9 +67,11 @@ class Komponen{
 
   static AppBar getAppBar(
       BuildContext context,
-      String title
+      String title,
+      [PreferredSizeWidget? bottomTab]
       ){
     return AppBar(
+      bottom: bottomTab,
       centerTitle: true,
       flexibleSpace: Container(
         decoration: const BoxDecoration(

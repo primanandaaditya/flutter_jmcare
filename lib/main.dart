@@ -3,7 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/agreementcard/view.dart';
+import 'package:jmcare/screens/antrian/view.dart';
 import 'package:jmcare/screens/detailslide/view.dart';
+import 'package:jmcare/screens/dialog/list_cabang/view.dart';
+import 'package:jmcare/screens/dialog/tujuan_kedatangan/view.dart';
 import 'package:jmcare/screens/historipoin/view.dart';
 import 'package:jmcare/screens/home/view.dart';
 import 'package:jmcare/screens/listcabang/view.dart';
@@ -27,8 +30,6 @@ import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
 import 'package:jmcare/service/BaseService.dart';
 import 'package:jmcare/service/Service.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 
 void main() {
@@ -71,13 +72,18 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_register_pin, page: () => const RegisterpinScreen()),
         GetPage(name: Konstan.rute_auth_pin, page: () => const AuthpinScreen()),
         GetPage(name: Konstan.rute_pilih_no_kontrak, page: () => const PilihkontrakScreen()),
-        GetPage(name: Konstan.rute_agreement_card, page: () => const AgreementcardScreen())
+        GetPage(name: Konstan.rute_agreement_card, page: () => const AgreementcardScreen()),
+        GetPage(name: Konstan.rute_antrian, page: () => const AntrianScreen()),
+        GetPage(name: Konstan.rute_tujuan_kedatangan, page: () => const DialogTujuankedatangan()),
+        GetPage(name: Konstan.rute_dialog_cabang, page: () => const DialogCabang())
       ],
       title: 'JM CARE',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const SplashScreen(),
+      home: const SafeArea(
+        child: SplashScreen(),
+      ),
     );
   }
 }

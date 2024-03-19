@@ -201,4 +201,6 @@ class BaseLogic extends GetxController{
     }
   }
 
+
+
 }

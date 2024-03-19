@@ -29,20 +29,20 @@ class CabangLogic extends BaseLogic{
       jmlRow.value = 0;
     }else{
       cabangRespon.value = cabanglist!;
-      realCabangRespon.data = cabanglist!.data;
+      realCabangRespon.data = cabanglist.data;
       jmlRow.value = realCabangRespon.data!.length;
     }
     is_loading.value = false;
   }
 
-  void filter(String namaCabang){
-    if (namaCabang.isEmpty || namaCabang.length == 0){
+  void filter(){
+    if (state.tecSearch!.text.isEmpty){
       cabangRespon.value.data = realCabangRespon.data;
       jmlRow.value = realCabangRespon.data!.length;
     }else{
-      var tmp = realCabangRespon!.data;
+      var tmp = realCabangRespon.data;
       var filtered = tmp!.where(
-              (x) => x.oFFICENAME!.toLowerCase().contains(namaCabang.toLowerCase())
+              (x) => x.oFFICENAME!.toLowerCase().contains(state.tecSearch!.text)
       ).toList();
       cabangRespon.value.data = filtered;
       jmlRow.value = cabangRespon.value.data!.length;

@@ -23,12 +23,10 @@ class CabangScreen extends StatelessWidget {
                     : Column(
                       children: [
                         TextField(
+                          onChanged: (a) => logic.filter(),
                           controller: state.tecSearch,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: () => logic.filter(state.tecSearch!.text.toString()),
-                            )
+                          decoration: const InputDecoration(
+                            suffixIcon: Icon(Icons.search)
                           ),
                         ),
                         logic.cabangRespon.value.data!.isEmpty || logic.cabangRespon.value.data!.length == 0 || logic.cabangRespon.value == null || logic.cabangRespon.value.data == null
@@ -36,18 +34,18 @@ class CabangScreen extends StatelessWidget {
                             : Expanded(
                               child: ListView.separated(
                                 separatorBuilder: (context, index){
-                                  return Divider(
+                                  return const Divider(
                                     color: Colors.grey,
                                   );
                                 },
                                 itemBuilder: (context, index){
                                   return ListTile(
-                                      leading: Icon(Icons.home),
+                                      leading: const Icon(Icons.home),
                                       title: Text(logic.cabangRespon.value.data![index].oFFICENAME!),
                                       subtitle:Row(
                                         children: [
                                           Text(logic.cabangRespon.value.data![index].pHONE!),
-                                          Icon(Icons.phone, size: 15)
+                                          const Icon(Icons.phone, size: 15)
                                         ],
                                       ),
                                       onTap: () => logic.openMap(index)

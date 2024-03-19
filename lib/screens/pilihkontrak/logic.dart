@@ -39,8 +39,6 @@ class PilihkontrakLogic extends BaseLogic{
       state.jmlEpolis = value.length;
       debugPrint('jml epolis ' + value.length.toString());
     });
-
-
   }
 
   void detail(int index){
@@ -99,8 +97,9 @@ class PilihkontrakLogic extends BaseLogic{
                       dir = Directory('/storage/emulated/0/Download/') ;  // for android
                       if (!await dir.exists()) dir = (await getExternalStorageDirectory())!;
                       //simpan nomor agreement di sqlite
-                      saveSqlite(agreementNo,"/storage/emulated/0/Download/" + namaFile);
-                      OpenFile.open("/storage/emulated/0/Download/" + namaFile, type: "application/pdf");
+                      saveSqlite(agreementNo,"/storage/emulated/0/Download/$namaFile");
+                      debugPrint('try opening file...');
+                      OpenFile.open("/storage/emulated/0/Download/$namaFile", type: "application/pdf");
                     }
                   } catch (err) {
                     Fungsi.errorToast("Cannot get download folder path $err");
@@ -112,7 +111,8 @@ class PilihkontrakLogic extends BaseLogic{
       }else{
         Fungsi.warningToast("File sudah ada di folder Download!");
         var filepath = await state.databaseHelper!.getFilepath(agreementNo);
-        debugPrint('filepath ' + filepath);
+        debugPrint('filepath $filepath');
+        debugPrint('try opening file...');
         OpenFile.open(filepath, type: "application/pdf");
       }
       is_download.value = false;
@@ -149,10 +149,10 @@ class PilihkontrakLogic extends BaseLogic{
     }
   }
 
-  void saveSqlite(String agreement_no, String filepath){
+  void saveSqlite(String agreementNo, String filepath){
     DateTime now = DateTime.now();
     state.epolis = Epolis(
-        agreement_no: agreement_no,
+        agreement_no: agreementNo,
         filepath: filepath,
         create_date: now.millisecondsSinceEpoch.toString()
     );

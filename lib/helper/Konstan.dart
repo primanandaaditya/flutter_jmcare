@@ -21,6 +21,9 @@ class Konstan {
   static const String rute_pilih_no_kontrak = "/pilihnomorkontrak";
   static const String rute_agreement_card = "/agreementcard";
   static const String rute_epolis = "/epolis";
+  static const String rute_antrian = "/antrian";
+  static const String rute_tujuan_kedatangan = "/tujuankedatangan";
+  static const String rute_dialog_cabang = "/dialogcabang";
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_downloading = 'Sedang mengunduh...';
@@ -52,6 +55,9 @@ class Konstan {
   static const String tag_warning = "PERINGATAN";
   static const String tag_belum_login = 'Silakan login terlebih dahulu!';
 
+  static const String tag_jenis_pic = "jenisPIC";
+  static const String tag_is_branch = "is branch";
+  static const String tag_selected_branch = "selected branch id";
   static const String tag_email_tdkvalid = "Email harus valid";
   static const String tag_email_harus_diisi = "Email harus diisi";
   static const double tag_padding_cell = 1;
