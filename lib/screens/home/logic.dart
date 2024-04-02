@@ -92,7 +92,7 @@ class HomeLogic extends BaseLogic{
                       leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
                       title: const Text("Antrian Online"),
                       subtitle: const Text("Sistem reservasi nomor antrian loket pendaftaran secara online"),
-                      onTap: () => Get.toNamed(Konstan.rute_antrian),
+                      onTap: () => Get.toNamed(Konstan.rute_antrian, arguments: {Konstan.tag_selected_index:0}),
                     ),
                     const Divider(),
                     ListTile(

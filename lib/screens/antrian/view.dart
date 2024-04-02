@@ -17,59 +17,68 @@ class AntrianScreen extends StatelessWidget {
         builder: (logic){
           return DefaultTabController(
               length: 3,
+              initialIndex: state.selected_index,
               child: Scaffold(
                 appBar: Komponen.getAppBar(context, "Antrian Online", const TabBar(
                   tabs: [
-                    Tab(text: "Ambil Antrian",),
+                    Tab(text: "Formulir Antrian",),
                     Tab(text: "Riwayat Antrian",),
                     Tab(text: "Antrian Sekarang",),
-                  ],
-                )
+                  ],)
                 ),
                 body: TabBarView(
                   children: [
+
+                    //tab pertama => Formulir Antrian
+                    //===============================
+                    //===============================
                     Form(
-                      key: state.formKey,
+                        key: state.formKey,
                         child: ListView(
                           padding: const EdgeInsets.all(20),
                           children: [
                             Obx(
-                                    () => logic.is_loading.value
-                                        ? Komponen.getLoadingWidget()
-                                        : Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                                          children: [
-                                            DropdownButtonFormField(
-                                                decoration: const InputDecoration(
-                                                    labelText: "Nomor kontrak",
-                                                    icon: Icon(Icons.folder_shared)
-                                                ),
-                                                isExpanded: true,
-                                                value: logic.idxDdNomorKontrak.value,
-                                                items: logic.ddNomorKontrak.value,
-                                                onChanged: (newValue){
-                                                  logic.setDDNomorKontrak(newValue);
-                                                }) ,
-
-                                            TextFormField(
-                                              readOnly: true,
+                              //jika nilai obsIsDebitur = true, buat dropdown kontrak dan 2 textfield nama & noplat
+                              //kalau false, buat container biasa
+                                    () => logic.obsIsDebitur.value
+                                    ? (logic.is_loading.value
+                                    ? Komponen.getLoadingWidget()
+                                    : Column(
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: [
+                                          DropdownButtonFormField(
                                               decoration: const InputDecoration(
+                                                  labelText: "Nomor kontrak",
+                                                  icon: Icon(Icons.folder_shared)
+                                              ),
+                                              isExpanded: true,
+                                              value: logic.idxDdNomorKontrak.value,
+                                              items: logic.ddNomorKontrak.value,
+                                              onChanged: (newValue){
+                                                logic.setDDNomorKontrak(newValue);
+                                              }) ,
+
+                                          TextFormField(
+                                            readOnly: true,
+                                            decoration: const InputDecoration(
                                                 labelText: "Nama",
                                                 icon: Icon(Icons.people)
-                                              ),
-                                              controller: state.tecNama,
                                             ),
-                                            TextFormField(
-                                              readOnly: true,
-                                              decoration: const InputDecoration(
-                                                  labelText: "Nomor plat",
-                                                  icon: Icon(Icons.confirmation_number_rounded)
-                                              ),
-                                              controller: state.tecNomorPlat,
-                                            )
+                                            controller: state.tecNama,
+                                          ),
+                                          TextFormField(
+                                            readOnly: true,
+                                            decoration: const InputDecoration(
+                                                labelText: "Nomor plat",
+                                                icon: Icon(Icons.confirmation_number_rounded)
+                                            ),
+                                            controller: state.tecNomorPlat,
+                                          )
 
-                                          ],
-                                        )
+                                        ],
+                                    )
+                                )
+                                    : Container()
                             ),
 
                             TextFormField(
@@ -93,7 +102,7 @@ class AntrianScreen extends StatelessWidget {
                             ),
 
                             DropdownButtonFormField(
-                              isExpanded: true,
+                                isExpanded: true,
                                 decoration: const InputDecoration(
                                     labelText: "PIC tujuan",
                                     icon: Icon(Icons.person)
@@ -124,14 +133,45 @@ class AntrianScreen extends StatelessWidget {
                               onTap: () => logic.tapPilihCabang(),
                             ),
 
+                            const Padding(padding: EdgeInsets.only(top: 10)),
+
+                            Obx(
+                                    () => logic.loadSubmit.value
+                                    ? Komponen.getLoadingWidget()
+                                    : ElevatedButton(
+                                      onPressed: () => logic.submitAntrian(context),
+                                        child: const Text(
+                                            "Submit"
+                                        )
+                                )
+                            )
 
                           ],
                         )
                     ),
 
-                    Center(
-                      child: Text("Dua"),
+                    //tab kedua => Riwayat antrian
+                    //===============================
+                    //===============================
+                    Container(
+                      padding: const EdgeInsets.all(0),
+                      child:  Obx(
+                                () => logic.is_loading.value
+                                      ? Komponen.getLoadingWidget()
+                                      : ListView.builder(
+                                          padding: const EdgeInsets.all(20),
+                                          itemCount: logic.riwayats.value.data!.length,
+                                          itemBuilder: (BuildContext context, int index){
+                                            return Komponen.getCardRiwayatantrian(logic.riwayats.value.data![index]);
+                                          }
+                          )
+                      ),
                     ),
+
+
+                    //tab ketiga => Antrian sekarang
+                    //===============================
+                    //===============================
                     Center(
                       child: Text("Tiga"),
                     )

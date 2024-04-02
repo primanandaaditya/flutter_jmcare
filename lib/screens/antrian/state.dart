@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class AntrianState {
 
@@ -11,6 +10,7 @@ class AntrianState {
   TextEditingController? tecJam;
   TextEditingController? tecCabangTujuan;
 
+  int selected_index = 0;
   String tanggalKedatangan = "";
   DateTime sekarang = DateTime.now();
   bool isSaturday = false;

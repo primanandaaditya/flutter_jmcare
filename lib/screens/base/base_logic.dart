@@ -19,6 +19,7 @@ import '../../model/api/SlideshowRespon.dart';
 class BaseLogic extends GetxController{
 
   var is_loading = false.obs;
+  final fungsi = Fungsi();
 
   Future<bool> sudahRegisterPIN() async {
     final registerPINStorage = await getStorage<RegisterpinModel>();

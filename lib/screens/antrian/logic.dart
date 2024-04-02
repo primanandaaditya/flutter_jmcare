@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Konstan.dart';
-import 'package:jmcare/model/api/KategoriRespon.dart';
+import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/model/api/RiwayatantrianRespon.dart';
 import 'package:jmcare/screens/antrian/state.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:flutter/material.dart';
-import 'package:jmcare/service/KategoriService.dart';
+import 'package:jmcare/service/AddantrianService.dart';
+import 'package:jmcare/service/RiwayatantrianService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../../helper/Fungsi.dart';
@@ -26,12 +28,36 @@ class AntrianLogic extends BaseLogic{
   var realKontrak = PilihkontrakRespon();
   var ddKategori = List<DropdownMenuItem>.empty(growable: true).obs;
   var idxDDKategori = "".obs;
+  var loadSubmit = false.obs;
+  String userID = "";
+  String isDebitur = "";
+  String nama = "";
+  var obsIsDebitur = false.obs;
+  var riwayats = RiwayatantrianRespon().obs;
 
   @override
   void onInit() {
     super.onInit();
+    //get selected index buat defaulttab controller
+    state.selected_index = Get.arguments[Konstan.tag_selected_index];
     //fill dropdown nomor kontrak dari API
     getListKontrak();
+    //get identitas user
+    getDetailUser();
+    //get riwayat antrian
+    getRiwayatAntrian();
+  }
+
+  void getDetailUser() async {
+    final authStorage = await getStorage<LoginRespon>();
+    userID = authStorage.data!.loginUserId!;
+    isDebitur = authStorage.data!.jenisdebitur!;
+    nama = authStorage.data!.namaUser!;
+    if (isDebitur.replaceAll(" ", "") == "1"){
+      obsIsDebitur.value = true;
+    }else{
+      obsIsDebitur.value = false;
+    }
   }
 
   void getListKontrak() async {
@@ -86,7 +112,6 @@ class AntrianLogic extends BaseLogic{
   }
 
   void tapTanggal(BuildContext context){
-    
     DatePicker.showDatePicker(context,
         showTitleActions: true,
         minTime: DateTime(state.sekarang.year, state.sekarang.month, state.sekarang.day),
@@ -141,13 +166,17 @@ class AntrianLogic extends BaseLogic{
     }
 
     //cek apakah jam sudah lewat
-    final jamSekarang = state.sekarang.hour;
-    final menitSekarang = state.sekarang.minute;
-    if (date.hour < jamSekarang || (date.hour == jamSekarang && date.minute < menitSekarang)){
-      Fungsi.warningToast("Jam sudah lewat tidak dapat dipilih");
-      state.tecJam!.text = "";
-      return;
+    //tapi cek dulu apakah tanggal yang dipilih itu sama dengan hari ini
+    if (DateFormat("yyyy-MM-dd").format(date) == state.tanggalKedatangan){
+      final jamSekarang = state.sekarang.hour;
+      final menitSekarang = state.sekarang.minute;
+      if (date.hour < jamSekarang || (date.hour == jamSekarang && date.minute < menitSekarang)){
+        Fungsi.warningToast("Jam sudah lewat tidak dapat dipilih");
+        state.tecJam!.text = "";
+        return;
+      }
     }
+
 
     //jika hari yang dipilih Sabtu, maksimal jam 11.30
     String strMenit = "";
@@ -200,44 +229,6 @@ class AntrianLogic extends BaseLogic{
     state.idTujuanKedatangan = "";
   }
 
-  void tapPilihCabang() async {
-    if (state.tecTujuanKedatangan!.text.isEmpty){
-      Fungsi.warningToast("Tujuan kedatangan harus diisi terlebih dahulu");
-      return;
-    }
-    if (idxDdNomorKontrak.value.isEmpty){
-      Fungsi.warningToast("Nomor kontrak harus dipilih terlebih dahulu");
-      return;
-    }
-    //saat textfield pilih cabang di-tap, akan muncul dialog list cabang
-    //pakai async/await untuk menunggu user klik listview di screen dialog list cabang
-    //======================================================================================
-    //lemparkan parameter untuk ditangkap di screen dialog list cabang
-    //untuk difilter, karena kalau isBranch = 1, list-nya harus di-filter berdasarkan var kode_cabang_asal_kontrak
-    //=====================================================================================
-    debugPrint("is branch " + state.isBranch);
-    debugPrint("selected branch " + state.branch_id);
-    final result = await Get.toNamed(Konstan.rute_dialog_cabang,
-        arguments: {
-          Konstan.tag_is_branch       : state.isBranch,
-          Konstan.tag_selected_branch : state.branch_id
-        }
-    );
-    if ("$result" == null){
-      debugPrint("cabang tujuan not selected");
-    }else{
-      //ubah var result menjadi model cabang
-      final cabangMap = jsonDecode("$result") as Map<String,dynamic>;
-      final cabang = modelCabang.Data.fromJson(cabangMap);
-
-      state.tecCabangTujuan!.text = cabang.oFFICENAME!;
-      state.idCabangTujuan = cabang.oFFICECODE!;
-      debugPrint("cabang tujuan " + state.tecCabangTujuan!.text + " " + state.idCabangTujuan);
-    }
-
-
-  }
-
   void tapTujuanKedatangan() async {
     debugPrint('pic terpilih ' + state.idxKasir);
     //saat textfield tujuankedatangan di-tap, akan muncul dialog tujuan kedatangan
@@ -265,6 +256,234 @@ class AntrianLogic extends BaseLogic{
 
   }
 
+  void tapPilihCabang() async {
+    if (state.tecTujuanKedatangan!.text.isEmpty){
+      Fungsi.warningToast("Tujuan kedatangan harus diisi terlebih dahulu");
+      return;
+    }
+    if (obsIsDebitur.value == true){
+      if (idxDdNomorKontrak.value.isEmpty){
+        Fungsi.warningToast("Nomor kontrak harus dipilih terlebih dahulu");
+        return;
+      }
+    }
+
+    //saat textfield pilih cabang di-tap, akan muncul dialog list cabang
+    //pakai async/await untuk menunggu user klik listview di screen dialog list cabang
+    //======================================================================================
+    //lemparkan parameter untuk ditangkap di screen dialog list cabang
+    //untuk difilter, karena kalau isBranch = 1, list-nya harus di-filter berdasarkan var kode_cabang_asal_kontrak
+    //=====================================================================================
+    debugPrint("is branch " + state.isBranch);
+    debugPrint("selected branch " + state.branch_id);
+    final result = await Get.toNamed(Konstan.rute_dialog_cabang,
+        arguments: {
+          Konstan.tag_is_branch       : state.isBranch,
+          Konstan.tag_selected_branch : state.branch_id
+        }
+    );
+    if ("$result" == null){
+      debugPrint("cabang tujuan not selected");
+    }else{
+      //ubah var result menjadi model cabang
+      final cabangMap = jsonDecode("$result") as Map<String,dynamic>;
+      final cabang = modelCabang.Data.fromJson(cabangMap);
+
+      state.tecCabangTujuan!.text = cabang.oFFICENAME!;
+      state.idCabangTujuan = cabang.oFFICECODE!;
+      state.branch_id = cabang.oFFICECODE!;
+      debugPrint("cabang tujuan " + state.tecCabangTujuan!.text + " " + state.idCabangTujuan);
+    }
+  }
+
+  void submitAntrian(BuildContext context) async {
+
+    loadSubmit.value = true;
+    //jika debitur
+    if (isDebitur!.replaceAll(" ", "") == "1"){
+      if (idxDdNomorKontrak.value.isEmpty){
+        Fungsi.warningToast("Nomor kontrak harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.tecNama!.text.isEmpty || state.tecNomorPlat!.text.isEmpty){
+        Fungsi.warningToast("Nama/nomor plat harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.tecTanggal!.text.isEmpty || state.tanggalKedatangan.isEmpty){
+        Fungsi.warningToast("Tanggal harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.tecJam!.text.isEmpty){
+        Fungsi.warningToast("Jam harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.idxKasir.isEmpty){
+        Fungsi.warningToast("PIC tujuan harus dipilih");
+        return;
+      }
+      if (state.idTujuanKedatangan.isEmpty){
+        Fungsi.warningToast("Tujuan kedatangan harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.branch_id.isEmpty || state.tecCabangTujuan!.text.isEmpty){
+        Fungsi.warningToast("Cabang tujuan harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      final baseRespon = await getService<AddantrianService>()?.addAntrian(
+          userID,
+          idxDdNomorKontrak.value.toString(),
+          state.tecNama!.text.toString(),
+          state.tecNama!.text.toString(),
+          state.tecNomorPlat!.text.toString(),
+          state.tanggalKedatangan,
+          state.tecJam!.text.toString(),
+          state.idxKasir,
+          isDebitur.replaceAll(" ", "") == "1" ? "KONSUMEN" : "TAMU", //jika isdebitur = 1 =>konsumen, kalau bukan =>tamu
+          state.idTujuanKedatangan,
+          state.branch_id
+      );
+      loadSubmit.value = false;
+      if (baseRespon is BaseError){
+        Fungsi.errorToast("Tidak dapat menyimpan antrian!");
+      }else{
+        //tutup form, lalu kalau dialog di klik OK akan menampilkan
+        //screen antrian di tab index ke - 1
+        Get.back();
+        showDialogNomorAntrian(baseRespon!.message!);
+      }
+
+    }else{
+      //jika bukan debitur
+      if (state.tecTanggal!.text.isEmpty || state.tanggalKedatangan.isEmpty){
+        Fungsi.warningToast("Tanggal harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.tecJam!.text.isEmpty){
+        Fungsi.warningToast("Jam harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.idxKasir.isEmpty){
+        Fungsi.warningToast("PIC tujuan harus dipilih");
+        return;
+      }
+      if (state.idTujuanKedatangan.isEmpty){
+        Fungsi.warningToast("Tujuan kedatangan harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      if (state.branch_id.isEmpty || state.tecCabangTujuan!.text.isEmpty){
+        Fungsi.warningToast("Cabang tujuan harus dipilih");
+        loadSubmit.value = false;
+        return;
+      }
+      final baseRespon = await getService<AddantrianService>()?.addAntrian(
+          userID,
+          "",
+          nama,
+          nama,
+          "",
+          state.tanggalKedatangan,
+          state.tecJam!.text.toString(),
+          state.idxKasir,
+          isDebitur.replaceAll(" ", "") == "1" ? "KONSUMEN" : "TAMU", //jika isdebitur = 1 =>konsumen, kalau bukan =>tamu
+          state.idTujuanKedatangan,
+          state.branch_id
+      );
+      if (baseRespon is BaseError){
+        Fungsi.errorToast("Tidak dapat menyimpan antrian!");
+      }else{
+        showDialogNomorAntrian(baseRespon!.message!);
+      }
+      loadSubmit.value = false;
+    }
+  }
+
+  void showDialogNomorAntrian(String nomorAntrian){
+    Get.dialog<bool?>(
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Material(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text(
+                        "NOMOR ANTRIAN ANDA",
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        nomorAntrian,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 25
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(top: 10)),
+                      const Text(
+                        "Mohon konfirmasi kedatangan pada aplikasi JM CARE jika sudah tiba di kantor cabang",
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 15),
+                      //Buttons
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextButton(
+                              onPressed: () {
+                                Get.offAndToNamed(Konstan.rute_antrian, arguments: {Konstan.tag_selected_index:1});
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void getRiwayatAntrian() async {
+    is_loading.value = true;
+
+    final authStorage = await getStorage<LoginRespon>();
+    userID = authStorage.data!.loginUserId!;
+    isDebitur = authStorage.data!.jenisdebitur!;
+    nama = authStorage.data!.namaUser!;
+
+    final riwayat = await getService<RiwayatantrianService>()?.getRiwayatantrian(userID);
+    if (riwayat is RiwayatantrianError){
+      Fungsi.errorToast("Tidak dapat memproses riwayat antrian");
+    }else{
+      riwayats.value = riwayat!;
+    }
+    is_loading.value = false;
+  }
 }
 
 

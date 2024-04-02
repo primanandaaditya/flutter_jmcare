@@ -8,6 +8,7 @@ import 'package:jmcare/model/api/AgreementcardRespon.dart';
 import 'package:jmcare/model/api/PilihkontrakRespon.dart' as pilihkontrak;
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
+import 'package:jmcare/model/api/RiwayatantrianRespon.dart' as riwayatantrian;
 import 'package:get/get.dart';
 
 class Komponen{
@@ -194,6 +195,146 @@ class Komponen{
             )
         )
     );
+  }
+
+  static Widget getCardRiwayatantrian(riwayatantrian.Data respon){
+    return InkWell(
+      onTap: () => Get.toNamed(
+          Konstan.rute_detail_riwayat_antrian,
+          arguments: {
+            Konstan.tag_agreement_no : respon.aGRMNTNO.toString(),
+            Konstan.tag_nomor_plat : respon.nOPLAT.toString(),
+            Konstan.tag_tanggal : respon.tGLKEDATANGAN.toString(),
+            Konstan.tag_tgl : respon.tANGGAL.toString(),
+            Konstan.tag_jam : respon.jAMKEDATANGAN.toString(),
+            Konstan.tag_office_name : respon.oFFICENAME.toString(),
+            Konstan.tag_nama : respon.nAMADEBITUR.toString(),
+            Konstan.tag_pic : respon.pICTUJUAN.toString(),
+            Konstan.tag_tujuan : respon.tUJUANKEDATANGAN.toString(),
+            Konstan.tag_token : respon.nOANTRIAN.toString(),
+            Konstan.tag_id : respon.iD.toString(),
+            Konstan.tag_is_finished : respon.iSFINISHED.toString(),
+            Konstan.tag_konfirmasi_kedatangan : respon.kONFIRMASIKEDATANGAN.toString(),
+            Konstan.tag_sudah_kuisioner : respon.sUDAHKUISIONER.toString(),
+            Konstan.tag_office_lat : respon.oFFICELAT.toString().replaceAll("\r\n", ""),
+            Konstan.tag_office_long : respon.oFFICELONG.toString().replaceAll("\r\n", "")
+          }
+      ),
+      child: Card(
+          color: respon.sUDAHKADALUWARSA! > 0 ? Colors.grey : null,
+          elevation: 5.0,
+          child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.calendar_month,
+                        color: Colors.green,
+                        size: 50,
+                      ),
+                      const Padding(padding: EdgeInsets.only(left: 10)),
+                      Text(
+                        respon.tGLKEDATANGAN!.substring(0,2),
+                        style: const TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const Padding(padding: EdgeInsets.only(left: 10)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.watch,
+                                size: 15,
+                                color: Colors.green,
+                              ),
+                              Text(respon.jAMKEDATANGAN!)
+                            ],
+                          ),
+                          Text(respon.tGLKEDATANGAN!.substring(3,11).replaceAll("-", " "))
+                        ],
+                      ),
+                      const Spacer(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            respon.nOPLAT!.replaceAll("\r\n", ""),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20
+                            ),
+                          ),
+                          const Divider(height: 1, color: Colors.green,),
+                          Text(
+                              respon.oFFICENAME!
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  const Divider(height: 1.0, color: Colors.grey,),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  const Text("NOMOR ANTRIAN"),
+                  Text(respon.nOANTRIAN!,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: Colors.green
+                    ),),
+
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  const Divider(height: 1.0, color: Colors.grey,),
+                  Row(
+                    children: [
+                      respon.iSFINISHED! == "0"
+                          ? Container()
+                          : const Chip(
+                            label: Text("SELESAI"),
+                            labelStyle: TextStyle(
+                                color: Colors.green
+                            ),
+                      ),
+                      const Spacer(),
+
+                      respon.iSFINISHED! == "0"
+                          ? chipKuisioner_TidakTersedia()
+                          : respon.sUDAHKUISIONER! == 0
+                            ? chipKuisioner_Tersedia()
+                            : chipKuisioner_TidakTersedia()
+                    ],
+                  ),
+
+                ],
+              )
+          )
+      )
+    );
+  }
+
+  static Widget chipKuisioner_Tersedia(){
+    return const Chip(
+      label: Text("Survey tersedia", style: TextStyle(fontSize: 10),),
+      backgroundColor: Colors.purple,
+      labelStyle: TextStyle(
+          color: Colors.white
+      ),
+    );
+  }
+
+  static Widget chipKuisioner_TidakTersedia(){
+    return const Chip(
+      elevation: 1.0,
+        label: Text("Survey tidak tersedia", style: TextStyle(fontSize: 10),),
+        backgroundColor: Colors.deepOrange,
+        labelStyle: TextStyle(
+        color: Colors.white
+        ));
   }
 
   static Widget getCardKontrak(pilihkontrak.Data respon){
@@ -657,6 +798,20 @@ class Komponen{
           Text(Konstan.tag_now_loading, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)
         ],
       )
+    );
+  }
+
+  static Widget getGpsLoading(){
+    return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: const [
+            LinearProgressIndicator(),
+            Padding(padding: EdgeInsets.only(top: 10)),
+            Text(Konstan.tag_gps_searching, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)
+          ],
+        )
     );
   }
 

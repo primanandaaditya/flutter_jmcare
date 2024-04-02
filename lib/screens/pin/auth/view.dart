@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:jmcare/screens/pin/auth/state.dart';
 import 'package:pinput/pinput.dart';
 
+
 class AuthpinScreen extends StatelessWidget {
   const AuthpinScreen({super.key});
 
@@ -13,11 +14,13 @@ class AuthpinScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthpinLogic logic = Get.put(AuthpinLogic());
     final AuthpinState state = Get.find<AuthpinLogic>().state;
+
     return JmcareGreenScreen(
       title: "Masukkan PIN Anda",
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+
           Pinput(
             length: 6,
             controller: state.tecPIN,
@@ -39,7 +42,8 @@ class AuthpinScreen extends StatelessWidget {
                             onPressed: () => logic.lupaPIN(),
                             child: const Text("Lupa PIN")
                   )
-          )
+          ),
+
         ],
       ),
     );

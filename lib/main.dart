@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/agreementcard/view.dart';
+import 'package:jmcare/screens/antrian/detailriwayat/view.dart';
 import 'package:jmcare/screens/antrian/view.dart';
 import 'package:jmcare/screens/detailslide/view.dart';
 import 'package:jmcare/screens/dialog/list_cabang/view.dart';
@@ -75,7 +76,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_agreement_card, page: () => const AgreementcardScreen()),
         GetPage(name: Konstan.rute_antrian, page: () => const AntrianScreen()),
         GetPage(name: Konstan.rute_tujuan_kedatangan, page: () => const DialogTujuankedatangan()),
-        GetPage(name: Konstan.rute_dialog_cabang, page: () => const DialogCabang())
+        GetPage(name: Konstan.rute_dialog_cabang, page: () => const DialogCabang()),
+        GetPage(name: Konstan.rute_detail_riwayat_antrian, page: () => const DetailRiwayatAntrian())
       ],
       title: 'JM CARE',
       theme: ThemeData(

@@ -8,9 +8,19 @@ import 'package:jmcare/helper/Konstan.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 
 class Fungsi{
 
+
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2){
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 - c((lat2 - lat1) * p)/2 +
+        c(lat1 * p) * c(lat2 * p) *
+            (1 - c((lon2 - lon1) * p))/2;
+    return 12742 * asin(sqrt(a));
+  }
 
   static String formatNumberDouble(double number){
     return Fungsi.thousandSeparator(int.parse(number.round().toString()));
@@ -246,5 +256,17 @@ class Fungsi{
     return formatter.format(str);
   }
 
+  static bool isToday(String tgl){
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final tanggal = DateTime.parse(tgl);
+    if (today == tanggal){
+      debugPrint("hari ini");
+      return true;
+    }else{
+      debugPrint("bukan hari ini");
+      return false;
+    }
+  }
 
 }

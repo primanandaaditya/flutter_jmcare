@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
+import 'package:jmcare/service/AddantrianService.dart';
 import 'package:jmcare/service/AgreementcardService.dart';
 import 'package:jmcare/service/CabangService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
@@ -9,6 +10,7 @@ import 'package:jmcare/service/EpolisService.dart';
 import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/HistoripoinService.dart';
 import 'package:jmcare/service/KategoriService.dart';
+import 'package:jmcare/service/KonfirmasikedatanganService.dart';
 import 'package:jmcare/service/LupapinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
@@ -17,6 +19,7 @@ import 'package:jmcare/service/PilihkontrakService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import 'package:jmcare/service/ResetpasswordService.dart';
+import 'package:jmcare/service/RiwayatantrianService.dart';
 import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/SlideService.dart';
 import 'package:jmcare/service/SmsService.dart';
@@ -57,7 +60,10 @@ class Service {
       AgreementcardService: AgreementcardService.instance,
       EpolisService: EpolisService.instance,
       DownloadepolisService: DownloadepolisService.instance,
-      KategoriService: KategoriService.instance
+      KategoriService: KategoriService.instance,
+      AddantrianService: AddantrianService.instance,
+      RiwayatantrianService: RiwayatantrianService.instance,
+      KonfirmasikedatanganService: KonfirmasikedatanganService.instance
     };
   }
 

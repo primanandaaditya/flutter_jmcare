@@ -106,6 +106,28 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(decoded);
   }
 
+  //tambahkan '{"data":' di sebelah kiri respon dan '}' disebelah kanan respon
+  //buat model di json to dart berdasarkan tambahan tadi
+  Future<T?> getResource<T>(String url, {Map<String, dynamic>? body}) async {
+    String param = jsonEncode(body);
+    client.options.baseUrl = Endpoint.base_url;
+    final response = await _wrapRequest(() => client.post(url,
+        data: param,
+        options: Options(
+          headers: {
+            'Content-Type': 'text/plain',
+            'Accept': '*/*',
+            'merchantkey': Konstan.tag_merchant_key,
+            'authorization': basicAuth
+          },
+        ))
+    );
+    var encoded = jsonEncode(response.data);
+    var bodi = '{"data":'  + encoded + '}';
+    var decoded = jsonDecode(bodi);
+    return models.ModelGenerator.resolve<T>(decoded);
+  }
+
   Future<T?> postSMS<T>(String url) async {
     client.options.baseUrl = Endpoint.base_url_reset_pass_sms;
     final response = await _wrapRequest(() => client.post(url,

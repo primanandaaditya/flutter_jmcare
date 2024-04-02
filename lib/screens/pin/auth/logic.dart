@@ -18,6 +18,12 @@ class AuthpinLogic extends BaseLogic{
 
   var counter = 31.obs;
 
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   void mulaiTimer(){
     debugPrint("mulai timer");
     counter.value = 31;

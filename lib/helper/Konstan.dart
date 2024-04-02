@@ -24,9 +24,11 @@ class Konstan {
   static const String rute_antrian = "/antrian";
   static const String rute_tujuan_kedatangan = "/tujuankedatangan";
   static const String rute_dialog_cabang = "/dialogcabang";
+  static const String rute_detail_riwayat_antrian = "/detail_riwayat_antrian";
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_downloading = 'Sedang mengunduh...';
+  static const String tag_gps_searching = 'Sedang memproses GPS...';
   static const String tag_is_login = 'is_login';
   static const String tag_email = 'email';
   static const String tag_grade = 'grade';
@@ -39,6 +41,7 @@ class Konstan {
   static const String tag_no_kk = 'no_kk';
   static const String tag_tempat_lahir = 'tempat_lahir';
   static const String tag_tgl_lahir = 'tgl_lahir';
+  static const String tag_selected_index = 'selected index';
 
   static const String tag_bronze = "bronze";
   static const String tag_platinum = "platinum";
@@ -64,4 +67,22 @@ class Konstan {
   static const String tag_rupiah = "Rp";
   static const String tag_debitur = "1";
   static const String tag_non_debitur = "2";
+
+  static const String tag_agreement_no = "agreement no";
+  static const String tag_nomor_plat = "no plat";
+  static const String tag_tanggal = "tanggal";
+  static const String tag_tgl = "tgl";
+  static const String tag_jam = "jam";
+  static const String tag_office_name = "office name";
+  static const String tag_nama = "nama";
+  static const String tag_pic = "pic";
+  static const String tag_tujuan = "tujuan";
+  static const String tag_token = "token";
+  static const String tag_id = "id";
+  static const String tag_is_finished = "is finished";
+  static const String tag_konfirmasi_kedatangan = "konfirmasi kedatangan";
+  static const String tag_sudah_kuisioner = "sudah kuisioner";
+  static const String tag_office_lat = "office lat";
+  static const String tag_office_long = "office long";
+
 }
