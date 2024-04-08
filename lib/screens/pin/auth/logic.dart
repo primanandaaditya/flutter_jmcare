@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
@@ -11,6 +12,7 @@ import 'package:jmcare/service/LupapinService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:flutter/material.dart';
+import 'package:local_auth/local_auth.dart';
 
 
 class AuthpinLogic extends BaseLogic{
@@ -22,6 +24,8 @@ class AuthpinLogic extends BaseLogic{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
+    cekFP();
   }
 
   void mulaiTimer(){
@@ -53,6 +57,40 @@ class AuthpinLogic extends BaseLogic{
     }
     is_loading.value = false;
   }
+
+  Future<void> cekFP() async {
+    bool authenticated = false;
+
+    final LocalAuthentication auth = LocalAuthentication();
+    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+    final bool canAuthenticate =
+        canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+
+    if (canAuthenticate){
+      final List<BiometricType> availableBiometrics =
+      await auth.getAvailableBiometrics();
+
+      if (availableBiometrics.isNotEmpty) {
+        debugPrint("available bio");
+        try {
+          final bool didAuthenticate = await auth.authenticate(
+              localizedReason: 'Gunakan sidik jari sebagai alternatif PIN',
+              options: const AuthenticationOptions(useErrorDialogs: false));
+          if (didAuthenticate){
+            Get.offAllNamed(Konstan.rute_home);
+          }else{
+            Fungsi.warningToast("Silakan memasukkan PIN");
+          }
+        } on PlatformException catch (e) {
+
+        }
+      }else{
+        debugPrint("not available bio");
+      }
+    }
+
+  }
+
 
   void checkPIN() async{
     if (state.tecPIN!.text.isEmpty){

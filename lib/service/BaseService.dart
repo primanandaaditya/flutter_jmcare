@@ -62,6 +62,22 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
+  Future<T?> postQuery<T>(String url, {Map<String, dynamic>? body}) async {
+    client.options.baseUrl = Endpoint.base_url;
+    final response = await _wrapRequest(() => client.post(url,
+        queryParameters: body,
+        options: Options(
+          headers: {
+            'Content-Type': 'text/plain',
+            'Accept': '*/*',
+            'merchantkey': Konstan.tag_merchant_key,
+            'authorization': basicAuth
+          },
+        ))
+    );
+    return models.ModelGenerator.resolve<T>(response.data);
+  }
+
   //tambahkan '{"data":' di sebelah kiri respon dan '}' disebelah kanan respon
   //buat model di json to dart berdasarkan tambahan tadi
   Future<T?> getJsonArray<T>(String url, {Map<String, dynamic>? body}) async {

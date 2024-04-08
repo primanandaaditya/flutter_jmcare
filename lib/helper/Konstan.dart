@@ -25,6 +25,7 @@ class Konstan {
   static const String rute_tujuan_kedatangan = "/tujuankedatangan";
   static const String rute_dialog_cabang = "/dialogcabang";
   static const String rute_detail_riwayat_antrian = "/detail_riwayat_antrian";
+  static const String rute_kuisioner = "/kuisioner";
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_downloading = 'Sedang mengunduh...';
@@ -42,6 +43,7 @@ class Konstan {
   static const String tag_tempat_lahir = 'tempat_lahir';
   static const String tag_tgl_lahir = 'tgl_lahir';
   static const String tag_selected_index = 'selected index';
+  static const String tag_id_antrian = "id antrian";
 
   static const String tag_bronze = "bronze";
   static const String tag_platinum = "platinum";

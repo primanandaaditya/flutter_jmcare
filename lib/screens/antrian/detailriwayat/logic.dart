@@ -42,6 +42,10 @@ class DetailRiwayatLogic extends BaseLogic {
     is_loading.value = false;
   }
 
+  void tampilKuisioner(){
+    //ke screen kuisioner dengan membawa id antrian
+    Get.toNamed(Konstan.rute_kuisioner, arguments: {Konstan.tag_id_antrian: state.id} );
+  }
 
   void showDialogNomorAntrian(String nomorAntrian){
     Get.dialog<bool?>(

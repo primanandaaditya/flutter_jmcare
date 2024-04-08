@@ -11,6 +11,7 @@ import 'package:jmcare/model/api/KategoriRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
+import 'package:jmcare/model/api/PertanyaanRespon.dart';
 import 'package:jmcare/model/api/PilihkontrakRespon.dart';
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
@@ -48,7 +49,8 @@ class ModelGenerator {
       EpolisRespon: (json) => EpolisRespon.fromJson(json),
       DownloadRespon: (json) => DownloadRespon.fromJson(json),
       KategoriRespon: (json) => KategoriRespon.fromJson(json),
-      RiwayatantrianRespon: (json) => RiwayatantrianRespon.fromJson(json)
+      RiwayatantrianRespon: (json) => RiwayatantrianRespon.fromJson(json),
+      PertanyaanRespon: (json) => PertanyaanRespon.fromJson(json)
     };
   }
 

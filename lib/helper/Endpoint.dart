@@ -41,6 +41,7 @@ class Endpoint{
   static const String TAG_ANTRIAN_SUBMIT_JAWABAN           = "submitJawaban.json";
   static const String TAG_ANTRIAN_TOLAK_KUISIONER          = "tolakKuisioner.json";
   static const String TAG_ANTRIAN_KATEGORI                 = "getKategori.json";
+  static const String TAG_ANTRIAN_CEK_KUISIONER            = "cekKuisioner.json";
 
   static const String TAG_LIST_USER                = "getlistuser.json";
   static const String TAG_PAGINATION_USER          = "paginationuser.json";

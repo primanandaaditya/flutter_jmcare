@@ -144,7 +144,7 @@ class DetailRiwayatAntrian extends StatelessWidget {
                     ? Container()
                     : ElevatedButton(
                       onPressed: (){
-
+                        logic.tampilKuisioner();
                       },
                       child: const Text("SURVEY KEPUASAN PELANGGAN")
                   )

@@ -3,6 +3,7 @@ import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/service/AddantrianService.dart';
 import 'package:jmcare/service/AgreementcardService.dart';
 import 'package:jmcare/service/CabangService.dart';
+import 'package:jmcare/service/CekkuisionerService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
 import 'package:jmcare/service/DownloadepolisService.dart';
@@ -15,6 +16,7 @@ import 'package:jmcare/service/LupapinService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/PaginationuserService.dart';
+import 'package:jmcare/service/PertanyaanService.dart';
 import 'package:jmcare/service/PilihkontrakService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
@@ -63,13 +65,15 @@ class Service {
       KategoriService: KategoriService.instance,
       AddantrianService: AddantrianService.instance,
       RiwayatantrianService: RiwayatantrianService.instance,
-      KonfirmasikedatanganService: KonfirmasikedatanganService.instance
+      KonfirmasikedatanganService: KonfirmasikedatanganService.instance,
+      CekkuisionerService: CekkuisionerService.instance,
+      PertanyaanService: PertanyaanService.instance
     };
   }
 
   static T? resolve<T extends BaseService?>() {
     if (instance.classes[T] == null) {
-      throw "$T tidak diregistrasi. Periksa service!";
+      throw "$T belum diregistrasi. Periksa service!";
     }
     return instance.classes[T] as T?;
   }

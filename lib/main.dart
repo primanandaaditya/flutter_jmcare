@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:jmcare/helper/Endpoint.dart';
 import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/agreementcard/view.dart';
 import 'package:jmcare/screens/antrian/detailriwayat/view.dart';
+import 'package:jmcare/screens/antrian/kuisioner/view.dart';
 import 'package:jmcare/screens/antrian/view.dart';
 import 'package:jmcare/screens/detailslide/view.dart';
 import 'package:jmcare/screens/dialog/list_cabang/view.dart';
@@ -50,6 +52,8 @@ class MyApp extends StatelessWidget {
     client.interceptors.addAll(Endpoint.dioInterceptors);
     BaseService.initialize(client);
     Service.setup(client);
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
+
 
     return GetMaterialApp(
       getPages: [
@@ -77,7 +81,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_antrian, page: () => const AntrianScreen()),
         GetPage(name: Konstan.rute_tujuan_kedatangan, page: () => const DialogTujuankedatangan()),
         GetPage(name: Konstan.rute_dialog_cabang, page: () => const DialogCabang()),
-        GetPage(name: Konstan.rute_detail_riwayat_antrian, page: () => const DetailRiwayatAntrian())
+        GetPage(name: Konstan.rute_detail_riwayat_antrian, page: () => const DetailRiwayatAntrian()),
+        GetPage(name: Konstan.rute_kuisioner, page: () => const KuisionerScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(

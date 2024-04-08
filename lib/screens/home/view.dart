@@ -23,14 +23,12 @@ class HomeScreen extends StatelessWidget {
           //jika sdh login munculkan navigationdrawer
             endDrawer:
                 Obx(
-                      () => logic.sdhLogin.value ?
-                      Komponen.getMainDrawer(
+                      () => logic.sdhLogin.value
+                          ? Komponen.getMainDrawer(
                               context,
                               () => logic.doLogout(context),
-                              () => logic.dialogDeleteAkun(context)
-                      )
-                          :
-                      Container(),),
+                              () => logic.dialogDeleteAkun(context))
+                          : Container(),),
 
             body: SafeArea(
 
@@ -111,57 +109,56 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               children: [
 
-                                Obx(() => (logic.is_loading.value || logic.arraySlideshow.value == null) ?
-                                  Komponen.getLoadingWidget()
-                                    :
-                                  Stack(
-                                    children: [
-                                      SizedBox(
-                                        height: 300,
-                                        child: CarouselSlider(
-                                            carouselController: state.carouselController,
-                                            options: CarouselOptions(
-                                                autoPlay: true,
-                                                viewportFraction: 1.0,
-                                                enlargeCenterPage: false,
-                                                autoPlayInterval: const Duration(seconds: 5),
-                                                height: double.infinity,
-                                                onPageChanged: (index,reason){
-                                                  logic.setIndeksCarousel(index);
-                                                }
-                                            ),
-                                            items: logic.konversi(logic.arraySlideshow.value)
-                                        ),
-                                      ),
-
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: logic.konversi(logic.arraySlideshow.value).asMap().entries.map((entry) {
-
-                                            return GestureDetector(
-                                              onTap: () {
-                                                logic.state.carouselController!.animateToPage(entry.key);
-                                              },
-                                              child: Container(
-                                                width: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
-                                                height: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
-                                                margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: (Theme.of(context).brightness == Brightness.dark
-                                                        ? Colors.white
-                                                        : Warna.hijau
-                                                    ).withOpacity(logic.indeksCarousel.value == entry.key ? 0.9 : 0.4)
+                                Obx(() => (logic.is_loading.value || logic.arraySlideshow.value == null)
+                                    ? Komponen.getLoadingWidget()
+                                    : Stack(
+                                        children: [
+                                          SizedBox(
+                                            height: 300,
+                                            child: CarouselSlider(
+                                                carouselController: state.carouselController,
+                                                options: CarouselOptions(
+                                                    autoPlay: true,
+                                                    viewportFraction: 1.0,
+                                                    enlargeCenterPage: false,
+                                                    autoPlayInterval: const Duration(seconds: 5),
+                                                    height: double.infinity,
+                                                    onPageChanged: (index,reason){
+                                                      logic.setIndeksCarousel(index);
+                                                    }
                                                 ),
-                                              ),
-                                            );
-                                          }).toList(),
-                                        ),
+                                                items: logic.konversi(logic.arraySlideshow.value)
+                                            ),
+                                          ),
+
+                                          Align(
+                                            alignment: Alignment.topCenter,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: logic.konversi(logic.arraySlideshow.value).asMap().entries.map((entry) {
+
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    logic.state.carouselController!.animateToPage(entry.key);
+                                                  },
+                                                  child: Container(
+                                                    width: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
+                                                    height: logic.indeksCarousel.value == entry.key ? 9.0 : 6.0,
+                                                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color: (Theme.of(context).brightness == Brightness.dark
+                                                            ? Colors.white
+                                                            : Warna.hijau
+                                                        ).withOpacity(logic.indeksCarousel.value == entry.key ? 0.9 : 0.4)
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          )
+                                        ],
                                       )
-                                    ],
-                                  )
                                 ),
 
                                 const Padding(padding: EdgeInsets.only(top: 10)),
@@ -177,18 +174,14 @@ class HomeScreen extends StatelessWidget {
 
                                 Row(
                                   children: [
-
                                     const Spacer(),
-
                                     Komponen.menuUtama(
                                         context,
                                         "assets/images/selfservice.png",
                                         "Self Service",
                                         () => logic.klikMenuSelfService(context)
                                     ),
-
                                     const Spacer(),
-
                                     Komponen.menuUtama(
                                         context,
                                         "assets/images/mservice.png",
@@ -199,8 +192,6 @@ class HomeScreen extends StatelessWidget {
                                 ),
 
                                 const Padding(padding: EdgeInsets.only(top: 30)),
-
-
 
                                 Komponen.teksJudul("Info Produk dan Melayani"),
 
@@ -229,7 +220,6 @@ class HomeScreen extends StatelessWidget {
                               ],
                             )
                         )
-
                       ],
                     ),
                   ),
@@ -244,14 +234,11 @@ class HomeScreen extends StatelessWidget {
                       automaticallyImplyLeading: true,
                     ),
                   ),
-
                 ],
               ),
             )
         );
         }
     );
-
-
   }
 }
