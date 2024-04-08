@@ -96,7 +96,7 @@ class KuisionerScreen extends StatelessWidget {
                                                           ),
                                                       ],
                                                     )
-                                            : logic.obxPertanyaan.value.data![index].subPertanyaan == null
+                                                : logic.obxPertanyaan.value.data![index].subPertanyaan == null
                                                   ? Container()
                                                   : Column(
                                                     children: [
@@ -106,9 +106,13 @@ class KuisionerScreen extends StatelessWidget {
                                                           children: [
                                                             for ( var j in i.templateJawaban! )
                                                               ChoiceChip(
+                                                                  selectedColor: Colors.green,
                                                                   label: Text(j.vALUEJAWABAN!),
-                                                                  selected: false
-                                                              )
+                                                                  selected: logic.choiceModels.where((e) => e.id == j.iDOPSI!).first.selected!,
+                                                                  onSelected: (s){
+                                                                    logic.clickChoiceChipSingle(j.iDOPSI!, j.pERTANYAANCODE!);
+                                                                  }
+                                                              ),
                                                           ],
                                                         )
                                                     ],
