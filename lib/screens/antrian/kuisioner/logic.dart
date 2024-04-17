@@ -14,7 +14,6 @@ import 'package:jmcare/service/PertanyaanService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:flutter/material.dart';
-
 import '../../../model/api/PertanyaanRespon.dart';
 
 
@@ -65,10 +64,40 @@ class KuisionerLogic extends BaseLogic {
     //refresh di ui-nya
    update();
   }
-  void handleTextField(String pertanyaanCode, String newValue){
-    debugPrint("newValue " + newValue);
+
+  void clickRadioButton(String id_value, String pertanyaanCode, String newValue){
+    state.hashRadio![id_value] = newValue;
     state.hashSemua![pertanyaanCode] = newValue;
-    debugPrint("nilai last " + state.hashSemua![pertanyaanCode]!);
+    debugPrint( pertanyaanCode + " " + state.hashSemua![pertanyaanCode]!);
+    debugPrint( state.hashRadio![id_value]);
+    //refresh di view-nya
+    update();
+  }
+
+  void clickSwitch(String pertanyaanCode, bool newValue){
+    if (newValue == true){
+      state.hashSemua![pertanyaanCode] = "1";
+    }else{
+      state.hashSemua![pertanyaanCode] = "0";
+    }
+    debugPrint(state.hashSemua![pertanyaanCode] );
+    //refresh di view
+    update();
+  }
+
+  void handleSlider(String pertanyaanCode, double newValue ){
+    //ingat, slider di fluter itu rangenya 100, bukan 10, jadi yang diset ke hashSemua itu dibagi 10
+    double baru = newValue/10; //simpan value baru dibagi dengan 10 pada hashSemua, bukan hashSlider
+    state.hashSlider![pertanyaanCode] = newValue.toString(); //disimpan disini
+    state.hashSemua![pertanyaanCode] = baru.toString(); //hashse
+    debugPrint("nilai " + pertanyaanCode + " : " + state.hashSemua![pertanyaanCode]!);
+    //refresh di view
+    update();
+  }
+
+  void handleTextField(String pertanyaanCode, String newValue){
+    state.hashSemua![pertanyaanCode] = newValue;
+    debugPrint("nilai " + pertanyaanCode + " : " + state.hashSemua![pertanyaanCode]!);
   }
 
   // Widget renderPertanyaan(){
@@ -195,6 +224,7 @@ class KuisionerLogic extends BaseLogic {
   // }
 
   void getPertanyaan() async {
+    state.nomor_pertanyaan = 0;
     load_get_kuisioner.value = true;
     final pertanyaanRespon = await getService<PertanyaanService>()?.getPertanyaan();
 
@@ -209,6 +239,58 @@ class KuisionerLogic extends BaseLogic {
       //jadi dilakuin di logicnya, untuk setiap view model
       obxPertanyaan.value.data!.forEach((a) {
 
+        //counter untuk nomor pertanyaan
+        state.nomor_pertanyaan += 1;
+        a.pertanyaan!.pERTANYAAN = state.nomor_pertanyaan!.toString() + ". " + a.pertanyaan!.pERTANYAAN!;
+
+        //untuk setiap pertanyaan TextBox
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "1" || a.pertanyaan!.iDFORMAT == "2"){
+          if (a.subPertanyaan == null || a.subPertanyaan!.isEmpty){
+            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "";
+          }else{
+            a.subPertanyaan!.forEach((sub) {
+              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "";
+            });
+          }
+        }
+
+        //untuk setiap pertanyaan Slider
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "5"){
+          if (a.subPertanyaan == null || a.subPertanyaan!.isEmpty){ //226
+            state.hashSlider![a.pertanyaan!.pERTANYAANCODE!] = "10";
+            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "1";
+          }else{ //252
+            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
+            a.subPertanyaan!.forEach((sub) {
+              state.hashSlider![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "10";
+              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "1";
+            });
+          }
+        }
+
+        //untuk setiap pertanyaan YesNo atau Switch
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "6"){
+          if (a.subPertanyaan == null){ //184
+            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "0";
+          }else{ //199
+            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
+            a.subPertanyaan!.forEach((sub) {
+              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "0";
+            });
+          }
+        }
+
+
+
+
         //untuk setiap pertanyaan Checklist atau Choicechip
         //=================================================
         //=================================================
@@ -221,10 +303,13 @@ class KuisionerLogic extends BaseLogic {
               if (a.subPertanyaan![0].templateJawaban == null){
 
               }else{
-                state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "-";
+                state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "";
               }
             }else{
               a.subPertanyaan!.forEach((sub) {
+                //simpan jawaban user di hash
+                //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+                //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
                 state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "";
               });
             }
@@ -244,9 +329,57 @@ class KuisionerLogic extends BaseLogic {
             }
           }
         }
+
+        //untuk setiap pertanyaan RadioGroup
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "4"){
+          if (a.subPertanyaan![0].templateJawaban == null){ //299
+
+          }else{
+            //jika ada template jawaban, tapi tdk ada sub pertanyaan
+            if (a.subPertanyaan!.length == 1 && a.subPertanyaan![0].labelPertanyaan == null ){ //304
+              if (a.subPertanyaan![0].templateJawaban == null){ //305
+
+              }else{
+                state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = ""; //308
+              }
+            }else{ //335
+              a.subPertanyaan!.forEach((sub) {
+                //simpan jawaban user saat user memilih
+                //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+                //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
+                state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "";
+              });
+            }
+          }
+
+          //cek ada berapa jumlah array sub pertanyaan
+          //jika tidak ada, hashRadio di set dengan pertanyaan_code
+          if (a.subPertanyaan!.isEmpty || a.subPertanyaan!.length == 0){
+            state.hashRadio![a.pertanyaan!.pERTANYAANCODE!] = "";
+          }else{
+            //jika ada array sub pertanyaan
+            //hashRadio di set dengan id value
+            for (var i in a.subPertanyaan!){
+              //simpan setiap id value di sini ke dalam hashRadio
+              state.hashRadio![i.labelPertanyaan!.iDVALUE!] = "";
+            }
+          }
+
+        }
+
       });
     }
     load_get_kuisioner.value = false;
+  }
+
+  void submit() {
+    debugPrint("======================================");
+    debugPrint("before submit");
+    state.hashSemua!.keys.forEach((element) {
+      debugPrint(element + " " + state.hashSemua![element]!);
+    });
   }
 
   void cekKuisioner() async {
