@@ -1,4 +1,4 @@
-import 'dart:ffi';
+import 'dart:convert';
 
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
@@ -6,16 +6,17 @@ import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/ChoicechipModel.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/PertanyaanRespon.dart' as pertanyaan;
+import 'package:jmcare/model/api/SubmitjawabanRequest.dart';
 import 'package:jmcare/screens/antrian/kuisioner/state.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/service/CekkuisionerService.dart';
 import 'package:jmcare/service/PertanyaanService.dart';
 import 'package:jmcare/service/Service.dart';
+import 'package:jmcare/service/SubmitjawabanService.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:flutter/material.dart';
 import '../../../model/api/PertanyaanRespon.dart';
-
 
 class KuisionerLogic extends BaseLogic {
 
@@ -100,139 +101,28 @@ class KuisionerLogic extends BaseLogic {
     debugPrint("nilai " + pertanyaanCode + " : " + state.hashSemua![pertanyaanCode]!);
   }
 
-  // Widget renderPertanyaan(){
-  //   final respon = obxPertanyaan.value.data;
-  //   return  ListView.separated(
-  //     padding: const EdgeInsets.all(0),
-  //     separatorBuilder: (context, index){
-  //       return const Divider(
-  //         color: Colors.grey,
-  //       );
-  //     },
-  //     itemBuilder: (context, index){
-  //
-  //       return Card(
-  //         child: Container(
-  //           padding: const EdgeInsets.all(10),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.center,
-  //             children: [
-  //               Text(respon[index].pertanyaan!.pERTANYAAN!),
-  //
-  //               respon[index].pertanyaan!.iDFORMAT == "1" || respon[index].pertanyaan!.iDFORMAT == "2"
-  //                   ? respon[index].subPertanyaan.isNull //baris 379
-  //                       ? Builder(builder: (context){
-  //                         state.hashSemua![respon[index].pertanyaan!.pERTANYAANCODE!] = '';
-  //                           return TextField(
-  //                             onChanged: (s){
-  //                               handleTextField(respon[index].pertanyaan!.pERTANYAANCODE!, s);
-  //                             },
-  //                           );
-  //                         })
-  //                       :  Column(
-  //                           children: [
-  //                               Builder(builder: (context){
-  //                                   for (var i in respon[index].subPertanyaan!){
-  //                                     //simpan jawaban kalau user mengetik
-  //                                     //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
-  //                                     //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
-  //                                     state.hashSemua![respon[index].pertanyaan!.pERTANYAANCODE! + ";" + i.labelPertanyaan!.iDVALUE!] = "";
-  //                                     return Column(
-  //                                       children: [
-  //                                         Text(i.labelPertanyaan!.vALUE!),
-  //                                         TextField(
-  //                                           onChanged: (s){
-  //                                             handleTextField(respon[index].pertanyaan!.pERTANYAANCODE! + ";" + i.labelPertanyaan!.iDVALUE!, s);
-  //                                           },
-  //                                         )
-  //                                       ],
-  //                                     );
-  //                                   }
-  //                                   return Container();
-  //                             })
-  //                           ],
-  //                         )
-  //                   : Container(),
-  //
-  //               respon[index].pertanyaan!.iDFORMAT == "3" //baris 460
-  //                   ? respon[index].subPertanyaan == null //baris 462
-  //                     ? Container()                       //baris 463 (kosong if else-nya)
-  //                     : (respon[index].subPertanyaan!.length == 1 && respon[index].subPertanyaan![0].labelPertanyaan == null ) //baris 466
-  //                       ? //baris 467
-  //                         (respon[index].subPertanyaan![0].templateJawaban == null)
-  //                         ? Container()
-  //                         : // baris 470
-  //                         Builder(builder: (context){
-  //                           state.hashSemua![respon[index].pertanyaan!.pERTANYAANCODE!] = "";
-  //                           for ( var i in respon[index].subPertanyaan![0].templateJawaban! ){
-  //                             choiceModels.add(ChoicechipModel(id: i.iDOPSI!, selected: false));
-  //                           }
-  //
-  //                             return Wrap(
-  //                                 spacing: 5.0,
-  //                                 children: [
-  //                                   for ( var i in respon[index].subPertanyaan![0].templateJawaban! )
-  //                                     ChoiceChip(
-  //                                         label: Text(i.vALUEJAWABAN!),
-  //                                         selected: choiceModels.where((e) => e.id == i.iDOPSI!).first.selected!,
-  //                                         onSelected: (newValue){
-  //                                           clickChoiceChip(i.iDOPSI!);
-  //                                         }
-  //                                     )
-  //                                 ],
-  //                               );
-  //                         })
-  //                       : //baris 520
-  //                         respon[index].subPertanyaan == null
-  //                             ? Container()
-  //                             : Column(
-  //                                 children: [
-  //                                   for ( var i in respon[index].subPertanyaan! )
-  //                                     Wrap(
-  //                                       spacing: 5.0,
-  //                                       children: [
-  //                                         for ( var j in i.templateJawaban! )
-  //                                           ChoiceChip(
-  //                                               label: Text(j.vALUEJAWABAN!),
-  //                                               selected: false
-  //                                           )
-  //                                       ],
-  //                                     )
-  //                                 ],
-  //                               )
-  //                   : Container(),
-  //
-  //               respon[index].pertanyaan!.iDFORMAT == "4"
-  //                   ? Text("Radio group")
-  //                   : Container(),
-  //
-  //               respon[index].pertanyaan!.iDFORMAT == "5"
-  //                   ? Text("Range slider")
-  //                   : Container(),
-  //
-  //               respon[index].pertanyaan!.iDFORMAT == "6"
-  //                   ? Text("Switch")
-  //                   : Container(),
-  //
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //     itemCount: respon!.length,
-  //   );
-  // }
-
   void getPertanyaan() async {
+    //ini untuk nomor pertanyaan yang didepan pertanyaan
     state.nomor_pertanyaan = 0;
+    //loading animation
     load_get_kuisioner.value = true;
+    //hit api untuk get pertanyaan
     final pertanyaanRespon = await getService<PertanyaanService>()?.getPertanyaan();
-
-
+    //jika hit api gagal
     if (pertanyaanRespon is PertanyaanError){
       Fungsi.errorToast("Tidak dapat memproses data kuisioner");
     }else{
+      //jika hit api berhasil
       obxPertanyaan.value = pertanyaanRespon!;
+      //sesudah hit api, yang dilakukan di logic disini adalah...
+      //membuat variabel anak map untuk setiap pertanyaan => lihat variabel state.hashSemua
+      //harus looping setiap pertanyaan
+      //kalau pertanyaan tidak ada sub pertanyaan => state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = ""
+      //kalau pertanyaan ada sub pertanyaan =>  state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "";
+      //jadi kalau survey disubmit, state.hashSemua tinggal dilooping, lalu diinsert ke tabel [JMPMFI_Mysystem].[dbo].[CS_SURVEY_PELANGGAN]
+      //pertanyaan_code masuk field PERTANYAAN_CODE, idVALUE masuk field VALUE_ID
+      //jadi setiap pertanyaan code ada variabelnya
+
 
       //semua looping dibawah ini nggak bisa dilakuin di view
       //karena semua pakai ternary
@@ -247,7 +137,7 @@ class KuisionerLogic extends BaseLogic {
         //=================================================
         //=================================================
         if (a.pertanyaan!.iDFORMAT == "1" || a.pertanyaan!.iDFORMAT == "2"){
-          if (a.subPertanyaan == null || a.subPertanyaan!.isEmpty){
+          if (a.subPertanyaan == null){
             state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "";
           }else{
             a.subPertanyaan!.forEach((sub) {
@@ -255,41 +145,6 @@ class KuisionerLogic extends BaseLogic {
             });
           }
         }
-
-        //untuk setiap pertanyaan Slider
-        //=================================================
-        //=================================================
-        if (a.pertanyaan!.iDFORMAT == "5"){
-          if (a.subPertanyaan == null || a.subPertanyaan!.isEmpty){ //226
-            state.hashSlider![a.pertanyaan!.pERTANYAANCODE!] = "10";
-            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "1";
-          }else{ //252
-            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
-            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
-            a.subPertanyaan!.forEach((sub) {
-              state.hashSlider![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "10";
-              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "1";
-            });
-          }
-        }
-
-        //untuk setiap pertanyaan YesNo atau Switch
-        //=================================================
-        //=================================================
-        if (a.pertanyaan!.iDFORMAT == "6"){
-          if (a.subPertanyaan == null){ //184
-            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "0";
-          }else{ //199
-            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
-            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
-            a.subPertanyaan!.forEach((sub) {
-              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "0";
-            });
-          }
-        }
-
-
-
 
         //untuk setiap pertanyaan Checklist atau Choicechip
         //=================================================
@@ -330,17 +185,16 @@ class KuisionerLogic extends BaseLogic {
           }
         }
 
+
         //untuk setiap pertanyaan RadioGroup
         //=================================================
         //=================================================
         if (a.pertanyaan!.iDFORMAT == "4"){
           if (a.subPertanyaan![0].templateJawaban == null){ //299
-
           }else{
             //jika ada template jawaban, tapi tdk ada sub pertanyaan
             if (a.subPertanyaan!.length == 1 && a.subPertanyaan![0].labelPertanyaan == null ){ //304
               if (a.subPertanyaan![0].templateJawaban == null){ //305
-
               }else{
                 state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = ""; //308
               }
@@ -366,20 +220,119 @@ class KuisionerLogic extends BaseLogic {
               state.hashRadio![i.labelPertanyaan!.iDVALUE!] = "";
             }
           }
-
         }
+
+        //untuk setiap pertanyaan Slider
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "5"){
+          if (a.subPertanyaan == null || a.subPertanyaan!.isEmpty){ //226
+            state.hashSlider![a.pertanyaan!.pERTANYAANCODE!] = "10";
+            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "1";
+          }else{ //252
+            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
+            a.subPertanyaan!.forEach((sub) {
+              state.hashSlider![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "10";
+              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "1";
+            });
+          }
+        }
+
+        //untuk setiap pertanyaan YesNo atau Switch
+        //=================================================
+        //=================================================
+        if (a.pertanyaan!.iDFORMAT == "6"){
+          if (a.subPertanyaan == null){ //184
+            state.hashSemua![a.pertanyaan!.pERTANYAANCODE!] = "0";
+          }else{ //199
+            //kalau ada subpertanyaan, hash dikasih tanda ; digabung IDvalue, nanti waktu dilempar ke API
+            //displit, supaya bisa masuk column PERTANYAAN_CODE dan VALUE_ID
+            a.subPertanyaan!.forEach((sub) {
+              state.hashSemua![a.pertanyaan!.pERTANYAANCODE! + ";" + sub.labelPertanyaan!.iDVALUE!] = "0";
+            });
+          }
+        }
+
+
+
+
+
 
       });
     }
     load_get_kuisioner.value = false;
   }
 
-  void submit() {
-    debugPrint("======================================");
-    debugPrint("before submit");
-    state.hashSemua!.keys.forEach((element) {
-      debugPrint(element + " " + state.hashSemua![element]!);
+  void submit() async {
+    Get.defaultDialog(
+      radius: 10.0,
+      title: "Kuisioner Antrian",
+      barrierDismissible: false,
+      content: const Padding(
+        padding: EdgeInsets.all(10),
+        child: Text("Apakah Anda akan mengirimkan jawaban kuisioner ini?")
+      ),
+      textCancel: "Tidak",
+      textConfirm: "Ya",
+      onCancel: (){
+
+      },
+      onConfirm: () {
+        Get.back();
+        kirimJawabanKuisioner();
+      }
+    );
+  }
+
+  void kirimJawabanKuisioner() async {
+    load_get_kuisioner.value = true;
+    await Future.delayed(const Duration(seconds: 1));
+    //get user id
+    final authStorage = await getStorage<LoginRespon>();
+    final userID = authStorage.data!.loginUserId;
+
+    List<SubmitjawabanRequest> requests = List<SubmitjawabanRequest>.empty(growable: true);
+    SubmitjawabanRequest request;
+
+    state.hashSemua!.keys.forEach((e) {
+      //pisahkan kalau ada pertanyaan yang pakai ;
+      final splitted = e.split(";");
+      if (splitted.isEmpty || splitted.length == 1){
+        request = SubmitjawabanRequest(
+            iDANTRIAN: state.id_antrian,
+            uSERID: int.parse(userID!),
+            pERTANYAANCODE: e,
+            vALUEID: "",
+            jAWABAN: state.hashSemua![e]
+        );
+      }else{
+        final pertanyaan_code = splitted[0].toString();
+        final value_id = splitted[1].toString();
+        request = SubmitjawabanRequest(
+            iDANTRIAN: state.id_antrian,
+            uSERID: int.parse(userID!),
+            pERTANYAANCODE: pertanyaan_code,
+            vALUEID: value_id,
+            jAWABAN: state.hashSemua![e]
+        );
+      }
+      requests.add(request);
     });
+
+    //convert json array ke string
+    final sRequest = jsonEncode(requests);
+    //hit api submit jawaban
+    final baseRespon = await getService<SubmitjawabanService>()?.doSubmit(sRequest);
+    load_get_kuisioner.value  = false;
+
+    if (baseRespon is BaseError){
+      Fungsi.errorToast("Tidak dapat mengirimkan jawaban kuisioner!");
+    }else{
+      Get.offAllNamed(Konstan.rute_home);
+      Fungsi.suksesToast("Jawaban kuisioner berhasil dikirimkan. Terima kasih atas partisipasi Anda.");
+    }
+
   }
 
   void cekKuisioner() async {
@@ -401,6 +354,8 @@ class KuisionerLogic extends BaseLogic {
         getPertanyaan();
       }
     }
-
   }
+
+
+
 }

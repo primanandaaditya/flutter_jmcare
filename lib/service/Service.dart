@@ -25,6 +25,7 @@ import 'package:jmcare/service/RiwayatantrianService.dart';
 import 'package:jmcare/service/SearchuserService.dart';
 import 'package:jmcare/service/SlideService.dart';
 import 'package:jmcare/service/SmsService.dart';
+import 'package:jmcare/service/SubmitjawabanService.dart';
 import 'package:jmcare/service/VersiService.dart';
 import 'BaseService.dart';
 import 'LoginService.dart';
@@ -67,7 +68,8 @@ class Service {
       RiwayatantrianService: RiwayatantrianService.instance,
       KonfirmasikedatanganService: KonfirmasikedatanganService.instance,
       CekkuisionerService: CekkuisionerService.instance,
-      PertanyaanService: PertanyaanService.instance
+      PertanyaanService: PertanyaanService.instance,
+      SubmitjawabanService: SubmitjawabanService.instance
     };
   }
 

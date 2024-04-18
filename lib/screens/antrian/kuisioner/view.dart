@@ -134,7 +134,6 @@ class KuisionerScreen extends StatelessWidget {
                                                               }
                                                           )
                                                       ],
-
                                                     )
                                                 : Column(
                                                     children: [

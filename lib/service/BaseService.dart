@@ -62,6 +62,23 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
+  Future<T?> postRawString<T>(String url, String body) async {
+    client.options.baseUrl = Endpoint.base_url;
+    final response = await _wrapRequest(() => client.post(url,
+        data: body,
+        options: Options(
+          headers: {
+            'Content-Type': 'text/plain',
+            'Accept': '*/*',
+            'merchantkey': Konstan.tag_merchant_key,
+            'authorization': basicAuth
+          },
+        ))
+    );
+    return models.ModelGenerator.resolve<T>(response.data);
+  }
+
+
   Future<T?> postQuery<T>(String url, {Map<String, dynamic>? body}) async {
     client.options.baseUrl = Endpoint.base_url;
     final response = await _wrapRequest(() => client.post(url,
