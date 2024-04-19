@@ -9,9 +9,24 @@ import 'package:jmcare/model/api/PilihkontrakRespon.dart' as pilihkontrak;
 import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:jmcare/model/api/RiwayatantrianRespon.dart' as riwayatantrian;
+import 'package:jmcare/model/api/AntriansekarangRespon.dart' as antriansekarang;
 import 'package:get/get.dart';
 
 class Komponen{
+
+  static Widget pullDowntoRefresh(){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Icon(
+            Icons.refresh,
+          color: Colors.green,
+        ),
+        Text("Pull down to refresh"),
+      ],
+    );
+  }
 
   static Widget getCardOption({
     required String title,
@@ -194,6 +209,30 @@ class Komponen{
               ],
             )
         )
+    );
+  }
+
+  static Widget getCardAntrianSekarang(antriansekarang.Data respon, {bool? showAnda}){
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          children: [
+            const Icon(Icons.person),
+            const VerticalDivider(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text( "Nama \t\t\t\t\t\t\t\t\t\t: ${respon.nAMAPENGUNJUNG!}"),
+                Text( "No. antrian \t: ${respon.nOANTRIAN!}"),
+                Text(respon.sTATUSPROGRESS!, style: const TextStyle(fontWeight: FontWeight.bold),)
+              ],
+            ),
+            const Spacer(),
+            showAnda == true ? const RawChip(label: Text("ANDA",style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,) : Container()
+          ],
+        )
+      ),
     );
   }
 

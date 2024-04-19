@@ -21,6 +21,7 @@ class AntrianState {
   String idCabangTujuan = "";
   String isBranch = "0";
   String branch_id = "";
+  String userID = "";
 
   AntrianState(){
     formKey = GlobalKey<FormState>();

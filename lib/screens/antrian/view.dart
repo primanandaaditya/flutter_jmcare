@@ -158,13 +158,25 @@ class AntrianScreen extends StatelessWidget {
                       child:  Obx(
                                 () => logic.is_loading.value
                                       ? Komponen.getLoadingWidget()
-                                      : ListView.builder(
-                                          padding: const EdgeInsets.all(20),
-                                          itemCount: logic.riwayats.value.data!.length,
-                                          itemBuilder: (BuildContext context, int index){
-                                            return Komponen.getCardRiwayatantrian(logic.riwayats.value.data![index]);
-                                          }
-                          )
+                                      : RefreshIndicator(
+                                            child: Column(
+                                              children: [
+                                                Komponen.pullDowntoRefresh(),
+                                                Expanded(
+                                                    child: ListView.builder(
+                                                        padding: const EdgeInsets.all(20),
+                                                        itemCount: logic.riwayats.value.data!.length,
+                                                        itemBuilder: (BuildContext context, int index){
+                                                          return Komponen.getCardRiwayatantrian(logic.riwayats.value.data![index]);
+                                                        }
+                                                    ),
+                                                )
+                                              ],
+                                            ),
+                                            onRefresh: () async {
+                                              logic.getRiwayatAntrian();
+                                            }
+                                        )
                       ),
                     ),
 
@@ -172,9 +184,82 @@ class AntrianScreen extends StatelessWidget {
                     //tab ketiga => Antrian sekarang
                     //===============================
                     //===============================
-                    Center(
-                      child: Text("Tiga"),
-                    )
+                    Container(
+                      padding: const EdgeInsets.all(0),
+                      child:  Obx(
+                              () => logic.is_loading.value
+                              ? Komponen.getLoadingWidget()
+                              : RefreshIndicator(
+                                child: Column(
+                                  children: [
+                                    Komponen.pullDowntoRefresh(),
+                                    const Padding(padding: EdgeInsets.only(top: 20)),
+                                    SizedBox(
+                                      height: 230,
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                              "NOMOR ANTRIAN ANDA",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                          Text(
+                                              logic.obsNoAntrianAnda.value,
+                                            style: const TextStyle(
+                                              fontSize: 40,
+                                              color: Colors.green
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 150.0,
+                                            height: 150.0,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: Colors.green,
+                                                width: 8.0,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  const Text("Sisa Antrian"),
+                                                  Text(
+                                                      logic.obsSisaAntrian.value.toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 50,
+                                                      fontWeight: FontWeight.bold
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: ListView.builder(
+                                          padding: const EdgeInsets.all(20),
+                                          itemCount: logic.obsRowcountAntriansekarang.value,
+                                          itemBuilder: (BuildContext context, int index){
+                                            return Komponen.getCardAntrianSekarang(
+                                                logic.obsAntrianSekarang.value.data![index],
+                                                showAnda: logic.obsAntrianSekarang.value.data![index].iDUSERJMCARE.toString() == state.userID.toString()
+                                            );
+                                          }
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                onRefresh: () async {
+                                  logic.getAntrianSekarang();
+                                }
+                          )
+                      ),
+                    ),
                   ],
                 ),
               )

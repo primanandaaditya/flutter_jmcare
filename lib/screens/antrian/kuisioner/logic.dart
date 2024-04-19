@@ -356,6 +356,4 @@ class KuisionerLogic extends BaseLogic {
     }
   }
 
-
-
 }

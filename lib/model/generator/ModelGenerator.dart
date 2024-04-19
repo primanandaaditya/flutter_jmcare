@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:jmcare/model/api/AgreementcardRespon.dart';
+import 'package:jmcare/model/api/AntriansekarangRespon.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/model/api/CabangRespon.dart';
 import 'package:jmcare/model/api/DownloadRespon.dart';
@@ -50,7 +49,8 @@ class ModelGenerator {
       DownloadRespon: (json) => DownloadRespon.fromJson(json),
       KategoriRespon: (json) => KategoriRespon.fromJson(json),
       RiwayatantrianRespon: (json) => RiwayatantrianRespon.fromJson(json),
-      PertanyaanRespon: (json) => PertanyaanRespon.fromJson(json)
+      PertanyaanRespon: (json) => PertanyaanRespon.fromJson(json),
+      AntriansekarangRespon: (json) => AntriansekarangRespon.fromJson(json)
     };
   }
 

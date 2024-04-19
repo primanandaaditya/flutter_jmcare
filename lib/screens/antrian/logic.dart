@@ -7,10 +7,12 @@ import 'package:jmcare/screens/antrian/state.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:jmcare/service/AddantrianService.dart';
+import 'package:jmcare/service/AntriansekarangService.dart';
 import 'package:jmcare/service/RiwayatantrianService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../../helper/Fungsi.dart';
+import '../../model/api/AntriansekarangRespon.dart';
 import '../../model/api/LoginRespon.dart';
 import '../../model/api/PilihkontrakRespon.dart';
 import '../../service/PilihkontrakService.dart';
@@ -29,11 +31,15 @@ class AntrianLogic extends BaseLogic{
   var ddKategori = List<DropdownMenuItem>.empty(growable: true).obs;
   var idxDDKategori = "".obs;
   var loadSubmit = false.obs;
-  String userID = "";
+  // String userID = "";
   String isDebitur = "";
   String nama = "";
   var obsIsDebitur = false.obs;
   var riwayats = RiwayatantrianRespon().obs;
+  var obsAntrianSekarang = AntriansekarangRespon().obs;
+  var obsRowcountAntriansekarang = 0.obs;
+  var obsNoAntrianAnda = "".obs;
+  var obsSisaAntrian = 0.obs;
 
   @override
   void onInit() {
@@ -46,11 +52,13 @@ class AntrianLogic extends BaseLogic{
     getDetailUser();
     //get riwayat antrian
     getRiwayatAntrian();
+    //get antrian sekarang
+    getAntrianSekarang();
   }
 
   void getDetailUser() async {
     final authStorage = await getStorage<LoginRespon>();
-    userID = authStorage.data!.loginUserId!;
+    state.userID = authStorage.data!.loginUserId!;
     isDebitur = authStorage.data!.jenisdebitur!;
     nama = authStorage.data!.namaUser!;
     if (isDebitur.replaceAll(" ", "") == "1"){
@@ -300,7 +308,7 @@ class AntrianLogic extends BaseLogic{
 
     loadSubmit.value = true;
     //jika debitur
-    if (isDebitur!.replaceAll(" ", "") == "1"){
+    if (isDebitur.replaceAll(" ", "") == "1"){
       if (idxDdNomorKontrak.value.isEmpty){
         Fungsi.warningToast("Nomor kontrak harus dipilih");
         loadSubmit.value = false;
@@ -336,7 +344,7 @@ class AntrianLogic extends BaseLogic{
         return;
       }
       final baseRespon = await getService<AddantrianService>()?.addAntrian(
-          userID,
+          state.userID,
           idxDdNomorKontrak.value.toString(),
           state.tecNama!.text.toString(),
           state.tecNama!.text.toString(),
@@ -385,7 +393,7 @@ class AntrianLogic extends BaseLogic{
         return;
       }
       final baseRespon = await getService<AddantrianService>()?.addAntrian(
-          userID,
+          state.userID,
           "",
           nama,
           nama,
@@ -472,11 +480,11 @@ class AntrianLogic extends BaseLogic{
     is_loading.value = true;
 
     final authStorage = await getStorage<LoginRespon>();
-    userID = authStorage.data!.loginUserId!;
+    state.userID = authStorage.data!.loginUserId!;
     isDebitur = authStorage.data!.jenisdebitur!;
     nama = authStorage.data!.namaUser!;
 
-    final riwayat = await getService<RiwayatantrianService>()?.getRiwayatantrian(userID);
+    final riwayat = await getService<RiwayatantrianService>()?.getRiwayatantrian(state.userID);
     if (riwayat is RiwayatantrianError){
       Fungsi.errorToast("Tidak dapat memproses riwayat antrian");
     }else{
@@ -485,8 +493,34 @@ class AntrianLogic extends BaseLogic{
     is_loading.value = false;
   }
 
+  void getAntrianSekarang() async {
+    is_loading.value = true;
+    final authStorage = await getStorage<LoginRespon>();
+    state.userID = authStorage.data!.loginUserId!;
+    final antrian_sekarang = await getService<AntriansekarangService>()!.getAntrianSekarang(state.userID);
+    if (antrian_sekarang is AntriansekarangError){
+      Fungsi.errorToast("Tidak dapat memproses data antrian sekarang!");
+    }else{
+      obsAntrianSekarang.value = antrian_sekarang!;
+      obsRowcountAntriansekarang.value = antrian_sekarang.data!.length;
 
+      //cari nomor antrian Anda
+      var filter = obsAntrianSekarang.value.data!.where((e) => e.iDUSERJMCARE == int.parse(state.userID));
+      if (filter == null){
 
+      }else{
+        try{
+          final p = filter.first;
+          obsNoAntrianAnda.value = p.nOANTRIAN!;
+          obsSisaAntrian.value = obsAntrianSekarang.value.data!.indexOf(p);
+        }catch(e){
+
+        }
+
+      }
+    }
+    is_loading.value = false;
+  }
 }
 
 

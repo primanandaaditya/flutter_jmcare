@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/service/AddantrianService.dart';
 import 'package:jmcare/service/AgreementcardService.dart';
+import 'package:jmcare/service/AntriansekarangService.dart';
 import 'package:jmcare/service/CabangService.dart';
 import 'package:jmcare/service/CekkuisionerService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
@@ -69,7 +70,8 @@ class Service {
       KonfirmasikedatanganService: KonfirmasikedatanganService.instance,
       CekkuisionerService: CekkuisionerService.instance,
       PertanyaanService: PertanyaanService.instance,
-      SubmitjawabanService: SubmitjawabanService.instance
+      SubmitjawabanService: SubmitjawabanService.instance,
+      AntriansekarangService: AntriansekarangService.instance
     };
   }
 
