@@ -15,8 +15,23 @@ abstract class BaseService {
 
   String username = "saya#4dalahus3r*jmpmfi!";
   String password = "jmpmf!@2022*api=keren";
-  String basicAuth =
+  static String basicAuth =
       'Basic ' + base64Encode(utf8.encode('saya#4dalahus3r*jmpmfi!' + ':' + 'jmpmf!@2022*api=keren'));
+
+  static Map<String, String> headerJSON = {
+     'Content-Type': 'application/json',
+     'Accept': '*/*',
+     'merchantkey': Konstan.tag_merchant_key,
+     'authorization': basicAuth
+   };
+
+  static Map<String, String> headerPlain = {
+     'Content-Type': 'text/plain',
+     'Accept': '*/*',
+     'merchantkey': Konstan.tag_merchant_key,
+     'authorization': basicAuth
+   };
+
   static late Dio client;
 
   static initialize(Dio newClient) async {

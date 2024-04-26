@@ -22,6 +22,11 @@ class AntrianState {
   String isBranch = "0";
   String branch_id = "";
   String userID = "";
+  String htmlString = "Ketentuan pengambilan legalisir FC BPKB : <br/>"+
+  "⋅ Menunjukkan keaslian identitas kontrak<br/>"+
+  "⋅ Membawa surat kuasa bila diwakilkan<br/>"+
+  "⋅ Tidak memiliki tunggakan angsuran<br/>"+
+  "⋅ Dikenakan biaya pada saat pengambilan legalisir";
 
   AntrianState(){
     formKey = GlobalKey<FormState>();

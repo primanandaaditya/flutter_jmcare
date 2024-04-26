@@ -1,5 +1,10 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
@@ -9,9 +14,8 @@ import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/model/session/RegisterpinModel.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
-import 'package:jmcare/service/DeleteakunService.dart';
-import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../helper/Komponen.dart';
 import '../../model/api/SlideshowRespon.dart';
@@ -20,6 +24,18 @@ class BaseLogic extends GetxController{
 
   var is_loading = false.obs;
   final fungsi = Fungsi();
+
+
+  void askPermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+      Permission.storage,
+      Permission.notification,
+      Permission.scheduleExactAlarm
+    ].request();
+  }
+
+
 
   Future<bool> sudahRegisterPIN() async {
     final registerPINStorage = await getStorage<RegisterpinModel>();

@@ -1,8 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:jmcare/helper/Endpoint.dart';
+import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
+import 'package:jmcare/model/api/NotifikasiRespon.dart';
+import 'package:jmcare/model/api/SingleNotifikasiRespon.dart';
 import 'package:jmcare/screens/agreementcard/view.dart';
 import 'package:jmcare/screens/antrian/detailriwayat/view.dart';
 import 'package:jmcare/screens/antrian/kuisioner/view.dart';
@@ -31,12 +38,23 @@ import 'package:jmcare/screens/resetpassword/webview/view.dart';
 import 'package:jmcare/screens/searchuser/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
+import 'package:jmcare/service/BackgroundService.dart';
+import 'package:dio/dio.dart';
 import 'package:jmcare/service/BaseService.dart';
+import 'package:jmcare/service/NotifikasiService.dart';
 import 'package:jmcare/service/Service.dart';
+import 'package:jmcare/storage/storage.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'model/api/LoginRespon.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = DioOverrides();
+  await initializeService();
   runApp(const MyApp());
 }
 
@@ -103,3 +121,175 @@ class DioOverrides extends HttpOverrides{
   }
 }
 
+void askPermission() async {
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.location,
+    Permission.storage,
+    Permission.notification,
+    Permission.scheduleExactAlarm
+  ].request();
+}
+
+Future<void> initializeService() async {
+
+  askPermission();
+
+  final service = FlutterBackgroundService();
+
+  /// OPTIONAL, using custom notification channel id
+  const AndroidNotificationChannel channel = AndroidNotificationChannel(
+    'my_foreground', // id
+    'MY FOREGROUND SERVICE', // title
+    description:
+    'This channel is used for important notifications.', // description
+    importance: Importance.low, // importance must be at low or higher level
+  );
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  if (Platform.isIOS || Platform.isAndroid) {
+    await flutterLocalNotificationsPlugin.initialize(
+      const InitializationSettings(
+        iOS: DarwinInitializationSettings(),
+        android: AndroidInitializationSettings('ic_notifjmcare'),
+      ),
+      onDidReceiveNotificationResponse: (NotificationResponse notificationresponse){
+        Get.toNamed(Konstan.rute_kuisioner, arguments: {Konstan.tag_id_antrian: notificationresponse.payload} );
+      }
+    );
+  }
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+      AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await service.configure(
+    androidConfiguration: AndroidConfiguration(
+      onStart: onStart,
+      autoStart: true,
+      isForegroundMode: false,
+      notificationChannelId: 'my_foreground',
+      initialNotificationTitle: 'JM CARE',
+      initialNotificationContent: 'Initializing',
+      foregroundServiceNotificationId: 888,
+    ),
+    iosConfiguration: IosConfiguration(
+      // auto start service
+      autoStart: true,
+      // this will be executed when app is in foreground in separated isolate
+      onForeground: onStart,
+      // you have to enable background fetch capability on xcode project
+      onBackground: onIosBackground,
+    ),
+  );
+}
+
+@pragma('vm:entry-point')
+Future<bool> onIosBackground(ServiceInstance service) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
+  return true;
+}
+
+@pragma('vm:entry-point')
+void onStart(ServiceInstance service) async {
+  // Only available for flutter 3.0.0 and later
+  DartPluginRegistrant.ensureInitialized();
+  /// OPTIONAL when use custom notification
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  if (service is AndroidServiceInstance) {
+    service.on('setAsForeground').listen((event) {
+      service.setAsForegroundService();
+    });
+
+    service.on('setAsBackground').listen((event) {
+      service.setAsBackgroundService();
+    });
+  }
+
+  service.on('stopService').listen((event) {
+    service.stopSelf();
+  });
+
+  // bring to foreground
+  Timer.periodic(const Duration(seconds: 10), (timer) async {
+
+    print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
+    final storageAuth = await getStorage<LoginRespon>();
+    if(storageAuth.data?.loginUserId != null){
+
+      final userID = storageAuth.data!.loginUserId;
+      final dio = Dio();
+      dio.options.baseUrl = Endpoint.base_url;
+
+      //cek jam sekarang
+      //kalau 8-15 => waktu_notifikasi = 0, kalo tidak = 1
+      DateTime skr = DateTime.now();
+      final jam_skr = skr.hour;
+      int waktu_notifikasi = ( jam_skr >= 8 && jam_skr <= 17 ) ? 0 : 1;
+      final r = await dio.post(
+          Endpoint.TAG_ANTRIAN_NOTIFIKASI_KUISIONER,
+          data: jsonEncode({"id_user":userID,"waktu_notifikasi":waktu_notifikasi}),
+          options: Options(
+              headers: BaseService.headerPlain
+          )
+      );
+      print("respon " + r.data.toString());
+
+      //jika json respon tidak ada data, berarti tidak usah munculkan notif
+      if (r.data.toString() == "[]"){
+        print("Tidak ada data kuis");
+      }else{
+        print("Ada data kuis");
+        /// OPTIONAL for use custom notification
+        /// the notification id must be equals with AndroidConfiguration when you call configure() method.
+
+        //konvert respon jadi object
+        final hasil = (r.data as List).map((x) => SingleNotifikasiRespon.fromJson(x) ).toList();
+
+        //sesudah dikonvert, get first arraynya
+        final pertama = hasil.first;
+        final id_antrian =  pertama.iD;
+
+        flutterLocalNotificationsPlugin.show(
+          888,
+          'Antrian Online',
+          'Isi survey untuk meningkatkan kualitas kerja kami',
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'my_foreground',
+              'MY FOREGROUND SERVICE',
+              icon: 'ic_notifjmcare',
+              ongoing: true,
+            ),
+          ),
+          payload: id_antrian
+        );
+      }
+    }else{
+      print("Belum login");
+    }
+
+    // test using external plugin
+    final deviceInfo = DeviceInfoPlugin();
+    String? device;
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      device = androidInfo.model;
+    }
+    if (Platform.isIOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      device = iosInfo.model;
+    }
+    service.invoke(
+      'update',
+      {
+        "current_date": DateTime.now().toIso8601String(),
+        "device": device,
+      },
+    );
+  });
+}

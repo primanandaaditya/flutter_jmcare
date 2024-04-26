@@ -8,6 +8,7 @@ import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/HistoripoinRespon.dart';
 import 'package:jmcare/model/api/KategoriRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
+import 'package:jmcare/model/api/NotifikasiRespon.dart';
 import 'package:jmcare/model/api/OtpModel.dart';
 import 'package:jmcare/model/api/PaginationuserRespon.dart';
 import 'package:jmcare/model/api/PertanyaanRespon.dart';
@@ -50,7 +51,8 @@ class ModelGenerator {
       KategoriRespon: (json) => KategoriRespon.fromJson(json),
       RiwayatantrianRespon: (json) => RiwayatantrianRespon.fromJson(json),
       PertanyaanRespon: (json) => PertanyaanRespon.fromJson(json),
-      AntriansekarangRespon: (json) => AntriansekarangRespon.fromJson(json)
+      AntriansekarangRespon: (json) => AntriansekarangRespon.fromJson(json),
+      NotifikasiRespon: (json) => NotifikasiRespon.fromJson(json)
     };
   }
 

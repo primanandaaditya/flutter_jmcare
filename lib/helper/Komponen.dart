@@ -134,18 +134,38 @@ class Komponen{
                       image: AssetImage("assets/images/drawer_bg.png")
                   )
               ),
-              child:  Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                      onPressed: (){
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.close,
-                        color: Colors.white,
-                        size: 30,
+              child:  Stack(
+                children: [
+
+                  Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 180,
+                        height: 80,
+                        child: Card(
+                            elevation: 12.0,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Image.asset("assets/images/ic_logo_jaccs.png")
+                            )
+                        )
+                      )
+                  ),
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 30,
+                          )
                       )
                   )
+                ],
               )
           ),
 
@@ -163,14 +183,12 @@ class Komponen{
               onDeleteAccount();
             },
           ),
-
           Container(
             color: Colors.white,
             constraints: const BoxConstraints(
                 maxHeight: double.infinity
             ),
           )
-
         ],
       ),
     );
@@ -212,7 +230,10 @@ class Komponen{
     );
   }
 
-  static Widget getCardAntrianSekarang(antriansekarang.Data respon, {bool? showAnda}){
+  static Widget getCardAntrianSekarang(
+      antriansekarang.Data respon,
+      {bool? showAnda}
+      ){
     return Card(
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -223,13 +244,28 @@ class Komponen{
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text( "Nama \t\t\t\t\t\t\t\t\t\t: ${respon.nAMAPENGUNJUNG!}"),
+                //jika nomor antrian berawalan K atau C (input dari JMCARE)
+                //maka tampilkan baris nama customer
+                //selain itu hide
+                (respon.nOANTRIAN!.substring(0,1) == "K") || (respon.nOANTRIAN!.substring(0,1) == "C")
+                  ? showAnda == true
+                    //hanya menampilkan nama customer untuk login id yang bersangkutan
+                    //jika bukan idnya, hide nama customer
+                    ? Text( "Nama \t\t\t\t\t\t\t\t\t\t: ${respon.nAMAPENGUNJUNG!}")
+                    : Container()
+                  : Container(),
+
                 Text( "No. antrian \t: ${respon.nOANTRIAN!}"),
                 Text(respon.sTATUSPROGRESS!, style: const TextStyle(fontWeight: FontWeight.bold),)
               ],
             ),
             const Spacer(),
-            showAnda == true ? const RawChip(label: Text("ANDA",style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,) : Container()
+            showAnda == true ? const RawChip(
+              label: Text(
+                "ANDA",
+                style: TextStyle(color: Colors.white),),
+              backgroundColor: Colors.green
+            ) : Container()
           ],
         )
       ),
@@ -545,49 +581,6 @@ class Komponen{
               ],
             )
         )
-    );
-  }
-
-  static Widget getChildren_MPoint(BuildContext context){
-    List<Widget> hasil = List<Widget>.empty(growable: true);
-    hasil.add(const Spacer());
-    hasil.add(subMenu(context, "assets/images/gradecustomer.png", "Grade", "/hpoin"));
-    hasil.add(const Spacer());
-    hasil.add(const Spacer());
-    hasil.add(subMenu(context, "assets/images/redeem.png", "Redeem\npoint", "/redeem"));
-    hasil.add(const Spacer());
-    return Row(
-      children: hasil,
-    );
-  }
-
-  static Widget getChildren_SelfService(BuildContext context){
-    List<Widget> rowAtas = List<Widget>.empty(growable: true);
-    // rowAtas.add(const Spacer());
-    // rowAtas.add(subMenu(context, "assets/images/gradecustomer.png", "Topup\nPlafond", "/topupplafond"));
-    // rowAtas.add(const Spacer());
-    // rowAtas.add(subMenu(context, "assets/images/redeem.png", "Renewal\nAsuransi", "/renewalasuransi"));
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/redeem.png", "Jaringan\nKami", "/jaringankami"));
-    rowAtas.add(const Spacer());
-    return Row(
-      children: rowAtas,
-    );
-  }
-
-  static Widget getChildren_MService(BuildContext context){
-    List<Widget> rowAtas = List<Widget>.empty(growable: true);
-    // rowAtas.add(const Padding(padding: EdgeInsets.only(left: 20)));
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/gradecustomer.png", "Agreement\nCard", "/agreementcard"));
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/redeem.png", "Request\nCopy\nBPKB", "/copybpkb"));
-    rowAtas.add(const Spacer());
-    rowAtas.add(subMenu(context, "assets/images/redeem.png", "E-Polis", "/epolis"));
-    // rowAtas.add(const Padding(padding: EdgeInsets.only(right: 20)));
-    rowAtas.add(const Spacer());
-    return Row(
-      children: rowAtas,
     );
   }
 

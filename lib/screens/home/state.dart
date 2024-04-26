@@ -5,6 +5,7 @@ class HomeState {
 
   CarouselController? carouselController;
   String noKTP = "";
+  String isDebitur = "";
 
   HomeState(){
     carouselController = CarouselController();

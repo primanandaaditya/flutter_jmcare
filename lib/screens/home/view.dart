@@ -63,6 +63,8 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Komponen.getLogoPutih(),
                             const Spacer(),
+                            // const Spacer(),
+                            // const Spacer(),
                             Obx(() =>
                               logic.sdhLogin.value ?
                               //kalau sudah login, tampilkan loading grade
@@ -85,14 +87,27 @@ class HomeScreen extends StatelessWidget {
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text(logic.nama_user.value, style: const TextStyle(color: Colors.white, fontSize: 12),),
-                                              Row(
-                                                children:  [
-                                                  Text(logic.point.value.toString(), style: const
-                                                  TextStyle(color: Colors.white, fontSize: 10),),
-                                                  const Text(" point", style: TextStyle(color: Colors.white, fontSize: 8),),
-                                                ],
+                                              const Text(
+                                                  "Selamat datang, ",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10
+                                                ),
                                               ),
+                                              Text(
+                                                logic.nama_user.value,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12
+                                                ),
+                                              ),
+                                              // Row(
+                                              //   children:  [
+                                              //     Text(logic.point.value.toString(), style: const
+                                              //     TextStyle(color: Colors.white, fontSize: 10),),
+                                              //     const Text(" point", style: TextStyle(color: Colors.white, fontSize: 8),),
+                                              //   ],
+                                              // ),
                                             ],
                                           ),
                                           const Padding(padding: EdgeInsets.only(left: 25)),
@@ -101,6 +116,7 @@ class HomeScreen extends StatelessWidget {
                               )
                               //kalau belum login tampilkan Container kosongan
                                 : Container(),),
+                            // const Spacer()
                           ],
                         ),
 
@@ -110,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                               children: [
 
                                 Obx(() => (logic.is_loading.value || logic.arraySlideshow.value == null)
-                                    ? Komponen.getLoadingWidget()
+                                    ? SizedBox(height: 300, child: Komponen.getLoadingWidget()) //loading ditaruh di Sizedbox, biar ga ngegap kalo api bisa
                                     : Stack(
                                         children: [
                                           SizedBox(
@@ -200,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                                 Obx(
                                       () =>
                                       logic.is_loading.value || logic.arrayProduk.value == null
-                                          ? Komponen.getLoadingWidget()
+                                          ? SizedBox(height: 200, child: Komponen.getLoadingWidget())
                                           : Komponen.getProdukListView(logic.arrayProduk.value),
                                 ),
 
@@ -212,7 +228,7 @@ class HomeScreen extends StatelessWidget {
 
                                 Obx(
                                       () => logic.is_loading.value || logic.arrayPromo.value == null
-                                          ? Komponen.getLoadingWidget()
+                                          ? SizedBox(height: 200, child: Komponen.getLoadingWidget())
                                           : Komponen.getPromoListView(logic.arrayPromo.value)
                                 ),
 

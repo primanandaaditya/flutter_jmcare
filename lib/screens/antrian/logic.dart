@@ -22,6 +22,7 @@ import '../../model/api/KategoriRespon.dart' as modelKategori;
 import '../../model/api/CabangRespon.dart' as modelCabang;
 
 class AntrianLogic extends BaseLogic{
+
   final AntrianState state = AntrianState();
   var ddNomorKontrak = List<DropdownMenuItem>.empty(growable: true).obs;
   var idxDdNomorKontrak = "".obs;
@@ -521,6 +522,7 @@ class AntrianLogic extends BaseLogic{
     }
     is_loading.value = false;
   }
+
 }
 
 

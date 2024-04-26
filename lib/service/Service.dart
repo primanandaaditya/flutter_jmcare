@@ -14,6 +14,7 @@ import 'package:jmcare/service/HistoripoinService.dart';
 import 'package:jmcare/service/KategoriService.dart';
 import 'package:jmcare/service/KonfirmasikedatanganService.dart';
 import 'package:jmcare/service/LupapinService.dart';
+import 'package:jmcare/service/NotifikasiService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/PaginationuserService.dart';
@@ -71,7 +72,8 @@ class Service {
       CekkuisionerService: CekkuisionerService.instance,
       PertanyaanService: PertanyaanService.instance,
       SubmitjawabanService: SubmitjawabanService.instance,
-      AntriansekarangService: AntriansekarangService.instance
+      AntriansekarangService: AntriansekarangService.instance,
+      NotifikasiService: NotifikasiService.instance
     };
   }
 

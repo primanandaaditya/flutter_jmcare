@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:jmcare/helper/Komponen.dart';
 import 'package:jmcare/screens/antrian/logic.dart';
 import 'package:get/get.dart';
@@ -132,6 +133,10 @@ class AntrianScreen extends StatelessWidget {
                               controller: state.tecCabangTujuan,
                               onTap: () => logic.tapPilihCabang(),
                             ),
+
+                            const Padding(padding: EdgeInsets.only(top: 10)),
+
+                            Html(data: state.htmlString),
 
                             const Padding(padding: EdgeInsets.only(top: 10)),
 

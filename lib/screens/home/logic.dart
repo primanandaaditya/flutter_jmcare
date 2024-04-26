@@ -46,10 +46,16 @@ class HomeLogic extends BaseLogic{
   }
 
   void klikMenuMService(BuildContext context) async {
+    //get login dari session
     final authStorage = await getStorage<LoginRespon>();
+
+
     if (authStorage.data == null){
       Fungsi.toastBelumLogin();
     }else{
+      //kalo sdh login, cek apakah debitur atau bukan
+      //cek apakah yang login itu debitur atau bukan
+      state.isDebitur = authStorage.data!.jenisdebitur!.replaceAll(" ", "");
       Get.bottomSheet(
           FractionallySizedBox(
               widthFactor: 0.9,
@@ -81,26 +87,33 @@ class HomeLogic extends BaseLogic{
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(top: 20)),
-                    ListTile(
-                      leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
-                      title: const Text("Agreement Card"),
-                      subtitle: const Text("Lihat agreement card berdasarkan nomor kontrak"),
-                      onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_agreement_card}),
-                    ),
-                    const Divider(),
+                    state.isDebitur == "1" //kalo yg login debitur, tampilkan menu agreement card
+                        ? ListTile(
+                            leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                            title: const Text("Agreement Card"),
+                            trailing: const Icon(Icons.arrow_right),
+                            subtitle: const Text("Lihat agreement card berdasarkan nomor kontrak"),
+                            onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_agreement_card}),
+                          )
+                        : Container(),
+                    state.isDebitur == "1" ? const Divider() : Container(),
                     ListTile(
                       leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
                       title: const Text("Antrian Online"),
+                      trailing: const Icon(Icons.arrow_right),
                       subtitle: const Text("Sistem reservasi nomor antrian loket pendaftaran secara online"),
                       onTap: () => Get.toNamed(Konstan.rute_antrian, arguments: {Konstan.tag_selected_index:0}),
                     ),
-                    const Divider(),
-                    ListTile(
-                      leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
-                      title: const Text("E-Polis"),
-                      subtitle: const Text("Unduh epolis Anda dalam format PDF"),
-                      onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_epolis}),
-                    ),
+                    state.isDebitur == "1" ? const Divider() : Container(),
+                    state.isDebitur == "1" //kalo yg login debitur, tampilkan menu epolis
+                          ? ListTile(
+                              leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                              trailing: const Icon(Icons.arrow_right),
+                              title: const Text("E-Polis"),
+                              subtitle: const Text("Unduh epolis Anda dalam format PDF"),
+                              onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_epolis}),
+                            )
+                        : Container()
                   ],
                 ),
               )
@@ -129,7 +142,7 @@ class HomeLogic extends BaseLogic{
                     topLeft: Radius.circular(30)
                 )
             ),
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Wrap(
               children: [
                 Center(
@@ -148,8 +161,9 @@ class HomeLogic extends BaseLogic{
                 const Padding(padding: EdgeInsets.only(top: 20)),
                 ListTile(
                   leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
-                  title: Text("Jaringan Kami"),
-                  subtitle: Text("Lihat daftar semua kantor cabang"),
+                  title: const Text("Jaringan Kami"),
+                  trailing: const Icon(Icons.arrow_right),
+                  subtitle: const Text("Lihat daftar semua kantor cabang"),
                   onTap: () => Get.toNamed(Konstan.rute_list_cabang),
                 ),
               ],
@@ -240,7 +254,7 @@ class HomeLogic extends BaseLogic{
     if (is_admin){
       gotoPaginationuser();
     }else{
-      gotoHistoripoin();
+      // gotoHistoripoin();
     }
   }
 
@@ -282,6 +296,8 @@ class HomeLogic extends BaseLogic{
     final storageAuth = await getStorage<LoginRespon>();
     if(storageAuth.data?.loginUserId != null){
       sdhLogin.value = true;
+      //ask permission kalo sdh login
+      askPermission();
     }else{
       sdhLogin.value = false;
     }
