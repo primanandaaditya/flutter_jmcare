@@ -6,6 +6,7 @@ import 'package:jmcare/service/AntriansekarangService.dart';
 import 'package:jmcare/service/CabangService.dart';
 import 'package:jmcare/service/CekkuisionerService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
+import 'package:jmcare/service/CekpengkiniandataService.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
 import 'package:jmcare/service/DownloadepolisService.dart';
 import 'package:jmcare/service/EpolisService.dart';
@@ -73,7 +74,8 @@ class Service {
       PertanyaanService: PertanyaanService.instance,
       SubmitjawabanService: SubmitjawabanService.instance,
       AntriansekarangService: AntriansekarangService.instance,
-      NotifikasiService: NotifikasiService.instance
+      NotifikasiService: NotifikasiService.instance,
+      CekpengkiniandataService: CekpengkiniandataService.instance
     };
   }
 

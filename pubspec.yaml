@@ -61,6 +61,9 @@ dependencies:
   flutter_background_service: ^5.0.5
   flutter_local_notifications: ^17.1.0
   flutter_launcher_icons: ^0.10.0
+  syncfusion_flutter_signaturepad: ^25.2.3
+  dotted_border: ^2.1.0
+  image_picker: ^1.0.0
 
 
 

@@ -14,6 +14,7 @@ import 'package:jmcare/model/api/SlideshowRespon.dart';
 import 'package:jmcare/model/api/VersiRespon.dart';
 import 'package:jmcare/screens/base/base_logic.dart';
 import 'package:jmcare/screens/home/state.dart';
+import 'package:jmcare/service/CekpengkiniandataService.dart';
 import 'package:jmcare/service/GradeService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/service/VersiService.dart';
@@ -48,7 +49,6 @@ class HomeLogic extends BaseLogic{
   void klikMenuMService(BuildContext context) async {
     //get login dari session
     final authStorage = await getStorage<LoginRespon>();
-
 
     if (authStorage.data == null){
       Fungsi.toastBelumLogin();
@@ -93,7 +93,7 @@ class HomeLogic extends BaseLogic{
                             title: const Text("Agreement Card"),
                             trailing: const Icon(Icons.arrow_right),
                             subtitle: const Text("Lihat agreement card berdasarkan nomor kontrak"),
-                            onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_agreement_card}),
+                            onTap: () => Get.offNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_agreement_card}),
                           )
                         : Container(),
                     state.isDebitur == "1" ? const Divider() : Container(),
@@ -102,7 +102,7 @@ class HomeLogic extends BaseLogic{
                       title: const Text("Antrian Online"),
                       trailing: const Icon(Icons.arrow_right),
                       subtitle: const Text("Sistem reservasi nomor antrian loket pendaftaran secara online"),
-                      onTap: () => Get.toNamed(Konstan.rute_antrian, arguments: {Konstan.tag_selected_index:0}),
+                      onTap: () => Get.offNamed(Konstan.rute_antrian, arguments: {Konstan.tag_selected_index:0}),
                     ),
                     state.isDebitur == "1" ? const Divider() : Container(),
                     state.isDebitur == "1" //kalo yg login debitur, tampilkan menu epolis
@@ -111,7 +111,7 @@ class HomeLogic extends BaseLogic{
                               trailing: const Icon(Icons.arrow_right),
                               title: const Text("E-Polis"),
                               subtitle: const Text("Unduh epolis Anda dalam format PDF"),
-                              onTap: () => Get.toNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_epolis}),
+                              onTap: () =>  Get.offNamed(Konstan.rute_pilih_no_kontrak, arguments: {'detail': Konstan.rute_epolis}),
                             )
                         : Container()
                   ],
@@ -164,7 +164,18 @@ class HomeLogic extends BaseLogic{
                   title: const Text("Jaringan Kami"),
                   trailing: const Icon(Icons.arrow_right),
                   subtitle: const Text("Lihat daftar semua kantor cabang"),
-                  onTap: () => Get.toNamed(Konstan.rute_list_cabang),
+                  onTap: () => Get.offNamed(Konstan.rute_list_cabang),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                ListTile(
+                  leading: Image.asset('assets/images/selfservice.png', width: 50, height: 50,),
+                  title: const Text("Pengkinian Data"),
+                  trailing: is_loading.value ? CircularProgressIndicator() : const Icon(Icons.arrow_right),
+                  subtitle: const Text("Pembaharuan data Anda terkini"),
+                  onTap: (){
+                    //cek apakah sudah melakukan pengkinian data/belum?
+                    cekPengkinianData();
+                  },
                 ),
               ],
             ),
@@ -172,6 +183,25 @@ class HomeLogic extends BaseLogic{
         )
 
       );
+    }
+  }
+
+  Future<void> cekPengkinianData() async {
+    is_loading.value = true;
+    final authStorage = await getStorage<LoginRespon>();
+    var login_user_id = authStorage.data!.loginUserId;
+    final baseRespon = await getService<CekpengkiniandataService>()?.cekPengkinian(login_user_id!);
+    if (baseRespon is BaseError){
+      is_loading.value = false;
+      Get.offNamed(Konstan.rute_pengkinian_data);
+    }else{
+      if (baseRespon?.code == "404"){
+        Get.offNamed(Konstan.rute_pengkinian_data);
+      }else{
+        Fungsi.warningToast("Anda sudah pernah melakukan pengkinian data");
+        Get.offNamed(Konstan.rute_pengkinian_data);
+      }
+      is_loading.value = false;
     }
   }
 

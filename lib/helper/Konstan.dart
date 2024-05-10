@@ -26,6 +26,7 @@ class Konstan {
   static const String rute_dialog_cabang = "/dialogcabang";
   static const String rute_detail_riwayat_antrian = "/detail_riwayat_antrian";
   static const String rute_kuisioner = "/kuisioner";
+  static const String rute_pengkinian_data = "/pengkiniandata";
 
   static const String tag_now_loading = 'Sedang memproses...';
   static const String tag_downloading = 'Sedang mengunduh...';

@@ -76,6 +76,9 @@ class Endpoint{
   static const String TAG_VIEWLIST_MERKKENDARAAN               = "getlistmerkkend/{tipeJaminan}";
   static const String TAG_VIEWLIST_TIPEKENDARAAN               = "getlisttipekend/{id}";
 
+  static const String TAG_CEK_PENGKINIAN_DATA                  = "cekPengkinianData.json";
+  static const String TAG_PENGKINIAN_DATA                      = "pengkinianData.json";
+
   static const String TAG_SEND_OTP                             = "sendSMS/";
   // static const String TAG_SEND_OTP                             = "sendSMS/{nomor_hp}/{pesan}";
 

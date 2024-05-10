@@ -38,6 +38,7 @@ import 'package:jmcare/screens/resetpassword/webview/view.dart';
 import 'package:jmcare/screens/searchuser/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
+import 'package:jmcare/screens/pengkiniandata/view.dart';
 import 'package:jmcare/service/BackgroundService.dart';
 import 'package:dio/dio.dart';
 import 'package:jmcare/service/BaseService.dart';
@@ -100,7 +101,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: Konstan.rute_tujuan_kedatangan, page: () => const DialogTujuankedatangan()),
         GetPage(name: Konstan.rute_dialog_cabang, page: () => const DialogCabang()),
         GetPage(name: Konstan.rute_detail_riwayat_antrian, page: () => const DetailRiwayatAntrian()),
-        GetPage(name: Konstan.rute_kuisioner, page: () => const KuisionerScreen())
+        GetPage(name: Konstan.rute_kuisioner, page: () => const KuisionerScreen()),
+        GetPage(name: Konstan.rute_pengkinian_data, page: () => const PengkiniandataScreen())
       ],
       title: 'JM CARE',
       theme: ThemeData(
