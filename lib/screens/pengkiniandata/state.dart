@@ -40,6 +40,15 @@ class PengkiniandataState {
   bool is_check_pernyataan = false;
   String title_pernyataan = "Demikian pernyataan ini saya buat dengan sebenarnya dan penuh rasa tanggung jawab. Apabila dikemudian hari ditemukan bahwa data/dokumen yang saya sampaikan tidak benar dan/atau ada pemalsuan, maka seluruh keputusan yang telah ditetapkan berdasarkan berkas tersebut batal berdasarkan hukum dan saya bersedia dikenakan sanksi sesuai ketentuan peraturan perundang-undangan yang berlaku.";
 
+  int selected_id_propinsi = 0;
+  int selected_id_kabupaten = 0;
+  int selected_id_kecamatan = 0;
+  int selected_id_kelurahan = 0;
+
+  String selected_id_status_nikah = "";
+  String selected_id_pendidikan = "";
+  String selected_id_jenis_pekerjaan = "";
+
   PengkiniandataState(){
     imagePicker = ImagePicker();
     formKey = GlobalKey<FormState>();

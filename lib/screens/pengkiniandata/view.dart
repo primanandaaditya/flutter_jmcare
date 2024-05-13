@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/helper/Komponen.dart';
+import 'package:jmcare/helper/Konstan.dart';
 import 'package:jmcare/screens/base/jmcare_bar_screen.dart';
 import 'package:jmcare/screens/pengkiniandata/logic.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
@@ -76,6 +77,9 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Pendidikan terakhir",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: (){
+                                    logic.dialogJMO(Konstan.tag_pendidikan);
+                                  },
                                 ),
                                 TextFormField(
                                   readOnly: true,
@@ -84,6 +88,9 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Status pernikahan",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: (){
+                                    logic.dialogJMO(Konstan.tag_status_nikah);
+                                  },
                                 ),
                                 TextFormField(
                                   keyboardType: TextInputType.phone,
@@ -153,6 +160,7 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Propinsi",
                                     suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: () => logic.dialogWilayah(Konstan.tag_propinsi),
                                 ),
                                 TextFormField(
                                   readOnly: true,
@@ -161,6 +169,7 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Kabupaten",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: () => logic.dialogWilayah(Konstan.tag_kabupaten),
                                 ),
                                 TextFormField(
                                   readOnly: true,
@@ -169,6 +178,7 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Kecamatan",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: () => logic.dialogWilayah(Konstan.tag_kecamatan),
                                 ),
                                 TextFormField(
                                   readOnly: true,
@@ -177,6 +187,7 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Kelurahan",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: () => logic.dialogWilayah(Konstan.tag_kelurahan),
                                 ),
                                 TextFormField(
                                   readOnly: true,
@@ -185,6 +196,9 @@ class PengkiniandataScreen extends StatelessWidget {
                                       labelText: "Pekerjaan",
                                       suffixIcon: Icon(Icons.arrow_drop_down_outlined)
                                   ),
+                                  onTap: (){
+                                    logic.dialogJMO(Konstan.tag_jenis_pekerjaan);
+                                  },
                                 ),
                                 TextFormField(
                                   controller: state.tecAlamatkantor,

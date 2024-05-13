@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:jmcare/model/api/AgreementcardRespon.dart';
 import 'package:jmcare/model/api/AntriansekarangRespon.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
@@ -6,6 +8,7 @@ import 'package:jmcare/model/api/DownloadRespon.dart';
 import 'package:jmcare/model/api/EpolisRespon.dart';
 import 'package:jmcare/model/api/GradeRespon.dart';
 import 'package:jmcare/model/api/HistoripoinRespon.dart';
+import 'package:jmcare/model/api/JmoRespon.dart';
 import 'package:jmcare/model/api/KategoriRespon.dart';
 import 'package:jmcare/model/api/LoginRespon.dart';
 import 'package:jmcare/model/api/NotifikasiRespon.dart';
@@ -17,6 +20,7 @@ import 'package:jmcare/model/api/ProdukRespon.dart';
 import 'package:jmcare/model/api/PromoRespon.dart';
 import 'package:jmcare/model/api/RiwayatantrianRespon.dart';
 import 'package:jmcare/model/api/SlideshowRespon.dart';
+import 'package:jmcare/model/api/WilayahRespon.dart';
 import 'package:jmcare/model/session/RegisterpinModel.dart';
 import 'package:jmcare/model/session/ResetPassModel.dart';
 import 'package:jmcare/model/session/SelectedMethod.dart';
@@ -52,7 +56,9 @@ class ModelGenerator {
       RiwayatantrianRespon: (json) => RiwayatantrianRespon.fromJson(json),
       PertanyaanRespon: (json) => PertanyaanRespon.fromJson(json),
       AntriansekarangRespon: (json) => AntriansekarangRespon.fromJson(json),
-      NotifikasiRespon: (json) => NotifikasiRespon.fromJson(json)
+      NotifikasiRespon: (json) => NotifikasiRespon.fromJson(json),
+      WilayahRespon: (json) => WilayahRespon.fromJson(json),
+      JmoRespon: (json) => JmoRespon.fromJson(json)
     };
   }
 

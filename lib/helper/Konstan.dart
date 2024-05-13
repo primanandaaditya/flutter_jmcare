@@ -24,7 +24,9 @@ class Konstan {
   static const String rute_antrian = "/antrian";
   static const String rute_tujuan_kedatangan = "/tujuankedatangan";
   static const String rute_dialog_cabang = "/dialogcabang";
+  static const String rute_dialog_jmo = "/dialogjmo";
   static const String rute_detail_riwayat_antrian = "/detail_riwayat_antrian";
+  static const String rute_dialog_wilayah = "/dialogwilayah";
   static const String rute_kuisioner = "/kuisioner";
   static const String rute_pengkinian_data = "/pengkiniandata";
 
@@ -88,4 +90,12 @@ class Konstan {
   static const String tag_office_lat = "office lat";
   static const String tag_office_long = "office long";
 
+  static const String tag_propinsi = "propinsi";
+  static const String tag_kabupaten = "kabupaten";
+  static const String tag_kecamatan = "kecamatan";
+  static const String tag_kelurahan = "kelurahan";
+
+  static const String tag_status_nikah = "status nikah";
+  static const String tag_pendidikan = "pendidikan";
+  static const String tag_jenis_pekerjaan = "jenis pekerjaan";
 }

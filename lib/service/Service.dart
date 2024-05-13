@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:jmcare/model/api/BaseRespon.dart';
 import 'package:jmcare/service/AddantrianService.dart';
 import 'package:jmcare/service/AgreementcardService.dart';
@@ -8,6 +9,7 @@ import 'package:jmcare/service/CekkuisionerService.dart';
 import 'package:jmcare/service/CeknomorhpService.dart';
 import 'package:jmcare/service/CekpengkiniandataService.dart';
 import 'package:jmcare/service/DeleteakunService.dart';
+import 'package:jmcare/service/DialogjmoService.dart';
 import 'package:jmcare/service/DownloadepolisService.dart';
 import 'package:jmcare/service/EpolisService.dart';
 import 'package:jmcare/service/GradeService.dart';
@@ -30,6 +32,7 @@ import 'package:jmcare/service/SlideService.dart';
 import 'package:jmcare/service/SmsService.dart';
 import 'package:jmcare/service/SubmitjawabanService.dart';
 import 'package:jmcare/service/VersiService.dart';
+import 'package:jmcare/service/WilayahService.dart';
 import 'BaseService.dart';
 import 'LoginService.dart';
 
@@ -75,7 +78,9 @@ class Service {
       SubmitjawabanService: SubmitjawabanService.instance,
       AntriansekarangService: AntriansekarangService.instance,
       NotifikasiService: NotifikasiService.instance,
-      CekpengkiniandataService: CekpengkiniandataService.instance
+      CekpengkiniandataService: CekpengkiniandataService.instance,
+      WilayahService: WilayahService.instance,
+      DialogjmoService: DialogjmoService.instance
     };
   }
 
