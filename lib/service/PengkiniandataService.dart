@@ -34,7 +34,7 @@ class PengkiniandataService extends BaseService {
       ) async{
     await Future.delayed(const Duration(seconds: 0));
     try{
-      return postString(Endpoint.TAG_PENGKINIAN_DATA, body: {
+      return postJSON(Endpoint.TAG_PENGKINIAN_DATA, body: {
         "login_user_id": login_user_id,
         "no_ktp": no_ktp,
         "nama": nama,

@@ -27,6 +27,7 @@ class LoginRespon {
   String? noKtp;
   String? npwp;
   String? password;
+  String? pekerjaan;
   String? pendidikanTerakhir;
   String? provinsi;
   String? setujuPenawaran;
@@ -66,6 +67,7 @@ class LoginRespon {
         this.noKtp,
         this.npwp,
         this.password,
+        this.pekerjaan,
         this.pendidikanTerakhir,
         this.provinsi,
         this.setujuPenawaran,
@@ -105,6 +107,7 @@ class LoginRespon {
     noKtp = json['no_ktp'];
     npwp = json['npwp'];
     password = json['password'];
+    pekerjaan = json['pekerjaan'];
     pendidikanTerakhir = json['pendidikan_terakhir'];
     provinsi = json['provinsi'];
     setujuPenawaran = json['setuju_penawaran'];
@@ -146,6 +149,7 @@ class LoginRespon {
     data['no_ktp'] = this.noKtp;
     data['npwp'] = this.npwp;
     data['password'] = this.password;
+    data['pekerjaan'] = this.pekerjaan;
     data['pendidikan_terakhir'] = this.pendidikanTerakhir;
     data['provinsi'] = this.provinsi;
     data['setuju_penawaran'] = this.setujuPenawaran;

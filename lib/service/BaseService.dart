@@ -93,7 +93,6 @@ abstract class BaseService {
     return models.ModelGenerator.resolve<T>(response.data);
   }
 
-
   Future<T?> postQuery<T>(String url, {Map<String, dynamic>? body}) async {
     client.options.baseUrl = Endpoint.base_url;
     final response = await _wrapRequest(() => client.post(url,

@@ -44,7 +44,7 @@ class DialogjmoScreen extends StatelessWidget {
                                 },
                                 itemBuilder: (context, index){
                                   return ListTile(
-                                    leading: const Icon(Icons.account_balance_rounded),
+                                    leading: const Icon(Icons.dataset),
                                     trailing: const Icon(Icons.arrow_right),
                                     title: Text(
                                         (logic.obsJmoRespon.value.data![index].name == null)

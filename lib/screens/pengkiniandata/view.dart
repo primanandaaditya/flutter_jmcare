@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -93,6 +95,8 @@ class PengkiniandataScreen extends StatelessWidget {
                                   },
                                 ),
                                 TextFormField(
+                                  buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
+                                  maxLength: 16,
                                   keyboardType: TextInputType.phone,
                                   controller: state.tecHP,
                                   decoration: const InputDecoration(
@@ -137,6 +141,8 @@ class PengkiniandataScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Expanded(child: TextFormField(
+                                      buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
+                                      maxLength: 3,
                                       keyboardType: TextInputType.number,
                                       controller: state.tecRT,
                                       decoration: const InputDecoration(
@@ -144,6 +150,8 @@ class PengkiniandataScreen extends StatelessWidget {
                                       ),
                                     ),),
                                     Expanded(child: TextFormField(
+                                      buildCounter: (BuildContext context, {int? currentLength, int? maxLength, bool? isFocused}) => null,
+                                      maxLength: 3,
                                       keyboardType: TextInputType.number,
                                       controller: state.tecRW,
                                       decoration: const InputDecoration(
@@ -317,8 +325,8 @@ class PengkiniandataScreen extends StatelessWidget {
                                           key: state.signatureGlobalKey,
                                           backgroundColor: Colors.white,
                                           strokeColor: Colors.black,
-                                          minimumStrokeWidth: 1.0,
-                                          maximumStrokeWidth: 1.0,
+                                          minimumStrokeWidth: 3.0,
+                                          maximumStrokeWidth: 5.0,
                                         ),
                                         Align(
                                           alignment: Alignment.bottomRight,
@@ -348,4 +356,22 @@ class PengkiniandataScreen extends StatelessWidget {
         }
     );
   }
+
+  // void myIsolateFunction(SendPort sendPort){
+  //   int result = 0;
+  //   for (int i = 0; i < 10000; i++){
+  //     result += i;
+  //   }
+  //   sendPort.send(result);
+  // }
+  // void isolasi() async {
+  //
+  //   print("Mulai isolasi...");
+  //   ReceivePort receivePort = ReceivePort();
+  //   Isolate.spawn(myIsolateFunction, receivePort.sendPort);
+  //   int isolateResult = await receivePort.first;
+  //   print ("Hasil isolasi adalah $isolateResult");
+  // }
+
 }
+

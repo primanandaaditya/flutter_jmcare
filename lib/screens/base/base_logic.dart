@@ -25,7 +25,6 @@ class BaseLogic extends GetxController{
   var is_loading = false.obs;
   final fungsi = Fungsi();
 
-
   void askPermission() async {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
@@ -34,8 +33,6 @@ class BaseLogic extends GetxController{
       Permission.scheduleExactAlarm
     ].request();
   }
-
-
 
   Future<bool> sudahRegisterPIN() async {
     final registerPINStorage = await getStorage<RegisterpinModel>();

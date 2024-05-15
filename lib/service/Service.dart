@@ -21,6 +21,7 @@ import 'package:jmcare/service/NotifikasiService.dart';
 import 'package:jmcare/service/OtpemailService.dart';
 import 'package:jmcare/service/OtpwaService.dart';
 import 'package:jmcare/service/PaginationuserService.dart';
+import 'package:jmcare/service/PengkiniandataService.dart';
 import 'package:jmcare/service/PertanyaanService.dart';
 import 'package:jmcare/service/PilihkontrakService.dart';
 import 'package:jmcare/service/RegisterDebiturService.dart';
@@ -80,7 +81,8 @@ class Service {
       NotifikasiService: NotifikasiService.instance,
       CekpengkiniandataService: CekpengkiniandataService.instance,
       WilayahService: WilayahService.instance,
-      DialogjmoService: DialogjmoService.instance
+      DialogjmoService: DialogjmoService.instance,
+      PengkiniandataService: PengkiniandataService.instance
     };
   }
 
