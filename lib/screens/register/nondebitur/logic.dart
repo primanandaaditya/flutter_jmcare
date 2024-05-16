@@ -8,7 +8,7 @@ import 'package:jmcare/screens/base/base_register_logic.dart';
 import 'package:jmcare/screens/register/nondebitur/state.dart';
 import 'package:jmcare/service/RegisterNonDebiturService.dart';
 import '../../../service/Service.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
 
 class RegisterNonDebiturLogic extends BaseRegisterLogic{
 

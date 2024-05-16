@@ -16,7 +16,9 @@ class SplashLogic extends BaseLogic {
   @override
   void onInit() {
     super.onInit();
-    SystemChrome.setEnabledSystemUIOverlays([]);
+     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top
+    ]);
     initVideoSplash();
   }
 

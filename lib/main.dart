@@ -73,7 +73,10 @@ class MyApp extends StatelessWidget {
     client.interceptors.addAll(Endpoint.dioInterceptors);
     BaseService.initialize(client);
     Service.setup(client);
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
+    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+      SystemUiOverlay.top
+    ]);
 
     return GetMaterialApp(
       getPages: [
