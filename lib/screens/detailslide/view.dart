@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:jmcare/screens/base/jmcare_bar_screen.dart';
 
@@ -12,8 +12,8 @@ class DetailslideScreen extends StatelessWidget {
     return JmcareBarScreen(
       title: "Keterangan",
       body: SingleChildScrollView(
-        child: Html(
-          data: detail,
+        child: HtmlWidget(
+          detail,
         ),
       )
     );

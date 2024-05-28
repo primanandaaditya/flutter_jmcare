@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jmcare/helper/Komponen.dart';
 import 'package:jmcare/screens/antrian/logic.dart';
 import 'package:get/get.dart';
@@ -136,7 +136,7 @@ class AntrianScreen extends StatelessWidget {
 
                             const Padding(padding: EdgeInsets.only(top: 10)),
 
-                            Html(data: state.htmlString),
+                            HtmlWidget(state.htmlString),
 
                             const Padding(padding: EdgeInsets.only(top: 10)),
 

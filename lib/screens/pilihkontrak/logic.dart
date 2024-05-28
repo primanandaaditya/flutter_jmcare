@@ -16,7 +16,6 @@ import 'package:jmcare/storage/storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../helper/Konstan.dart';
-import 'package:open_file/open_file.dart';
 
 
 class PilihkontrakLogic extends BaseLogic{
@@ -99,7 +98,7 @@ class PilihkontrakLogic extends BaseLogic{
                       //simpan nomor agreement di sqlite
                       saveSqlite(agreementNo,"/storage/emulated/0/Download/$namaFile");
                       debugPrint('try opening file...');
-                      OpenFile.open("/storage/emulated/0/Download/$namaFile", type: "application/pdf");
+                      // OpenFile.open("/storage/emulated/0/Download/$namaFile", type: "application/pdf");
                     }
                   } catch (err) {
                     Fungsi.errorToast("Cannot get download folder path $err");
@@ -113,7 +112,7 @@ class PilihkontrakLogic extends BaseLogic{
         var filepath = await state.databaseHelper!.getFilepath(agreementNo);
         debugPrint('filepath $filepath');
         debugPrint('try opening file...');
-        OpenFile.open(filepath, type: "application/pdf");
+        // OpenFile.open(filepath, type: "application/pdf");
       }
       is_download.value = false;
     }

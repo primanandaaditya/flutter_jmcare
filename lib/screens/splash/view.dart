@@ -12,9 +12,10 @@ class SplashScreen extends StatelessWidget {
     final logic = Get.put(SplashLogic());
     final state = Get.find<SplashLogic>().state;
     // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
-     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.top
-    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+    //  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+    //   SystemUiOverlay.top
+    // ]);
 
     return GetBuilder<SplashLogic>(
       assignId: true,

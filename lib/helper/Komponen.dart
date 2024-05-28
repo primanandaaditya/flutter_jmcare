@@ -102,12 +102,12 @@ class Komponen{
         ),
       ),
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_outlined),
+        icon: const Icon(Icons.arrow_back_outlined, color: Colors.white,),
         onPressed: (){
           Get.back();
         },
       ),
-      title: Text(title, textAlign: TextAlign.center,),
+      title: Text(title, textAlign: TextAlign.center, style: const TextStyle(color: Colors.white),),
     );
   }
 

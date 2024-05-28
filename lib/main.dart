@@ -6,9 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:jmcare/helper/Endpoint.dart';
-import 'package:jmcare/helper/Fungsi.dart';
 import 'package:jmcare/helper/Konstan.dart';
-import 'package:jmcare/model/api/NotifikasiRespon.dart';
 import 'package:jmcare/model/api/SingleNotifikasiRespon.dart';
 import 'package:jmcare/screens/agreementcard/view.dart';
 import 'package:jmcare/screens/antrian/detailriwayat/view.dart';
@@ -41,17 +39,13 @@ import 'package:jmcare/screens/searchuser/view.dart';
 import 'package:jmcare/screens/splash/view.dart';
 import 'package:jmcare/screens/welcome/view.dart';
 import 'package:jmcare/screens/pengkiniandata/view.dart';
-import 'package:jmcare/service/BackgroundService.dart';
-import 'package:dio/dio.dart';
 import 'package:jmcare/service/BaseService.dart';
-import 'package:jmcare/service/NotifikasiService.dart';
 import 'package:jmcare/service/Service.dart';
 import 'package:jmcare/storage/storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'model/api/LoginRespon.dart';
 
 void main() async {
@@ -73,10 +67,10 @@ class MyApp extends StatelessWidget {
     client.interceptors.addAll(Endpoint.dioInterceptors);
     BaseService.initialize(client);
     Service.setup(client);
-    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-      SystemUiOverlay.top
-    ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+    //   SystemUiOverlay.top
+    // ]);
 
     return GetMaterialApp(
       getPages: [
@@ -112,7 +106,9 @@ class MyApp extends StatelessWidget {
       ],
       title: 'JM CARE',
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: Colors.green,
+
       ),
       home: const SafeArea(
         child: SplashScreen(),
